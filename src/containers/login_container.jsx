@@ -78,6 +78,7 @@ export default class Login extends Component {
         
 
         return (
+	<div id="login_view">
         <div className="container login-signup-wrappers">
         <div className='row justify-content-center'>
             <div className='col-md-6'>
@@ -108,6 +109,7 @@ export default class Login extends Component {
             </div>
         </div>
         </div>
+	</div>
         )
       }
       

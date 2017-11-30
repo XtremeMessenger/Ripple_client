@@ -79,6 +79,7 @@ class Signup extends Component {
 
     return (
       <div id="sign_up_view">
+	<h2>Signup</h2>
         <FormGroup id="signup">
           <div id="credentials"><label> Username: <input type="text" name="username" value={this.state.username} onChange={this.handleChange} /></label></div>
           <div id="credentials"><label> First Name: <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} /></label></div>

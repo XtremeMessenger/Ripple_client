@@ -3,11 +3,11 @@ import Login from '../containers/login_container.jsx'
 import Signup from '../containers/signup_container.jsx'
 
 const App = () => (
-  <div>
-    <h2>Login:</h2>
+  <div id="yolo">
+    
     <Login /> 
-    <hr />
-    <h2>Signup:</h2>
+    
+    
     <Signup />
   </div>
 );
