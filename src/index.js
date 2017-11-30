@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import AllReducers from './reducers/AllReducers.jsx';
+import AllReducers from './reducers/allReducers.jsx';
 import App from './components/App.jsx';
 
 //main application storage

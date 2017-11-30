@@ -8,7 +8,7 @@ import { FormGroup } from 'react-bootstrap'
 import FIREBASE_API from '../../config.js'
 
 const firebase = require("firebase");
-console.log('API Key', FIREBASE_API.FIREBASE_API)
+// console.log('API Key', FIREBASE_API.FIREBASE_API)
 // Initialize Firebase
 // TODO: Replace with your project's customized code snippet
 var config = {
