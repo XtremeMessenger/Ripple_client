@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { BrowserRouter } from 'react-router-dom';
 import AllReducers from './reducers/allReducers.jsx';
 import App from './components/App.jsx';
 
@@ -13,7 +14,9 @@ ReactDOM.render(
   // <App />,
   // Provider: make the data accessable
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );
