@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Login from '../containers/login_container.jsx'
 import Signup from '../containers/signup_container.jsx'
-import Index2 from './Index.jsx'
+import Root from './Root.jsx'
 import { Link } from 'react-router-dom';
 
 const App = () => (
@@ -11,7 +11,7 @@ const App = () => (
     <Switch>
       <Route path='/login' exact component={ Login } />
       <Route path='/signup' exact component={ Signup } />
-      <Route path='/' exact component= { Index2 }/>
+      <Route path='/' exact component= { Root }/>
     </Switch>
   </div>
 );
