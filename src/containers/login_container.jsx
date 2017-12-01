@@ -34,7 +34,7 @@ class Login extends Component {
   
   async handleClickSubmit (e) {
     e.preventDefault();
-    console.log('this is redux state before submit ===== ', this.props);
+    //console.log('this is redux state before submit ===== ', this.props);
     let context = this;
     firebase.auth()
       .signInWithEmailAndPassword(this.state.username, this.state.password)
@@ -46,7 +46,7 @@ class Login extends Component {
           firebase_id: user.uid
         })
         context.props.setCurrentUser(response.data[0])
-        console.log('this is redux state after submit ===== ', context.props)
+        //console.log('this is redux state after submit ===== ', context.props)
         context.props.history.push('/main')
       }
       getParameter();
