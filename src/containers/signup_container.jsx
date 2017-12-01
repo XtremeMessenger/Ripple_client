@@ -25,7 +25,7 @@ class Signup extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this)
     this.handleClickSubmit = this.handleClickSubmit.bind(this)
-    // this.handleClickDropDown = this.handleClickDropDown.bind(this)
+    this.handleIconClick = this.handleIconClick.bind(this)
     this.state = {
       username: '',
       password: '',
@@ -46,7 +46,15 @@ class Signup extends Component {
     });
   }
 
-  async handleClickSubmit () {
+  handleIconClick(e){
+    console.log('icon clicked', e.target.src)
+    this.setState({
+      icon: e.target.src
+    })
+  }
+
+  async handleClickSubmit (e) {
+    e.preventDefault();
     console.log('this is redux state before submit ===== ',this.props)
     let context = this;
     // console.log('state ', this.state)
@@ -63,11 +71,12 @@ class Signup extends Component {
         first: context.state.firstname,
         last: context.state.lastname,
         quote: context.state.quote,
-        icon: ''
+        icon: context.state.icon
       }
     axios.post('/signup', newUser)
       .then(response => {
         console.log('sign up response ', response.data)
+        context.props.history.push('/login')
       })
     })
   }
@@ -86,7 +95,11 @@ class Signup extends Component {
           <div id="credentials"><label> First Name: <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} /></label></div>
           <div id="credentials"><label> Last Name: <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} /></label></div>
           <div id="credentials"><label> Quote: <input type="text" name="quote" value={this.state.quote} onChange={this.handleChange} /></label></div>
-          <div id="credentials"><label> Icon </label></div>
+          <div id="credentials">
+          <label> Choose an Icon: </label>
+          <img src="https://thumbs.dreamstime.com/z/businessman-profile-icon-male-portrait-business-man-flat-design-vector-illustration-55382689.jpg" width="100" height="100" onClick={this.handleIconClick}></img>
+          <img src="https://thumbs.dreamstime.com/z/face-woman-hairdo-face-appearance-single-icon-flat-style-vector-symbol-stock-illustration-face-98467159.jpg" width="100" height="100" onClick={this.handleIconClick}></img>
+          </div>
           <div id="credentials"><label> Password: <input type="text" name="password" value={this.state.password} onChange={this.handleChange} /></label></div>
           <div id="credentials"><label> Email: <input type="text" name="email" value={this.state.email} onChange={this.handleChange} /></label></div>
           <span><input type="submit" value="Signup" onClick={this.handleClickSubmit} /></span>
