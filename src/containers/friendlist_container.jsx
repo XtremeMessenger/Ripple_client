@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
+import {connect} from  'react-redux'
 
 class Friendlist extends Component {
   constructor(props) {
@@ -40,4 +41,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default Friendlist;
+export default connect(mapStateToProps)(Friendlist);
