@@ -55,10 +55,8 @@ export default class Login extends Component {
         firebase.auth().signInWithEmailAndPassword(this.state.username, this.state.password).then(function(user){
             firebase.auth.Auth.Persistence.LOCAL	
             
-            // axios.get('/getUser',{
-            //     params:{
-            //       id: user.uid
-            //     }
+            // axios.get('/login',{
+            //     firebase_id: user.uid
             //   }).then(function (response) {
             //     console.log('response ', response);
             //     var userObject = response.data[0]
@@ -83,7 +81,6 @@ export default class Login extends Component {
         <div className='row justify-content-center'>
             <div className='col-md-6'>
                         <h2>Login</h2>
-                        <form name="form" onSubmit={this.handleSubmit}>
                             <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
                                 <label htmlFor="username">Username</label>
                                 <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} placeholder='Username'/>
@@ -99,13 +96,12 @@ export default class Login extends Component {
                                 }
                             </div>
                             <div className="form-group">
-                                <button className="btn btn-primary">Login</button>
+                                <button className="btn btn-primary" onClick={this.handleClickSubmit}>Login</button>
                                 <button className="btn btn-primary btn-facebook" onClick={this.handleFacebookLogin}>Facebook</button>
                                 <button className='btn btn-secondary btn-sign-up' onClick={this.handleRegister}>Sign Up</button>
                             </div>
                             
                             
-                        </form>
             </div>
         </div>
         </div>

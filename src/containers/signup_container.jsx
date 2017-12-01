@@ -55,16 +55,17 @@ class Signup extends Component {
     firebase.auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(function (user) {
+        console.log('successfully registerd new user with firebase id :', user.uuid)
       const newUser = {
         username: context.state.username,
-        password: user.uuid,
+        firebase_id: user.uuid,
         email: context.state.email,
         first: context.state.firstname,
         last: context.state.lastname,
         quote: context.state.quote,
         icon: ''
       }
-    axios.post('/main/signup', newUser)
+    axios.post('/signup', newUser)
       .then(response => {
         console.log('sign up response ', response.data)
       })
