@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Signup from './signup_container.jsx';
-import FIREBASE_API from '../../config.js'
+import FIREBASE_API from '../../config.js';
+import axios from 'axios';
 
 const firebase = require('firebase')
 var provider = new firebase.auth.FacebookAuthProvider();
@@ -49,22 +50,24 @@ export default class Login extends Component {
       async handleClickSubmit () {
         console.log('this is redux state before submit ===== ',this.props)
         let context = this;
-        e.preventDefault();
+        //e.preventDefault();
         
         // console.log('state ', this.state)
         firebase.auth().signInWithEmailAndPassword(this.state.username, this.state.password).then(function(user){
             firebase.auth.Auth.Persistence.LOCAL	
-            
-            // axios.get('/login',{
-            //     firebase_id: user.uid
-            //   }).then(function (response) {
-            //     console.log('response ', response);
-            //     var userObject = response.data[0]
-            //     context.props.getUserInfo(userObject);
-            //   })
-            //   .catch(function (error) {
-            //     console.log(error);
-            //   })
+            console.log('firebase user id', user.uid);
+
+            axios.post('/login',{
+                firebase_id: user.uid
+              }).then(function (response) {
+                console.log('response ', response);
+                // var userObject = response.data[0]
+                // context.props.getUserInfo(userObject);
+              })
+              .catch(function (error) {
+                console.log(error);
+              })
+
         }).catch((error) => {
             console.log('failed to login thru firebase', error.message)
     	});

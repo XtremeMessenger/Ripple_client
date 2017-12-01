@@ -55,10 +55,10 @@ class Signup extends Component {
     firebase.auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(function (user) {
-        console.log('successfully registerd new user with firebase id :', user.uuid)
+        console.log('successfully registerd new user with firebase id :', user.uid)
       const newUser = {
         username: context.state.username,
-        firebase_id: user.uuid,
+        firebase_id: user.uid,
         email: context.state.email,
         first: context.state.firstname,
         last: context.state.lastname,
