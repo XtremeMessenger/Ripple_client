@@ -32,7 +32,8 @@ class Login extends Component {
     });
   }
   
-  async handleClickSubmit () {
+  async handleClickSubmit (e) {
+    e.preventDefault();
     console.log('this is redux state before submit ===== ', this.props);
     let context = this;
     firebase.auth()
@@ -40,17 +41,15 @@ class Login extends Component {
       .then(function(user){
         firebase.auth.Auth.Persistence.LOCAL
 
-        const getParameter = async () => {
-          const response = await axios.post('/login', {
-            firebase_id: user.uid
-          })
-          //console.log('response ', response);
-          //console.log('response.data ', response.data[0]);
-          //console.log('response.data.username ', response.data[0].username);
-          context.props.setCurrentUser(response.data[0])
-          console.log('this is redux state after submit ===== ', context.props)
-        }
-        getParameter();
+      const getParameter = async () => {
+        const response = await axios.post('/login', {
+          firebase_id: user.uid
+        })
+        context.props.setCurrentUser(response.data[0])
+        console.log('this is redux state after submit ===== ', context.props)
+        context.props.history.push('/main')
+      }
+      getParameter();
     })
     .catch((error) => {
         console.log('failed to login thru firebase', error.message)
