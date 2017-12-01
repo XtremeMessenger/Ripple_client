@@ -53,6 +53,7 @@ class Login extends Component {
     })
     .catch((error) => {
         console.log('failed to login thru firebase', error.message)
+        context.props.history.push('/')
     });
   }
 
