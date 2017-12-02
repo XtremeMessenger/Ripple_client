@@ -43,7 +43,7 @@ class Login extends Component {
         firebase.auth.Auth.Persistence.LOCAL
 
       const getParameter = async () => {
-        const response = await axios.post('http://www.jayop.com/main/login', {
+        const response = await axios.post('http://www.jayop.com:3000/main/login', {
           firebase_id: user.uid
         })
         context.props.setCurrentUser(response.data[0])
