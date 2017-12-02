@@ -20,9 +20,8 @@ class Friendlist extends Component {
       requestee: currentUser,
       requested: newFriend
     }
-    axios.post('/addFriend', friendRequest)
+    axios.post(`${process.env}.http://localhost:3000/main/addFriend`, friendRequest)
   }
-
   render() {
     return (
       <div className="friendlist" id="friendsComponent">

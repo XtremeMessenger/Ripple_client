@@ -8,6 +8,7 @@ import { setCurrentUser } from '../actions/setCurrentUser.jsx';
 
 const firebase = require('firebase')
 var provider = new firebase.auth.FacebookAuthProvider();
+const EndPoint = '/main'
 
 class Login extends Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class Login extends Component {
         firebase.auth.Auth.Persistence.LOCAL
 
       const getParameter = async () => {
-        const response = await axios.post('/login', {
+        const response = await axios.post('http://www.jayop.com/main/login', {
           firebase_id: user.uid
         })
         context.props.setCurrentUser(response.data[0])
