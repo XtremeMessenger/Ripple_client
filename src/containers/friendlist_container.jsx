@@ -8,8 +8,31 @@ class Friendlist extends Component {
     super(props)
     this.handleFindFriend = this.handleFindFriend.bind(this);
     this.state = {
-
+      friendsArr: []
     }
+  }
+
+  componentDidMount(){
+    var context = this;
+    var friends = this.state.friendsArr.slice()
+    //retrieve friends for current user
+    var currentUser = this.props.currentUserStore
+    let userRef = {
+      user: currentUser
+    }
+    axios.post('/getFriends',userRef).then(function(response){
+      console.log('this is getFriends response', response)
+      response.data.forEach(function(friend){
+        friends.push(friend)
+      })
+      context.setState({
+        friendsArr: friends
+      })
+    })
+    .catch(function(err){
+      console.log('error in POST request to /getFriends', err)
+    })
+
   }
   handleFindFriend(){
     console.log(document.getElementById('friendSearchBar').value);
@@ -28,7 +51,13 @@ class Friendlist extends Component {
         <h2>find friend</h2>
         <input id="friendSearchBar"></input>
         <button id="findFriendButton" onClick={this.handleFindFriend}>add</button>
-        <div></div>
+        <div>
+          My Friends: 
+          <ul> {this.state.friendsArr.map(function(friend){
+            return <li> {friend} </li>
+          })} 
+          </ul>
+        </div>
       </div>
     )
   }
