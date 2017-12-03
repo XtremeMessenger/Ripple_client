@@ -21,13 +21,15 @@ class Chat extends Component {
     })
   }
 
+
   handleSubmit(event) {
     console.log('handleSubmit invoked')
     const body = event.target.value
+    //console.log('this.props.currentUserStore.username', this.props.currentUserStore)
     if (event.keyCode === 13 && body) {
       const message = {
         body: body,
-        from: this.props.currentUser
+        from: this.props.currentUserStore.username
       }
       this.setState({ messages: [message, ...this.state.messages] })
       this.socket.emit('message', [message.from, message.body])
