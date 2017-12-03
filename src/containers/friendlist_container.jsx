@@ -20,7 +20,7 @@ class Friendlist extends Component {
       requestee: currentUser,
       requested: newFriend
     }
-    axios.post(`${process.env}.http://localhost:3000/main/addFriend`, friendRequest)
+    axios.post('http://www.jayop.com:3000/main/addFriend', friendRequest)
   }
   render() {
     return (
