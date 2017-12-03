@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import io from 'socket.io-client'
+import { connect } from 'react-redux'
 
 class Chat extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class Chat extends Component {
     if (event.keyCode === 13 && body) {
       const message = {
         body: body,
-        from: this.props.currentUser + '(' + this.props.hashTotalCurrentUser + ')'
+        from: this.props.currentUser
       }
       this.setState({ messages: [message, ...this.state.messages] })
       this.socket.emit('message', [message.from, message.body])
@@ -50,4 +51,10 @@ class Chat extends Component {
   }
 }
 
-export default Chat;
+function mapStateToProps(state) {
+  return {
+    currentUserStore: state.currentUserStore
+  }
+}
+
+export default connect(mapStateToProps)(Chat);
