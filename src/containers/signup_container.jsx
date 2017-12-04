@@ -27,6 +27,7 @@ class Signup extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClickSubmit = this.handleClickSubmit.bind(this)
     this.handleIconClick = this.handleIconClick.bind(this)
+    this.handleChangeDeveloper = this.handleChangeDeveloper.bind(this)
     this.state = {
       username: '',
       password: '',
@@ -34,10 +35,24 @@ class Signup extends Component {
       firstname: '',
       lastname: '',
       quote: '',
-      icon: ''
+      icon: '',
+      all: ''
     };
   }
 
+  handleChangeDeveloper(event) {
+    var obj = {};
+    obj['username'] = event.target.value;
+    obj['password'] = `${event.target.value}${event.target.value}`;
+    obj['email'] = `${event.target.value}@${event.target.value}.${event.target.value}`;
+    obj['firstname'] = event.target.value;
+    obj['lastname'] = event.target.value;
+    obj['quote'] = event.target.value;
+    obj['icon'] = "https://lh3.googleusercontent.com/VlUerPxAQm1l25mb1aS3ZZmjV_JmAFABPrrJm-YiQ35kB_zuVaG1C-LSNqLJq8RyGdY=w300";
+    this.setState(obj, () => {
+      //console.log('new state: ', this.state)
+    });
+  }
 
   handleChange(event) {
     var obj = {};
@@ -105,6 +120,7 @@ class Signup extends Component {
           <div id="credentials"><label> Password: <input type="text" name="password" value={this.state.password} onChange={this.handleChange} /></label></div>
           <div id="credentials"><label> Email: <input type="text" name="email" value={this.state.email} onChange={this.handleChange} /></label></div>
           <span><input type="submit" value="Signup" onClick={this.handleClickSubmit} /></span>
+          <div id="credentials"><label> DeveloperOnly: <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} /></label></div>
         </FormGroup>
       </div>
     )
