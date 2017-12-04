@@ -6,3 +6,4 @@ bundle.js
 node_module
 *.sqlite
 config.js
+config/

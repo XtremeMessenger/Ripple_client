@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { FormGroup } from 'react-bootstrap'
 import FIREBASE_API from '../../config.js'
+import URL from '../../config/url.js'
 
 const firebase = require("firebase");
 // console.log('API Key', FIREBASE_API.FIREBASE_API)
@@ -73,7 +74,8 @@ class Signup extends Component {
         quote: context.state.quote,
         icon: context.state.icon
       }
-      axios.post('http://www.jayop.com:3000/main/signup', newUser)
+      //axios.post('http://www.jayop.com:3000/main/signup', newUser)
+      axios.post(`${URL.SERVER_URL}/main/signup`, newUser)
       .then(response => {
         console.log('sign up response ', response.data)
         context.props.history.push('/login')
