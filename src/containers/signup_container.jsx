@@ -44,10 +44,10 @@ class Signup extends Component {
     var obj = {};
     obj['username'] = event.target.value;
     obj['password'] = `${event.target.value}${event.target.value}`;
-    obj['email'] = `${event.target.value}@${event.target.value}.${event.target.value}`;
-    obj['firstname'] = event.target.value;
-    obj['lastname'] = event.target.value;
-    obj['quote'] = event.target.value;
+    obj['email'] = `${event.target.value}@${event.target.value}.com`;
+    obj['firstname'] = `${event.target.value}s firstname`;
+    obj['lastname'] = `${event.target.value}s lastname`;
+    obj['quote'] = `${event.target.value}s quote`;
     obj['icon'] = "https://lh3.googleusercontent.com/VlUerPxAQm1l25mb1aS3ZZmjV_JmAFABPrrJm-YiQ35kB_zuVaG1C-LSNqLJq8RyGdY=w300";
     this.setState(obj, () => {
       //console.log('new state: ', this.state)
