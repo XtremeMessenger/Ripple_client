@@ -39,7 +39,7 @@ class Login extends Component {
     var obj = {};
     obj['username'] = event.target.value;
     obj['password'] = `${event.target.value}${event.target.value}`;
-    obj['email'] = `${event.target.value}@${event.target.value}.${event.target.value}`;
+    obj['email'] = `${event.target.value}@${event.target.value}.com`;
     this.setState(obj, () => {
       //console.log('new state: ', this.state)
     });
