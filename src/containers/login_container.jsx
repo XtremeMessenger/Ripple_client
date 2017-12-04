@@ -16,6 +16,7 @@ class Login extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this)
     this.handleClickSubmit = this.handleClickSubmit.bind(this)
+    this.handleChangeDeveloper = this.handleChangeDeveloper.bind(this)
     this.state = {
       username: '',
       password: '',
@@ -33,13 +34,23 @@ class Login extends Component {
       //console.log('new state: ', this.state)
     });
   }
-  
+
+  handleChangeDeveloper(event) {
+    var obj = {};
+    obj['username'] = event.target.value;
+    obj['password'] = `${event.target.value}${event.target.value}`;
+    obj['email'] = `${event.target.value}@${event.target.value}.${event.target.value}`;
+    this.setState(obj, () => {
+      //console.log('new state: ', this.state)
+    });
+  }
+
   async handleClickSubmit (e) {
     e.preventDefault();
     //console.log('this is redux state before submit ===== ', this.props);
     let context = this;
     firebase.auth()
-      .signInWithEmailAndPassword(this.state.username, this.state.password)
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(function(user){
         firebase.auth.Auth.Persistence.LOCAL
 
@@ -61,17 +72,17 @@ class Login extends Component {
   }
 
   render() {
-    const { username, password, submitted } = this.state;
+    const { email, password, submitted } = this.state;
     return (
       <div id="login_view">
         <div className="container login-signup-wrappers">
         <div className='row justify-content-center'>
           <div className='col-md-6'>
             <h2>Login</h2>
-              <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                <label htmlFor="username">Username</label>
-                <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} placeholder='Username'/>
-                {submitted && !username &&
+              <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
+                <label htmlFor="email">Email</label>
+                <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} placeholder='email'/>
+                {submitted && !email &&
                     <div className="help-block">Username is required</div>
                 }
               </div>
@@ -86,7 +97,8 @@ class Login extends Component {
                 <button className="btn btn-primary" onClick={this.handleClickSubmit}>Login</button>
                 <button className="btn btn-primary btn-facebook" onClick={this.handleFacebookLogin}>Facebook</button>
                 <button className='btn btn-secondary btn-sign-up' onClick={this.handleRegister}>Sign Up</button>
-              </div>  
+              </div>
+              <div id="credentials"><label> DeveloperOnly: <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} /></label></div> 
           </div>
         </div>
         </div>
