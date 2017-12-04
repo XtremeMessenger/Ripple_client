@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
+import URL from '../../config/url.js'
 
 class Roomlist extends Component {
   constructor(props) {

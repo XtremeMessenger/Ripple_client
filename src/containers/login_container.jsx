@@ -5,6 +5,7 @@ import Signup from './signup_container.jsx';
 import FIREBASE_API from '../../config.js';
 import axios from 'axios';
 import { setCurrentUser } from '../actions/setCurrentUser.jsx';
+import URL from '../../config/url.js'
 
 const firebase = require('firebase')
 var provider = new firebase.auth.FacebookAuthProvider();
@@ -43,7 +44,8 @@ class Login extends Component {
         firebase.auth.Auth.Persistence.LOCAL
 
       const getParameter = async () => {
-        const response = await axios.post('http://www.jayop.com:3000/main/login', {
+        //const response = await axios.post('http://www.jayop.com:3000/main/login', {
+        const response = await axios.post(`${URL.SERVER_URL}/main/login`, {
           firebase_id: user.uid
         })
         context.props.setCurrentUser(response.data[0])

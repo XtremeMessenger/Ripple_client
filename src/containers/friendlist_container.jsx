@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import {connect} from  'react-redux'
+import URL from '../../config/url.js'
 
 class Friendlist extends Component {
   constructor(props) {
@@ -43,7 +44,8 @@ class Friendlist extends Component {
       requestee: currentUser,
       requested: newFriend
     }
-    axios.post('http://www.jayop.com:3000/main/addFriend', friendRequest)
+    //axios.post('http://www.jayop.com:3000/main/addFriend', friendRequest)
+    axios.post(`${URL.SERVER_URL}/main/addFriend`, friendRequest)
   }
   render() {
     return (
