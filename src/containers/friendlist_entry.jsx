@@ -6,6 +6,7 @@ import {connect} from  'react-redux'
 export default class FriendlistEntry extends Component {
     constructor(props){
         super(props)
+        this.handleFriendClick = this.handleFriendClick.bind(this);
     }
 
 handleFriendClick(e){
@@ -16,7 +17,7 @@ handleFriendClick(e){
 
 render() {
     return (
-        <li onClick={this.handleFriendClick.bind(this)}> {this.props.id} : {this.props.friend} </li>
+        <li onClick={this.handleFriendClick}> {this.props.id} : {this.props.friend} </li>
     )
 }
 

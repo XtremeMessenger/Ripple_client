@@ -27,8 +27,8 @@ class PrivateChat extends Component {
     let context = this;
     const chatHistory = async () => {
       const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
-        ogUsor: this.props.currentChatStore.currentUser,
-        friend: this.props.currentChatStore.currentFriend
+        from: this.props.currentChatStore.currentUser,
+        to: this.props.currentChatStore.currentFriend
       })
       this.setState(response.data[0], () => {
         console.log('new state: ', this.state.messages)
@@ -53,9 +53,9 @@ class PrivateChat extends Component {
       this.setState({ messages: [message, ...this.state.messages] })
       this.socket.emit('message', [message.from, message.body])
       event.target.value = ''
-      axios.post(`${URL.SERVER_URL}/main/chat/store`, {
-        newMessage: message.body
-      })
+      // axios.post(`${URL.SERVER_URL}/main/chat/store`, {
+      //   newMessage: message.body
+      // })
     }
   }
 
