@@ -25,52 +25,25 @@ class PrivateChat extends Component {
     //this.getChatHistory()
     this.socket = io(URL.SOCKET_SERVER_URL)
     this.socket.on('message', message => {
-      this.props.setPrivateChat({ messages: [message, ...this.state.messages] })
+      //this.props.setPrivateChat({ messages: [message, ...this.state.messages] })
     })
   }
-  componentWillUpdate() {
-    //this.socket = io('http://chat.jayop.com')
-    this.getChatHistory()
+  componentWillReceiveProps(nextProps) {
+    console.log('this is next prop', nextProps)
+    this.setState({
+      messages: nextProps.currentChatStore.messages
+      //messages: [nextProps.currentChatStore.messages, ...this.state.messages]
+    }, ()=> {
+      console.log('this.state',this.state)
+    })
   }
  
   getChatHistory() {
     console.log('this is redux state before submit ===== ', this.props);
-    let context = this;
-    const chatHistory = async () => {
-      //const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
-      console.log('inside chat history ==== ', context.props.currentChatStore)
-      console.log('inside chat history ==== ', context.props.currentChatStore.currentUser)
-      console.log('inside chat history ==== ', context.props.currentChatStore.currentFriend)
 
-      const postRequest = async () => {
-        const responseFrom = await axios.post(`/main/getPrivateChatHistoryFrom`, {
-          from: context.props.currentChatStore.currentUser,
-          to: context.props.currentChatStore.currentFriend
-        })
-
-        const responseTo = await axios.post(`/main/getPrivateChatHistoryTo`, {
-          from: context.props.currentChatStore.currentUser,
-          to: context.props.currentChatStore.currentFriend
-        })
-        console.log('inside chat history after sent ==== ', context.props.currentChatStore)
-        console.log('response.data', responseFrom.data)
-
-        console.log('inside chat history after sent ==== ', context.props.currentChatStore)
-        console.log('response.data', responseTo.data)
-        //console.log('response.data[0]', response.data.messages)
-        // this.props.setPrivateChat(response.data, () => {
-        //   console.log('new state: ', this.props.currentUserStore.messages)
-        // });
-
-      }
-
-      postRequest();
-
-      
-
-    }
-    chatHistory();
   }
+
+
 
   handleSubmit(event) {
     console.log('handleSubmit invoked')
@@ -83,33 +56,53 @@ class PrivateChat extends Component {
         to: this.props.currentChatStore.currentFriend,
         text: text
       }
-      //this.setState({ messages: [message, ...this.state.messages] })
-      //this.props.setPrivateChat({ messages: [message, ...this.props.currentChatStore.messages] })
-      //this.props.setPrivateChat({ currentUser: this.props.currentChatStore.currentUser})
-      //this.props.setPrivateChat({ currentFriend: this.props.currentChatStore.currentFriend })
+
       this.socket.emit('message', [message.from, message.text])
       console.log('to send', message)
-      //axios.post(`${URL.SERVER_URL}/main/privateChatStore`, message)
-      axios.post(`/main/privateChatStore`, message)
+      axios.post(`${URL.SERVER_URL}/main/privateChatStore`, message)
+      // axios.post(`/main/privateChatStore`, message).then(function (response) {
+        console.log('add friend success', response)
+      })
       event.target.value = '';
+      var context = this
+      const getData = async () => {
+
+        console.log('this.props.currentUserStore', context.props.currentUserStore)
+        const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
+        // const response = await axios.post(`/main/getPrivateChatHistory`, {
+          from: context.props.currentUserStore.username,
+          to: context.props.currentChatStore.currentFriend
+        })
+        await context.props.setPrivateChat({
+          currentUser: context.props.currentUserStore.username,
+          currentFriend: context.props.currentChatStore.currentFriend,
+          messages: response.data.messages
+        })
+
+        console.log('response response response ===', response)
+      }
+      getData()
     }
   }
 
 
   render() {
-
-    var messages = this.props.currentChatStore.messages.map((message, index) => {
-      return <li id="chat_list" key={index}><b>{message.from}:</b>{message.text}</li>
-    })
+    var messages = 'test'
 
     return (
       <div id="private_chat">
         <div><h2>Private Chat</h2></div>
         <p> Username: {this.props.currentChatStore.currentUser} </p>
         <p> Friend Name: {this.props.currentChatStore.currentFriend} </p>
-        {/* <h1 id="chat-user">Current User: {this.props.currentUser}</h1> */}
         <input type='text' placeholder='Enter a message...' onKeyUp={this.handleSubmit} />
-        {messages}
+        {
+          this.state.messages.length>0 ? 
+            this.state.messages[0].map((message, index) => {
+              return <li id="chat_list" key={index}><b>{message.from}:</b>{message.text}</li>
+            }) : 'test'
+          
+        }
+        <ul>{messages}</ul>
       </div>
     )
   }
