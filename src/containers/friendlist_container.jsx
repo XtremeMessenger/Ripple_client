@@ -65,7 +65,8 @@ class Friendlist extends Component {
     const privateChat = async () => {
       await this.props.setPrivateChat({
         currentUser: context.props.currentUserStore.username,
-        currentFriend: friend
+        currentFriend: friend,
+        messages: []
       })
       console.log('set private chat', context.props.currentChatStore)
     }
