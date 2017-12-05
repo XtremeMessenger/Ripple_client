@@ -59,7 +59,7 @@ class PrivateChat extends Component {
 
       this.socket.emit('message', [message.from, message.text])
       console.log('to send', message)
-      axios.post(`${URL.SERVER_URL}/main/privateChatStore`, message)
+      axios.post(`${URL.SERVER_URL}/main/privateChatStore`, message).then(function (response) {
       // axios.post(`/main/privateChatStore`, message).then(function (response) {
         console.log('add friend success', response)
       })
