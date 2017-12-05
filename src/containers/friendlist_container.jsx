@@ -27,8 +27,8 @@ class Friendlist extends Component {
       user: currentUser
     }
     console.log('currentUser', currentUser)
-    //axios.post(`/main/getFriends`, userRef).then(function (response) {
-    axios.post(`${URL.SERVER_URL}/main/getFriends`,userRef).then(function(response){
+    axios.post(`/main/getFriends`, userRef).then(function (response) {
+    // axios.post(`${URL.SERVER_URL}/main/getFriends`,userRef).then(function(response){
       console.log('this is getFriends response', response)
       response.data.forEach(function(friend){
         friends.push(friend)
@@ -51,8 +51,8 @@ class Friendlist extends Component {
       requestee: currentUser,
       requested: newFriend
     }
-    //axios.post('http://www.jayop.com:3000/main/addFriend', friendRequest)
-    axios.post(`${URL.SERVER_URL}/main/addFriend`, friendRequest).then(function(response){
+    axios.post('/main/addFriend', friendRequest).then(function (response) {
+    // axios.post(`${URL.SERVER_URL}/main/addFriend`, friendRequest).then(function(response){
       console.log('add friend success', response)
     }).catch(function(err){
       console.log('error in add friend ', err)
@@ -70,8 +70,8 @@ class Friendlist extends Component {
       // })
       console.log('this.props.currentUserStore', context.props.currentUserStore)
       //console.log('this.props.currentChatStore.currentFriend', context.props.currentChatStore.currentFriend)
-      //const response = await axios.post(`/main/getPrivateChatHistory`, {
-      const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
+      const response = await axios.post(`/main/getPrivateChatHistory`, {
+      // const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
         from: context.props.currentUserStore.username,
         to: friend
       })
