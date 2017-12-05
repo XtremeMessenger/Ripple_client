@@ -27,7 +27,8 @@ class Friendlist extends Component {
       user: currentUser
     }
     console.log('currentUser', currentUser)
-    axios.post(`/main/getFriends`,userRef).then(function(response){
+    //axios.post(`/main/getFriends`, userRef).then(function (response) {
+    axios.post(`${URL.SERVER_URL}/main/getFriends`,userRef).then(function(response){
       console.log('this is getFriends response', response)
       response.data.forEach(function(friend){
         friends.push(friend)
@@ -60,15 +61,32 @@ class Friendlist extends Component {
 
   handleClick(friend){
     var context = this
-    console.log('this was clicked list', friend)
-
     const privateChat = async () => {
-      await this.props.setPrivateChat({
+
+      // await context.props.setPrivateChat({
+      //   currentUser: context.props.currentUserStore.username,
+      //   currentFriend: friend,
+      //   // messages: response.data.messages
+      // })
+      console.log('this.props.currentUserStore', context.props.currentUserStore)
+      //console.log('this.props.currentChatStore.currentFriend', context.props.currentChatStore.currentFriend)
+      //const response = await axios.post(`/main/getPrivateChatHistory`, {
+      const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
+        from: context.props.currentUserStore.username,
+        to: friend
+      })
+      await context.props.setPrivateChat({
         currentUser: context.props.currentUserStore.username,
         currentFriend: friend,
-        messages: []
+        messages: response.data.messages
       })
-      console.log('set private chat', context.props.currentChatStore)
+      // await context.props.setPrivateChat({
+      //   currentUser: context.props.currentUserStore.username,
+      //   currentFriend: friend,
+      //   messages: response.data.messages
+      // })
+
+      console.log('response response response ===', response)
     }
     privateChat()
   }
