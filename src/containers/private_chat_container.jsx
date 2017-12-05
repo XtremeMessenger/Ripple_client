@@ -25,7 +25,7 @@ class PrivateChat extends Component {
     //this.getChatHistory()
     this.socket = io(URL.SOCKET_SERVER_URL)
     this.socket.on('message', message => {
-      //this.props.setPrivateChat({ messages: [message, ...this.state.messages] })
+      this.props.setPrivateChat({ messages: [message, ...this.state.messages] })
     })
   }
   componentWillReceiveProps(nextProps) {
@@ -59,8 +59,8 @@ class PrivateChat extends Component {
 
       this.socket.emit('message', [message.from, message.text])
       console.log('to send', message)
-      axios.post(`${URL.SERVER_URL}/main/privateChatStore`, message).then(function (response) {
-      // axios.post(`/main/privateChatStore`, message).then(function (response) {
+      // axios.post(`${URL.SERVER_URL}/main/privateChatStore`, message).then(function (response) {
+      axios.post(`/main/privateChatStore`, message).then(function (response) {
         console.log('add friend success', response)
       })
       event.target.value = '';
@@ -68,8 +68,8 @@ class PrivateChat extends Component {
       const getData = async () => {
 
         console.log('this.props.currentUserStore', context.props.currentUserStore)
-        const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
-        // const response = await axios.post(`/main/getPrivateChatHistory`, {
+        // const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
+        const response = await axios.post(`/main/getPrivateChatHistory`, {
           from: context.props.currentUserStore.username,
           to: context.props.currentChatStore.currentFriend
         })
