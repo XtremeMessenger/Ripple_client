@@ -24,12 +24,15 @@ class PrivateChat extends Component {
     //this.socket = io('http://chat.jayop.com')
     //this.getChatHistory()
     this.socket = io(URL.SOCKET_SERVER_URL)
+    this.socket.on('message', message => {
+      this.props.setPrivateChat({ messages: [message, ...this.state.messages] })
+    })
   }
   componentWillUpdate() {
     //this.socket = io('http://chat.jayop.com')
     this.getChatHistory()
   }
-b 
+ 
   getChatHistory() {
     console.log('this is redux state before submit ===== ', this.props);
     let context = this;
@@ -41,24 +44,22 @@ b
 
       const postRequest = async () => {
         const response = await axios.post(`/main/getPrivateChatHistory`, {
-          from: this.props.currentChatStore.currentUser,
-          to: this.props.currentChatStore.currentFriend
+          from: context.props.currentChatStore.currentUser,
+          to: context.props.currentChatStore.currentFriend
         })
-
+        console.log('inside chat history after sent ==== ', context.props.currentChatStore)
+        console.log('response.data', response.data)
+        //console.log('response.data[0]', response.data.messages)
+        // this.props.setPrivateChat(response.data, () => {
+        //   console.log('new state: ', this.props.currentUserStore.messages)
+        // });
 
       }
 
       postRequest();
-      console.log('inside chat history after sent ==== ', context.props.currentChatStore)
-      console.log('response.data', response.data.messages)
-      //console.log('response.data[0]', response.data.messages)
-      this.props.setPrivateChat(response.data.messages, () => {
-        console.log('new state: ', this.props.currentUserStore.messages)
-      });
+
       
-      this.socket.on('message', message => {
-        this.props.setPrivateChat({ messages: [message, ...this.state.messages] })
-      })
+
     }
     chatHistory();
   }
