@@ -43,12 +43,20 @@ class PrivateChat extends Component {
       console.log('inside chat history ==== ', context.props.currentChatStore.currentFriend)
 
       const postRequest = async () => {
-        const response = await axios.post(`/main/getPrivateChatHistory`, {
+        const responseFrom = await axios.post(`/main/getPrivateChatHistoryFrom`, {
+          from: context.props.currentChatStore.currentUser,
+          to: context.props.currentChatStore.currentFriend
+        })
+
+        const responseTo = await axios.post(`/main/getPrivateChatHistoryTo`, {
           from: context.props.currentChatStore.currentUser,
           to: context.props.currentChatStore.currentFriend
         })
         console.log('inside chat history after sent ==== ', context.props.currentChatStore)
-        console.log('response.data', response.data)
+        console.log('response.data', responseFrom.data)
+
+        console.log('inside chat history after sent ==== ', context.props.currentChatStore)
+        console.log('response.data', responseTo.data)
         //console.log('response.data[0]', response.data.messages)
         // this.props.setPrivateChat(response.data, () => {
         //   console.log('new state: ', this.props.currentUserStore.messages)
