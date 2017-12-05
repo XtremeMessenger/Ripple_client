@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Chat from '../containers/chat_container.jsx'
 import PrivateChat from '../containers/private_chat_container.jsx'
+import PrivateRoom from '../containers/private_room_container.jsx'
 import Friendlist from '../containers/friendlist_container.jsx'
 import Roomlist from '../containers/roomlist_container.jsx'
 import UserPanel from '../containers/userpanel_container.jsx'
@@ -29,6 +30,7 @@ export default class Main extends Component {
         <div><Chat /></div>
         <div><PrivateChat /></div>
         <div><Friendlist /></div>
+        <div><PrivateRoom /></div>
         <div><Roomlist /></div>
       </div>
     )

@@ -11,10 +11,9 @@ text-align: center;
 #login_view{
 text-align: center;
 }
-#friendsComponent{
-    height: 100%;
-    width:  24%;
-    float: left;
+
+#private_room{
+    background-color: rgb(49, 191, 66);
 }
 
 #private_chat{
