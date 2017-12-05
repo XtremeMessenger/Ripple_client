@@ -35,11 +35,21 @@ b
     let context = this;
     const chatHistory = async () => {
       //const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
-      console.log('inside chat history ==== ', this.props.currentChatStore)
-      const response = await axios.post(`/main/getPrivateChatHistory`, {
-      from: context.props.currentChatStore.currentUser,
-        to: context.props.currentChatStore.currentFriend
-      })
+      console.log('inside chat history ==== ', context.props.currentChatStore)
+      console.log('inside chat history ==== ', context.props.currentChatStore.currentUser)
+      console.log('inside chat history ==== ', context.props.currentChatStore.currentFriend)
+
+      const postRequest = async () => {
+        const response = await axios.post(`/main/getPrivateChatHistory`, {
+          from: this.props.currentChatStore.currentUser,
+          to: this.props.currentChatStore.currentFriend
+        })
+
+
+      }
+
+      postRequest();
+      console.log('inside chat history after sent ==== ', context.props.currentChatStore)
       console.log('response.data', response.data.messages)
       //console.log('response.data[0]', response.data.messages)
       this.props.setPrivateChat(response.data.messages, () => {
