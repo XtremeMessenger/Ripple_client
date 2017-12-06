@@ -13,7 +13,8 @@ class Roomlist extends Component {
     this.handleMakeRoom = this.handleMakeRoom.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      roomsArray: []
+      roomsArray: [],
+      roomname: ''
     }
   }
 
@@ -22,9 +23,9 @@ class Roomlist extends Component {
     var rooms = this.state.roomsArray.slice()
     //retrieve friends for current user
     var currentUser = this.props.currentUserStore
-    console.log('currentUser', this.props.currentUserStore)
+    console.log('currentUser', this.props.currentUserStore.username)
     let userRef = {
-      user: currentUser
+      username: currentUser.username
     }
     console.log('currentUser', currentUser)
     axios.post(`/main/getRooms`, userRef).then(function (response) {
@@ -45,12 +46,13 @@ class Roomlist extends Component {
   handleMakeRoom(){
     console.log(document.getElementById('roomSearchBar').value);
     let newRoom = document.getElementById('roomSearchBar').value;
-    let currentUser = this.props.currentUserStore;
-    console.log(' this is the current logged user ',currentUser)
+    let currentUser = this.props.currentUserStore.username;
+    console.log(' this is the makeroom ',currentUser, newRoom)
     let roomRequest = { 
-      requestee: currentUser,
-      requested: newRoom
+      resident: currentUser,
+      roomname: newRoom
     }
+    console.log('roomRequest', roomRequest)
     axios.post('/main/addRoom', roomRequest).then(function (response) {
     // axios.post(`${URL.SERVER_URL}/main/addRoom`, roomRequest).then(function(response){
       console.log('add room success', response)
@@ -63,7 +65,7 @@ class Roomlist extends Component {
     var context = this
     const privateRoom = async () => {
 
-      console.log('this.props.currentUserStore', context.props.currentUserStore)
+      console.log('this.props.currentUserStore', context.props.currentUserStore.username)
       //console.log('this.props.currentRoomStore.currentFriend', context.props.currentRoomStore.currentRoom)
       const response = await axios.post(`/main/getPrivateRoomHistory`, {
       // const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateRoomHistory`, {
