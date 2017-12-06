@@ -10,17 +10,29 @@ import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 class Video extends Component {
   constructor(props) {
     super(props)
+    this.handleCloseVideo = this.handleCloseVideo.bind(this)
     this.state = {
 
     }
   }
 
+  componentDidMount() {
+    console.log('inside video.jsx', this.props)
+  }
+
+  handleCloseVideo() {
+    this.props.history.push('/main');
+  }
+
 
   render() {
+    let context = this
     return (
       <div className="video">
         This is Video Page
-        <div>Current User: {this.props.currentChatStore.username}</div>
+        <button id="closeVideoButton" onClick={this.handleCloseVideo}>Close Video</button>
+        <div>Current User: {this.props.currentChatStore.currentUser}</div>
+        <div>Current User: {this.props.currentChatStore.currentFriend}</div>
       </div>
     )
   }
