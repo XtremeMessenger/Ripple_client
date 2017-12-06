@@ -22,36 +22,18 @@ class PrivateChat extends Component {
 
     this.handle
     this.state = {
-      messages: [],
-      startVideo: false
+      messages: []
     }
   }
 
   componentDidMount() {
+    //this.socket = io('/')
     this.socket = io('http://chat.jayop.com')
-    //this.getChatHistory()
-    this.socket = io(URL.SOCKET_SERVER_URL)
-    this.socket.on('message', message => {
-      this.setState({ messages: [message, ...this.state.messages] },
-      () => { console.log(this.state.messages)})
+    // this.socket = io(URL.SOCKET_SERVER_URL)
+    this.socket.on('private', message => {
+      console.log('this is from socket io', message)
     })
   }
-  componentWillReceiveProps(nextProps) {
-    console.log('this is next prop', nextProps)
-    this.setState({
-      messages: nextProps.currentChatStore.messages
-      //messages: [nextProps.currentChatStore.messages, ...this.state.messages]
-    }, ()=> {
-      console.log('this.state',this.state)
-    })
-  }
- 
-  // getChatHistory() {
-  //   console.log('this is redux state before submit ===== ', this.props);
-
-  // }
-
-
 
   handleSubmit(event) {
     console.log('handleSubmit invoked')
@@ -59,7 +41,6 @@ class PrivateChat extends Component {
     //console.log('this.props.currentUserStore.username', this.props.currentUserStore)
     if (event.keyCode === 13 && text) {
       var message = {
-        
         from: this.props.currentUserStore.username,
         to: this.props.currentChatStore.currentFriend,
         text: text
@@ -72,6 +53,15 @@ class PrivateChat extends Component {
       axios.post(`/main/privateChatStore`, message).then(function (response) {
         console.log('add friend success', response)
       })
+      var messageArray = this.props.currentChatStore.messages;
+      console.log('messageArray[0]', messageArray[0])
+      messageArray[0].push(message)
+      this.props.setPrivateChat({
+        currentUser: this.props.currentUserStore.username,
+        currentFriend: this.props.currentChatStore.currentFriend,
+        messages: messageArray
+      })
+
       event.target.value = '';
 
       // ================================================ //
@@ -117,19 +107,20 @@ class PrivateChat extends Component {
         <div><h2>Private Chat</h2></div>
         {/* <button id="videoChatButton" onClick={this.handleVideoChat}>Video Chat</button> */}
         <div id="videoChatButton">
-          <Link to="/video">VideoChat</Link>
+          <Link to="/video"><h2>VideoChat</h2></Link>
         </div>
         <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button>
         <p> Username: {this.props.currentChatStore.currentUser} </p>
         <p> Friend Name: {this.props.currentChatStore.currentFriend} </p>
         
         {
-          this.state.messages.length>0 ? 
-            this.state.messages[0].map((message, index) => {
+          this.props.currentChatStore.messages.length>0 ? 
+            this.props.currentChatStore.messages[0].map((message, index) => {
               return <li id="chat_list" key={index}><b>{message.from}:</b>{message.text}</li>
-            }) : 'test'
+            }) : 'no message yet'
           
         }
+
         <input type='text' placeholder='Enter a message...' onKeyUp={this.handleSubmit} />
       </div>
     )
