@@ -59,15 +59,17 @@ class Roomlist extends Component {
     }).catch(function(err){
       console.log('error in add room ', err)
     })
+    console.log('this.state.roomsArray ', this.state.roomsArray)
   }
 
   handleClick(room){
+    
     var context = this
     const privateRoom = async () => {
 
       console.log('this.props.currentUserStore', context.props.currentUserStore.username)
       //console.log('this.props.currentRoomStore.currentFriend', context.props.currentRoomStore.currentRoom)
-      const response = await axios.post(`/main/getPrivateRoomHistory`, {
+      const response = await axios.post(`/main/getRooms`, {
       // const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateRoomHistory`, {
         from: context.props.currentUserStore.username,
         to: room
@@ -85,6 +87,7 @@ class Roomlist extends Component {
 
   render() {
     var context = this;
+    console.log(' this is the room state shit ', this.state)
     return (
       <div className="roomlist" id="roomsComponent">
         <h2>Create Room</h2>
