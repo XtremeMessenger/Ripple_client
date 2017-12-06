@@ -12,7 +12,7 @@ class PrivateChat extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.getChatHistory = this.getChatHistory.bind(this)
+    //this.getChatHistory = this.getChatHistory.bind(this)
 
     this.handle
     this.state = {
@@ -21,11 +21,12 @@ class PrivateChat extends Component {
   }
 
   componentDidMount() {
-    //this.socket = io('http://chat.jayop.com')
+    this.socket = io('http://chat.jayop.com')
     //this.getChatHistory()
     this.socket = io(URL.SOCKET_SERVER_URL)
     this.socket.on('message', message => {
-      this.props.setPrivateChat({ messages: [message, ...this.state.messages] })
+      this.setState({ messages: [message, ...this.state.messages] },
+      () => { console.log(this.state.messages)})
     })
   }
   componentWillReceiveProps(nextProps) {
@@ -38,10 +39,10 @@ class PrivateChat extends Component {
     })
   }
  
-  getChatHistory() {
-    console.log('this is redux state before submit ===== ', this.props);
+  // getChatHistory() {
+  //   console.log('this is redux state before submit ===== ', this.props);
 
-  }
+  // }
 
 
 
@@ -59,42 +60,41 @@ class PrivateChat extends Component {
 
       this.socket.emit('message', [message.from, message.text])
       console.log('to send', message)
+      // new message stores in db
       // axios.post(`${URL.SERVER_URL}/main/privateChatStore`, message).then(function (response) {
       axios.post(`/main/privateChatStore`, message).then(function (response) {
         console.log('add friend success', response)
       })
       event.target.value = '';
-      var context = this
-      const getData = async () => {
 
-        console.log('this.props.currentUserStore', context.props.currentUserStore)
+      // ================================================ //
+      // this code is to retrive messages from db
+      // var context = this
+      // const getData = async () => {
         // const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
-        const response = await axios.post(`/main/getPrivateChatHistory`, {
-          from: context.props.currentUserStore.username,
-          to: context.props.currentChatStore.currentFriend
-        })
-        await context.props.setPrivateChat({
-          currentUser: context.props.currentUserStore.username,
-          currentFriend: context.props.currentChatStore.currentFriend,
-          messages: response.data.messages
-        })
-
-        console.log('response response response ===', response)
-      }
-      getData()
+        // const response = await axios.post(`/main/getPrivateChatHistory`, {
+        //   from: context.props.currentUserStore.username,
+        //   to: context.props.currentChatStore.currentFriend
+        // })
+        // await context.props.setPrivateChat({
+        //   currentUser: context.props.currentUserStore.username,
+        //   currentFriend: context.props.currentChatStore.currentFriend,
+        //   messages: response.data.messages
+        // })
+      // }
+      // getData()
+      // ================================================ //
     }
   }
 
 
   render() {
-    var messages = 'test'
-
     return (
       <div id="private_chat">
         <div><h2>Private Chat</h2></div>
         <p> Username: {this.props.currentChatStore.currentUser} </p>
         <p> Friend Name: {this.props.currentChatStore.currentFriend} </p>
-        <input type='text' placeholder='Enter a message...' onKeyUp={this.handleSubmit} />
+        
         {
           this.state.messages.length>0 ? 
             this.state.messages[0].map((message, index) => {
@@ -102,7 +102,7 @@ class PrivateChat extends Component {
             }) : 'test'
           
         }
-        <ul>{messages}</ul>
+        <input type='text' placeholder='Enter a message...' onKeyUp={this.handleSubmit} />
       </div>
     )
   }
