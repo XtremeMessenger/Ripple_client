@@ -31,7 +31,8 @@ class Main extends Component {
         <div>current User: {this.props.currentUserStore.username}</div>
         <div>current ChatView: {this.props.currentChatView.chatview}</div>
         <div><UserPanel /></div>
-        <div><Chat /></div>
+        {this.props.currentChatView.chatview === 0 ?
+          <div><Chat /></div> : null}
         {this.props.currentChatView.chatview === 0 ?
           <div id="chat">No Chat Room Opened</div> : null}
         {this.props.currentChatView.chatview === 1 ? 

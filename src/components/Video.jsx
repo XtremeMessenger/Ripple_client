@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
+import io from 'socket.io-client'
+
 class Video extends Component {
   constructor(props) {
     super(props)
@@ -17,7 +19,12 @@ class Video extends Component {
   }
 
   componentDidMount() {
-    console.log('inside video.jsx', this.props)
+    console.log('inside video.jsx', this.props.currentChatStore.messages)
+    // this.socket = io(URL.SOCKET_SERVER_URL);
+    // this.socket.on('message', message => {
+    //   this.setState({ messages: [message, ...this.state.messages] },
+    //     () => { console.log('this.setstate by socket io', this.state.messages) })
+    // })
   }
 
   handleCloseVideo() {
@@ -33,6 +40,15 @@ class Video extends Component {
         <button id="closeVideoButton" onClick={this.handleCloseVideo}>Close Video</button>
         <div>Current User: {this.props.currentChatStore.currentUser}</div>
         <div>Current User: {this.props.currentChatStore.currentFriend}</div>
+        <div id="private_chat"> Chat Window
+          {
+            this.props.currentChatStore.messages.length > 0 ?
+              this.props.currentChatStore.messages[0].map((message, index) => {
+                return <li id="chat_list" key={index}><b>{message.from}:</b>{message.text}</li>
+              }) : 'no message yet'
+
+          }
+        </div>
       </div>
     )
   }
