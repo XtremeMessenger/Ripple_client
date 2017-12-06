@@ -6,6 +6,7 @@ import {connect} from  'react-redux'
 import URL from '../../config/url.js'
 import FriendlistEntry from './friendlist_entry.jsx'
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
+import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
 class Friendlist extends Component {
   constructor(props) {
@@ -61,13 +62,20 @@ class Friendlist extends Component {
 
   handleClick(friend){
     var context = this
+    console.log('before click chatview', context.props.currentChatView)
     const privateChat = async () => {
+      
+      context.props.setCurrentChatView({
+        chatview: 1
+      })
 
+      
       // await context.props.setPrivateChat({
       //   currentUser: context.props.currentUserStore.username,
       //   currentFriend: friend,
       //   // messages: response.data.messages
       // })
+      
       console.log('this.props.currentUserStore', context.props.currentUserStore)
       //console.log('this.props.currentChatStore.currentFriend', context.props.currentChatStore.currentFriend)
       const response = await axios.post(`/main/getPrivateChatHistory`, {
@@ -89,6 +97,7 @@ class Friendlist extends Component {
       console.log('response response response ===', response)
     }
     privateChat()
+    
   }
 
   render() {
@@ -105,6 +114,7 @@ class Friendlist extends Component {
           })} 
           </ul>
         </div>
+        {<div>current chat view: {context.props.currentChatView.chatview}</div>}
       </div>
     )
   }
@@ -113,13 +123,16 @@ class Friendlist extends Component {
 function mapStateToProps(state) {
   return {
     currentUserStore: state.currentUserStore,
-    currentChatStore: state.currentChatStore
+    currentChatStore: state.currentChatStore,
+    currentChatView: state.currentChatView
   }
 }
 
 function matchDispatchToProps(dispatch) {
   // call selectUser in index.js
-  return bindActionCreators({ setPrivateChat: setPrivateChat }, dispatch)
+  return bindActionCreators(
+    { setPrivateChat: setPrivateChat,
+      setCurrentChatView: setCurrentChatView }, dispatch)
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Friendlist);

@@ -7,16 +7,23 @@ import axios from 'axios'
 import io from 'socket.io-client'
 import URL from '../../config/url.js'
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
+import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
+
+import { Switch, Route } from 'react-router-dom';
+import { browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 class PrivateChat extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
-    //this.getChatHistory = this.getChatHistory.bind(this)
+    this.handleCloseChat = this.handleCloseChat.bind(this)
+    // this.handleVideoChat = this.handleVideoChat.bind(this)
 
     this.handle
     this.state = {
-      messages: []
+      messages: [],
+      startVideo: false
     }
   }
 
@@ -87,11 +94,32 @@ class PrivateChat extends Component {
     }
   }
 
+  // handleVideoChat() {
+  //   console.log('this.props.history', this.props)
+  //   this.props.history.push('/video')
+  // }
+
+  handleCloseChat() {
+    this.props.setPrivateChat({
+      currentUser: this.props.currentUserStore.username,
+      currentFriend: '',
+      messages: []
+    })
+    this.props.setCurrentChatView({
+      chatview: 0
+    })
+  }
 
   render() {
     return (
+
       <div id="private_chat">
         <div><h2>Private Chat</h2></div>
+        {/* <button id="videoChatButton" onClick={this.handleVideoChat}>Video Chat</button> */}
+        <div id="videoChatButton">
+          <Link to="/video">VideoChat</Link>
+        </div>
+        <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button>
         <p> Username: {this.props.currentChatStore.currentUser} </p>
         <p> Friend Name: {this.props.currentChatStore.currentFriend} </p>
         
@@ -111,13 +139,18 @@ class PrivateChat extends Component {
 function mapStateToProps(state) {
   return {
     currentChatStore: state.currentChatStore,
-    currentUserStore: state.currentUserStore
+    currentUserStore: state.currentUserStore,
+    currentChatView: state.currentChatView
   }
 }
 
 function matchDispatchToProps(dispatch) {
   // call selectUser in index.js
-  return bindActionCreators({ setPrivateChat: setPrivateChat }, dispatch)
+  return bindActionCreators(
+    {
+      setPrivateChat: setPrivateChat,
+      setCurrentChatView: setCurrentChatView
+    }, dispatch)
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(PrivateChat);

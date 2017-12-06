@@ -16,6 +16,10 @@ text-align: center;
     background-color: rgb(49, 191, 66);
 }
 
+#chat{
+background-color:	rgb(249, 14, 14);
+}
+
 #private_chat{
 background-color:	rgb(213, 72, 197);
 }
