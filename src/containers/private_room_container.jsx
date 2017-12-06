@@ -69,7 +69,7 @@ class PrivateRoom extends Component {
 
         console.log('this.props.currentUserStore', context.props.currentUserStore)
         // const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateRoomHistory`, {
-        const response = await axios.post(`/main/getPrivateRoomHistory`, {
+        const response = await axios.post(`/main/getRooms`, {
           from: context.props.currentUserStore.username,
           to: context.props.currentRoomStore.currentRoom
         })
