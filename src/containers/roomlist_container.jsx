@@ -44,26 +44,42 @@ class Roomlist extends Component {
 
   }
   handleMakeRoom(){
-    console.log(document.getElementById('roomSearchBar').value);
-    let newRoom = document.getElementById('roomSearchBar').value;
-    let currentUser = this.props.currentUserStore.username;
-    console.log(' this is the makeroom ',currentUser, newRoom)
-    let roomRequest = { 
-      resident: currentUser,
-      roomname: newRoom
+    var context = this
+
+    const makeRoom = async () => {
+
+      console.log(document.getElementById('roomSearchBar').value);
+      let newRoom = document.getElementById('roomSearchBar').value;
+      let currentUser = this.props.currentUserStore.username;
+      console.log(' this is the makeroom ',currentUser, newRoom)
+      let roomRequest = { 
+        resident: currentUser,
+        roomname: newRoom
+      }
+
+      console.log('roomRequest', roomRequest)
+      axios.post('/main/addRoom', roomRequest).then(function (response) {
+      // axios.post(`${URL.SERVER_URL}/main/addRoom`, roomRequest).then(function(response){
+        console.log('add room success', response)
+      }).catch(function(err){
+        console.log('error in add room ', err)
+      }).then(
+      axios.post(`/main/getRooms`, userRef).then(function (response) {
+        // axios.post(`${URL.SERVER_URL}/main/getRooms`,userRef).then(function(response){
+        console.log('this is getRooms response', response)
+        response.data.forEach(function (room) {
+          rooms.push(room)
+        })
+        context.setState({
+          roomsArray: rooms
+        })
+      })
+    )
+      makeRoom()
     }
-    console.log('roomRequest', roomRequest)
-    axios.post('/main/addRoom', roomRequest).then(function (response) {
-    // axios.post(`${URL.SERVER_URL}/main/addRoom`, roomRequest).then(function(response){
-      console.log('add room success', response)
-    }).catch(function(err){
-      console.log('error in add room ', err)
-    })
-    console.log('this.state.roomsArray ', this.state.roomsArray)
   }
 
   handleClick(room){
-    
     var context = this
     const privateRoom = async () => {
 
@@ -87,16 +103,15 @@ class Roomlist extends Component {
 
   render() {
     var context = this;
-    console.log(' this is the room state shit ', this.state)
     return (
       <div className="roomlist" id="roomsComponent">
         <h2>Create Room</h2>
         <input id="roomSearchBar"></input>
-        <button id="findFriendButton" onClick={this.handleMakeRoom}>Create</button>
+        <button id="createRoomButton" onClick={this.handleMakeRoom}>Create</button>
         <div>
           Rooms: 
           <ul> {this.state.roomsArray.map(function(room, i){
-            return <RoomlistEntry room={room} key = {i} id = {i} onClick={context.handleClick}/> 
+            return <RoomlistEntry room={room.roomname} key = {i} id = {i} onClick={context.handleClick}/> 
           })} 
           </ul>
         </div>
@@ -104,7 +119,7 @@ class Roomlist extends Component {
     )
   }
 }
-
+{/* <li onClick={this.handleRoomClick}> {this.props.room.roomID} : {this.props.room.roomname} </li> */}
 function mapStateToProps(state) {
   return {
     currentUserStore: state.currentUserStore,
