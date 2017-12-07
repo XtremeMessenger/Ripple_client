@@ -28,8 +28,8 @@ class Roomlist extends Component {
       username: currentUser.username
     }
     console.log('currentUser', currentUser)
-    axios.post(`/main/getRooms`, userRef).then(function (response) {
-    // axios.post(`${URL.SERVER_URL}/main/getRooms`,userRef).then(function(response){
+    // axios.post(`/main/getRooms`, userRef).then(function (response) {
+    axios.post(`${URL.LOCAL_SERVER_URL}/main/getRooms`,userRef).then(function(response){
       console.log('this is getRooms response', response)
       response.data.forEach(function(room){
         rooms.push(room)
@@ -58,8 +58,8 @@ class Roomlist extends Component {
       }
 
       console.log('roomRequest', roomRequest)
-      axios.post('/main/addRoom', roomRequest).then(function (response) {
-      // axios.post(`${URL.SERVER_URL}/main/addRoom`, roomRequest).then(function(response){
+      // axios.post('/main/addRoom', roomRequest).then(function (response) {
+      axios.post(`${URL.LOCAL_SERVER_URL}/main/addRoom`, roomRequest).then(function(response){
         console.log('add room success', response)
       }).catch(function(err){
         console.log('error in add room ', err)

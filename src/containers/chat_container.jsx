@@ -16,7 +16,7 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    //this.socket = io('http://chat.jayop.com')
+    // this.socket = io('http://localhost:3500')
     this.socket = io(URL.SOCKET_SERVER_URL)
     // this.socket.on('message', message => {
     //   this.setState({ messages: [message, ...this.state.messages] })

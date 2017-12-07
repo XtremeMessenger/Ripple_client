@@ -59,8 +59,8 @@ class PrivateRoom extends Component {
 
       this.socket.emit('message', [message.from, message.text])
       console.log('to send', message)
-      // axios.post(`${URL.SERVER_URL}/main/privateRoomStore`, message).then(function (response) {
-      axios.post(`/main/privateRoomStore`, message).then(function (response) {
+      axios.post(`${URL.LOCAL_SERVER_URL}/main/privateRoomStore`, message).then(function (response) {
+      // axios.post(`/main/privateRoomStore`, message).then(function (response) {
         console.log('add room success', response)
       })
       event.target.value = '';
@@ -68,8 +68,8 @@ class PrivateRoom extends Component {
       const getData = async () => {
 
         console.log('this.props.currentUserStore', context.props.currentUserStore)
-        // const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateRoomHistory`, {
-        const response = await axios.post(`/main/getRooms`, {
+        const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getPrivateRoomHistory`, {
+        // const response = await axios.post(`/main/getRooms`, {
           from: context.props.currentUserStore.username,
           to: context.props.currentRoomStore.currentRoom
         })
