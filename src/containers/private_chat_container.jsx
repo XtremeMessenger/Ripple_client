@@ -30,7 +30,7 @@ class PrivateChat extends Component {
     //this.socket = io('/')
     //this.socket = io('http://chat.jayop.com')
     // this.socket = io('http://localhost:3500')
-    this.socket = io(URL.SOCKET_SERVER_URL)
+    this.socket = io(URL.SOCKET_SERVER_URL, {secure: true})
     this.socket.on('private', message => {
       console.log('this is from socket io message', message)
       console.log('this is messages ', this.props.currentChatStore.messages)

@@ -136,7 +136,7 @@ class Video extends Component {
         let remoteVideo = document.getElementById('remoteVideo');
         
     
-        navigator.mediaDevices.getUserMedia({
+        navigator.getUserMedia({
           audio: false,
           video: true
         })
@@ -162,12 +162,12 @@ class Video extends Component {
     
           console.log('Getting user media with constraints', constraints);
     
-          if (location.hostname !== 'localhost') {
-            console.log('not local host')
-            requestTurn(
-              'https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913'
-            );
-          }
+          //if (location.hostname !== 'localhost') {
+          //  console.log('not local host')
+          //  requestTurn(
+          //    'https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913'
+          //  );
+         // }
         function maybeStart() {
         console.log('>>>>>>> maybeStart() ', isStarted, localStream, isChannelReady);
         if (!isStarted && typeof localStream !== 'undefined' && isChannelReady) {
