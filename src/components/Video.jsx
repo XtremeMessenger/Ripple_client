@@ -8,6 +8,7 @@ import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
 import io from 'socket.io-client'
+import URL from '../../config/url.js'
 
 class Video extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class Video extends Component {
         
         window.room = prompt("Enter room name:");
         var isInitiator;
-        var socket = io.connect('http://localhost:3500');
+        var socket = io.connect(URL.SOCKET_SERVER_URL);
         
     
         if (room !== "") {
@@ -162,6 +163,7 @@ class Video extends Component {
           console.log('Getting user media with constraints', constraints);
     
           if (location.hostname !== 'localhost') {
+            console.log('not local host')
             requestTurn(
               'https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913'
             );

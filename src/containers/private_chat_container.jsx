@@ -29,8 +29,8 @@ class PrivateChat extends Component {
   componentDidMount() {
     //this.socket = io('/')
     //this.socket = io('http://chat.jayop.com')
-    this.socket = io('http://localhost:3500')
-    // this.socket = io(URL.SOCKET_SERVER_URL)
+    // this.socket = io('http://localhost:3500')
+    this.socket = io(URL.SOCKET_SERVER_URL)
     this.socket.on('private', message => {
       console.log('this is from socket io message', message)
       console.log('this is messages ', this.props.currentChatStore.messages)
@@ -59,8 +59,8 @@ class PrivateChat extends Component {
       this.socket.emit('private', [message.from, message.text])
       console.log('to send', message)
       // new message stores in db
-      // axios.post(`${URL.SERVER_URL}/main/privateChatStore`, message).then(function (response) {
-      axios.post(`/main/privateChatStore`, message).then(function (response) {
+      axios.post(`${URL.LOCAL_SERVER_URL}/main/privateChatStore`, message).then(function (response) {
+      // axios.post(`/main/privateChatStore`, message).then(function (response) {
         console.log('add friend success', response)
       })
       var messageArray = this.props.currentChatStore.messages;

@@ -56,7 +56,7 @@ class Login extends Component {
 
       const getParameter = async () => {
         //const response = await axios.post('http://www.jayop.com:3000/main/login', {
-        const response = await axios.post(`${URL.SERVER_URL}/main/login`, {
+        const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/login`, {
           firebase_id: user.uid
         })
         context.props.setCurrentUser(response.data[0])
