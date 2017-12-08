@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { FormGroup } from 'react-bootstrap'
+// import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import io from 'socket.io-client'
 import SocketIOFileUpload from 'socketio-file-upload';
+import URL from '../../config/url.js';
 
 class Dropzone extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Dropzone extends Component {
     }
   }
   componentDidMount(){
-    var socket = io.connect('http://localhost:3500');
+    var socket = io.connect(URL.SOCKET_SERVER_URL);
     var uploader = new SocketIOFileUpload(socket);
     uploader.listenOnInput(document.getElementById("siofu_input"));
 
