@@ -10,6 +10,8 @@ import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 import io from 'socket.io-client'
 import URL from '../../config/url.js'
 
+import Dropzone from '../containers/dropzone_container.jsx'
+
 class Video extends Component {
   constructor(props) {
     super(props)
@@ -413,6 +415,7 @@ class Video extends Component {
         <button id="closeVideoButton" onClick={this.handleCloseVideo}>Close Video</button>
         <div>Current User: {this.props.currentChatStore.currentUser}</div>
         <div>Current User: {this.props.currentChatStore.currentFriend}</div>
+        <div id="dropzone"><Dropzone /></div>
         <div id="private_chat"> Chat Window
           {
             this.props.currentChatStore.messages.length > 0 ?
