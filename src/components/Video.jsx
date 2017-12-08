@@ -1,3 +1,6 @@
+'use strict';
+
+
 import React, { Component } from 'react'
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
@@ -9,6 +12,9 @@ import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
 import io from 'socket.io-client'
 import URL from '../../config/url.js'
+import 'webrtc-adapter';
+
+
 
 import Dropzone from '../containers/dropzone_container.jsx'
 
@@ -126,8 +132,8 @@ class Video extends Component {
           ////////////////////////////////////////////////////
     
     
-        navigator.getUserMedia = navigator.getUserMedia ||
-        navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+       // navigator.getUserMedia = navigator.getUserMedia ||
+       // navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     
         var constraints = {
           audio: false,
@@ -138,15 +144,16 @@ class Video extends Component {
         let remoteVideo = document.getElementById('remoteVideo');
         
     
-        navigator.getUserMedia({
+console.log('before navigator.mediaDevices.getUserMedia')
+
+        navigator.mediaDevices.getUserMedia({
           audio: false,
           video: true
         })
-        .then(gotStream)
-        .catch(function(e) {
-          alert('getUserMedia() error: ' + e.name);
-        });
-    
+.then(gotStream)
+.catch(function(e) {
+  alert('getUserMedia() error: ' + e.name);
+});
     
         function gotStream(stream) {
           console.log('Adding local stream.');
@@ -156,7 +163,8 @@ class Video extends Component {
           if (isInitiator) {
             maybeStart();
           }
-        }
+        }    
+    
     
           var constraints = {
             video: true
