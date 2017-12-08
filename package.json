@@ -38,15 +38,10 @@
     "redux": "^3.7.2",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4",
-<<<<<<< HEAD
-    "socketio-file-upload": "^0.6.0",
-    "webpack": "^3.8.1"
-=======
     "webpack": "^3.8.1",
     "webrtc-adapter": "^6.0.2",
     "socketio-file-upload": "^0.6.0"
     
->>>>>>> client side file transfer logic
   },
   "devDependencies": {
     "eslint": "^4.12.1",
