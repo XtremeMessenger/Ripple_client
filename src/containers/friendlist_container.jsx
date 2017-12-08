@@ -25,7 +25,7 @@ class Friendlist extends Component {
     var currentUser = this.props.currentUserStore
     console.log('currentUser', this.props.currentUserStore)
     let userRef = {
-      user: currentUser
+      user: this.props.currentUserStore
     }
     console.log('currentUser', currentUser)
     // axios.post(`/main/getFriends`, userRef).then(function (response) {
@@ -43,21 +43,51 @@ class Friendlist extends Component {
     })
 
   }
-  handleFindFriend(){
+  // handleFindFriend(){
+  //   console.log(document.getElementById('friendSearchBar').value);
+  //   let newFriend = document.getElementById('friendSearchBar').value;
+  //   let currentUser = this.props.currentUserStore;
+  //   console.log(' this is the current logged user ',currentUser)
+  //   let friendRequest = { 
+  //     requestee: currentUser,
+  //     requested: newFriend
+  //   }
+  //   // axios.post('/main/addFriend', friendRequest).then(function (response) {
+  //   axios.post(`${URL.LOCAL_SERVER_URL}/main/addFriend`, friendRequest).then(function(response){
+  //     console.log('add friend success', response)
+  //   }).catch(function(err){
+  //     console.log('error in add friend ', err)
+  //   })
+  // }
+
+  handleFindFriend() {
     console.log(document.getElementById('friendSearchBar').value);
     let newFriend = document.getElementById('friendSearchBar').value;
     let currentUser = this.props.currentUserStore;
-    console.log(' this is the current logged user ',currentUser)
-    let friendRequest = { 
+    console.log(' this is the current logged user ', currentUser)
+    let friendRequest = {
       requestee: currentUser,
       requested: newFriend
     }
+    let userRef = {
+      user: this.props.currentUserStore
+    }
     // axios.post('/main/addFriend', friendRequest).then(function (response) {
-    axios.post(`${URL.LOCAL_SERVER_URL}/main/addFriend`, friendRequest).then(function(response){
+    axios.post(`${URL.LOCAL_SERVER_URL}/main/addFriend`, friendRequest).then(function (response) {
       console.log('add friend success', response)
-    }).catch(function(err){
+    }).catch(function (err) {
       console.log('error in add friend ', err)
-    })
+    }).then(
+      axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`, userRef).then(function (response) {
+        console.log('this is getFriends response', response)
+        response.data.forEach(function (friend) {
+          friends.push(friend)
+        })
+        context.setState({
+          friendsArr: friends
+        })
+      })
+    )
   }
 
   handleClick(friend){
