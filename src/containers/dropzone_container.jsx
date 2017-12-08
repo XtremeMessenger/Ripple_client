@@ -12,9 +12,14 @@ class Dropzone extends Component {
     }
   }
   componentDidMount(){
-    var socket = io.connect();
+    var socket = io.connect('http://localhost:3500');
     var uploader = new SocketIOFileUpload(socket);
     uploader.listenOnInput(document.getElementById("siofu_input"));
+
+    uploader.addEventListener("complete", function(event){
+      console.log('im sending this yo ',event.success);
+      console.log('im sending this yo ',event.file);
+    });
   }
   render() {
     return (
