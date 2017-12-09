@@ -50,9 +50,9 @@ class Login extends Component {
     //console.log('this is redux state before submit ===== ', this.props);
     let context = this;
     firebase.auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(function(user){
-        firebase.auth.Auth.Persistence.LOCAL
+    .signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then(function(user){
+      firebase.auth.Auth.Persistence.LOCAL
 
       const getParameter = async () => {
         //const response = await axios.post('http://www.jayop.com:3000/main/login', {
@@ -69,12 +69,13 @@ class Login extends Component {
         context.props.history.push('/main')
       }
       getParameter();
-    })
-    .catch((error) => {
-        console.log('failed to login thru firebase', error.message)
-        context.props.history.push('/')
-    });
-  }
+      })
+      .catch((error) => {
+          console.log('failed to login thru firebase', error.message)
+          context.props.history.push('/')
+      });
+    }
+
 
   render() {
     const { email, password, submitted } = this.state;
