@@ -411,7 +411,7 @@ console.log('before navigator.mediaDevices.getUserMedia')
     return (
       <div className="video">
 
-        <video id="localVideo" muted="muted" width="100" height="80"></video>
+        <video id="localVideo" muted="muted" width="200" height="180" autoPlay></video>
         <video id="remoteVideo" autoPlay></video>
 
           <div>
