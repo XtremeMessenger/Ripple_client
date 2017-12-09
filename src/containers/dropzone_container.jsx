@@ -15,6 +15,8 @@ class Dropzone extends Component {
     }
   }
   componentDidMount(){
+    let currentUser = this.props.currentChatStore.currentUser;
+    let currentFriend = this.props.currentChatStore.currentFriend;
     var socket = io.connect(URL.SOCKET_SERVER_URL);
     var uploader = new SocketIOFileUpload(socket);
     uploader.listenOnInput(document.getElementById("siofu_input"));
@@ -23,8 +25,8 @@ class Dropzone extends Component {
       console.log('im sending this yo ',event.success);
       console.log('im sending this yo ',event.file);
       let fileNfo = {
-        // from:??????,
-        // to:???????,
+        from: currentUser,
+        to: currentFriend,
         fileName: 'waaazzzaaa'
       }
       axios.post(`${URL.LOCAL_SERVER_URL}/main/privateSendFile`, fileNfo).then(function (response) {
@@ -45,7 +47,7 @@ class Dropzone extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentUserStore: state.currentUserStore
+    currentChatStore: state.currentChatStore
   }
 }
 

@@ -37,6 +37,8 @@ class Video extends Component {
     //   this.setState({ messages: [message, ...this.state.messages] },
     //     () => { console.log('this.setstate by socket io', this.state.messages) })
     // })
+    this.props.currentChatStore.currentUser
+    this.props.currentChatStore.currentFriend
   }
 
   handleCloseVideo() {
