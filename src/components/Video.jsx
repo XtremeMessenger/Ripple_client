@@ -23,7 +23,8 @@ class Video extends Component {
     super(props)
     this.handleCloseVideo = this.handleCloseVideo.bind(this)
     this.handleVideoClick = this.handleVideoClick.bind(this)
-    
+    this.handleHangUp = this.handleHangUp.bind(this)
+
     this.state = {
 
     }
@@ -402,6 +403,23 @@ console.log('before navigator.mediaDevices.getUserMedia')
             return sdpLines;
           }
       }
+
+  handleHangUp(){
+    let localVideo = document.getElementById('localVideo');    
+    let remoteVideo = document.getElementById('remoteVideo');
+    let stream = localVideo.srcObject;
+    let tracks = stream.getTracks();
+
+    tracks.forEach(function(track) {
+      track.stop();
+    });
+  
+    localVideo.srcObject = null;
+  
+    localVideo.src = null;
+    remoteVideo.src = null;
+
+  }
     
     
 
@@ -417,7 +435,7 @@ console.log('before navigator.mediaDevices.getUserMedia')
           <div>
             <button id="startButton" onClick={this.handleVideoClick}>Start</button>
             <button id="callButton">Call</button>
-            <button id="hangupButton">Hang Up</button>
+            <button id="hangupButton" onClick={this.handleHangUp}>Hang Up</button>
           </div>
 
         <button id="closeVideoButton" onClick={this.handleCloseVideo}>Close Video</button>
