@@ -60,7 +60,7 @@ class Video extends Component {
         
         // Set up audio and video regardless of what devices are present.
         var sdpConstraints = {
-          offerToReceiveAudio: false,
+          offerToReceiveAudio: true,
           offerToReceiveVideo: true
         };
         
@@ -147,7 +147,7 @@ class Video extends Component {
 console.log('before navigator.mediaDevices.getUserMedia')
 
         navigator.mediaDevices.getUserMedia({
-          audio: false,
+          audio: true,
           video: true
         })
 .then(gotStream)
@@ -410,8 +410,8 @@ console.log('before navigator.mediaDevices.getUserMedia')
     let context = this
     return (
       <div className="video">
-        This is Video Page
-        <video id="localVideo" autoPlay></video>
+
+        <video id="localVideo" muted="muted" width="100" height="80"></video>
         <video id="remoteVideo" autoPlay></video>
 
           <div>
