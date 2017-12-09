@@ -29,6 +29,7 @@
     "babel-preset-react": "^6.24.1",
     "express": "^4.16.2",
     "firebase": "^4.6.2",
+    "jwt-decode": "^2.2.0",
     "path": "^0.12.7",
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
