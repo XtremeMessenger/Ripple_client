@@ -9,7 +9,7 @@ import URL from '../../config/url.js'
 
 const firebase = require('firebase')
 var provider = new firebase.auth.FacebookAuthProvider();
-const EndPoint = '/main'
+//const EndPoint = '/main'
 
 class Login extends Component {
   constructor(props) {
@@ -60,6 +60,11 @@ class Login extends Component {
           firebase_id: user.uid
         })
         context.props.setCurrentUser(response.data[0])
+        console.log('response.data[0].token', response.data[0].token);
+        await localStorage.setItem('username', response.data[0].username);
+        await localStorage.setItem('uid', response.data[0].key);
+        await localStorage.setItem('token', response.data[0].token.accessToken);
+        console.log('localStorage.token', localStorage.token)
         //console.log('this is redux state after submit ===== ', context.props)
         context.props.history.push('/main')
       }

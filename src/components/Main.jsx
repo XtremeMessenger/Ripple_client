@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import { bindActionCreators } from 'redux';
 import Chat from '../containers/chat_container.jsx'
 import PrivateChat from '../containers/private_chat_container.jsx'
 import PrivateRoom from '../containers/private_room_container.jsx'
@@ -11,6 +12,8 @@ import Friendlist from '../containers/friendlist_container.jsx'
 import Roomlist from '../containers/roomlist_container.jsx'
 import UserPanel from '../containers/userpanel_container.jsx'
 import Video from './Video.jsx'
+import URL from '../../config/url.js'
+import { setCurrentUser } from '../actions/setCurrentUser.jsx';
 
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
@@ -23,6 +26,18 @@ class Main extends Component {
     }
   }
 
+  componentDidMount() {
+    var context = this;
+    const getParameter = async () => {
+      //const response = await axios.post('http://www.jayop.com:3000/main/login', {
+      const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/auth`, {
+        firebase_id: localStorage.uid
+      })
+      context.props.setCurrentUser(response.data[0])
+      console.log('response.data[0] in Main', response.data[0])
+    }
+    getParameter();
+  }
 
   render() {
     return (
@@ -53,4 +68,9 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Main);
+function matchDispatchToProps(dispatch) {
+  // call selectUser in index.js
+  return bindActionCreators({ setCurrentUser: setCurrentUser }, dispatch)
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(Main);
