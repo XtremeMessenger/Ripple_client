@@ -4,6 +4,8 @@ import axios from 'axios'
 import io from 'socket.io-client'
 import SocketIOFileUpload from 'socketio-file-upload';
 import URL from '../../config/url.js';
+import { connect } from 'react-redux';
+import { FormGroup } from 'react-bootstrap';
 
 class Dropzone extends Component {
   constructor(props) {
@@ -20,6 +22,15 @@ class Dropzone extends Component {
     uploader.addEventListener("complete", function(event){
       console.log('im sending this yo ',event.success);
       console.log('im sending this yo ',event.file);
+      let fileNfo = {
+        // from:??????,
+        // to:???????,
+        fileName: 'waaazzzaaa'
+      }
+      axios.post(`${URL.LOCAL_SERVER_URL}/main/privateSendFile`, fileNfo).then(function (response) {
+        // axios.post(`/main/privateChatStore`, message).then(function (response) {
+          console.log('file record nfo', response)
+        })
     });
   }
   render() {
@@ -32,4 +43,10 @@ class Dropzone extends Component {
   }
 }
 
-export default Dropzone;
+function mapStateToProps(state) {
+  return {
+    currentUserStore: state.currentUserStore
+  }
+}
+
+export default connect(mapStateToProps)(Dropzone);
