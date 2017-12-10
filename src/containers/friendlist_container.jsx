@@ -7,6 +7,7 @@ import URL from '../../config/url.js'
 import FriendlistEntry from './friendlist_entry.jsx'
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
+import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
 
 class Friendlist extends Component {
   constructor(props) {
@@ -36,6 +37,10 @@ class Friendlist extends Component {
       })
       context.setState({
         friendsArr: friends
+      })
+      context.setCurrentFriends({
+        currentUser: this.currentUserStore.username,
+        currentFriends: friends
       })
     })
     .catch(function(err){
@@ -86,6 +91,10 @@ class Friendlist extends Component {
         context.setState({
           friendsArr: friends
         })
+        context.setCurrentFriends({
+          currentUser: this.currentUserStore.username,
+          currentFriends: friends
+        })
       })
     )
   }
@@ -106,7 +115,7 @@ class Friendlist extends Component {
       //   // messages: response.data.messages
       // })
       
-      console.log('this.props.currentUserStore', context.props.currentUserStore)
+      console.log('this.props.currentFriends', context.props.currentFriends)
       //console.log('this.props.currentChatStore.currentFriend', context.props.currentChatStore.currentFriend)
       // const response = await axios.post(`/main/getPrivateChatHistory`, {
       const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getPrivateChatHistory`, {
@@ -139,7 +148,7 @@ class Friendlist extends Component {
         <button id="findFriendButton" onClick={this.handleFindFriend}>add</button>
         <div>
           My Friends: 
-          <ul> {this.state.friendsArr.map(function(friend, i){
+          <ul> {context.props.currentFriendsStore.currentFriends.map(function(friend, i){
             return <FriendlistEntry friend={friend} key = {i} id = {i} onClick={context.handleClick}/> 
           })} 
           </ul>
@@ -154,7 +163,8 @@ function mapStateToProps(state) {
   return {
     currentUserStore: state.currentUserStore,
     currentChatStore: state.currentChatStore,
-    currentChatView: state.currentChatView
+    currentChatView: state.currentChatView,
+    currentFriendsStore: state.currentFriendsStore
   }
 }
 
@@ -162,7 +172,8 @@ function matchDispatchToProps(dispatch) {
   // call selectUser in index.js
   return bindActionCreators(
     { setPrivateChat: setPrivateChat,
-      setCurrentChatView: setCurrentChatView }, dispatch)
+      setCurrentChatView: setCurrentChatView,
+      setCurrentFriends: setCurrentFriends }, dispatch)
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Friendlist);

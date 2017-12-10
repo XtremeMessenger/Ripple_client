@@ -14,6 +14,7 @@ import UserPanel from '../containers/userpanel_container.jsx'
 import Video from './Video.jsx'
 import URL from '../../config/url.js'
 import { setCurrentUser } from '../actions/setCurrentUser.jsx';
+import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
 
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
@@ -22,22 +23,61 @@ class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      currentUser: '',
+      friendsArr: []
     }
   }
 
-  componentDidMount() {
+  // shouldComponentUpdate(nextProps) {
+  //   return true;
+  //   // return !deepEquals(render(this.props), render(nextProps))
+  // }
+
+  componentWillMount() {
+    //console.log('componentWillUpdate')
     var context = this;
+    var friends = this.state.friendsArr.slice()
     const getParameter = async () => {
       //const response = await axios.post('http://www.jayop.com:3000/main/login', {
-      const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/auth`, {
+      var response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/auth`, {
         firebase_id: localStorage.uid
       })
-      context.props.setCurrentUser(response.data[0])
+      await context.setState({currentUser: response.data[0].username})
+      await context.props.setCurrentUser(response.data[0])
       console.log('response.data[0] in Main', response.data[0])
+
+      let userRef = {
+        user: response.data[0]
+      };
+      console.log('componentWillMount userRef', userRef)
+      var response2 = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`, userRef)
+      console.log('this is response2', response2)
+      await response2.data.forEach(function (friend) {
+        friends.push(friend)
+      })
+
+      await context.setState({
+        friendsArr: friends
+      }, () => { console.log('friendsarray after willmount', context.state.friendsArr) })
+      await context.props.setCurrentFriends({
+        currentUser: response.data[0].username,
+        currentFriends: friends
+      }, () => { console.log('friendsarray after willmount', context.state.friendsArr) })
+      // .then(function (response) {
+      //   console.log('this is getFriends response', response)
+      //   response.data.forEach(function (friend) {
+      //     friends.push(friend)
+      //   })
+      //   context.setState({
+      //     friendsArr: friends
+      //   }, () => {console.log('friendsarray after willmount',this.state.friendsArr)})
+      // })
+
+      console.log('friendsarray after willmount', this.state.friendsArr)
     }
     getParameter();
   }
+
 
   render() {
     return (
@@ -64,13 +104,16 @@ class Main extends Component {
 function mapStateToProps(state) {
   return {
     currentUserStore: state.currentUserStore,
-    currentChatView: state.currentChatView
+    currentChatView: state.currentChatView,
+    currentFriendsStore: state.currentFriendsStore
   }
 }
 
 function matchDispatchToProps(dispatch) {
   // call selectUser in index.js
-  return bindActionCreators({ setCurrentUser: setCurrentUser }, dispatch)
+  return bindActionCreators(
+    { setCurrentUser: setCurrentUser,
+    setCurrentFriends: setCurrentFriends }, dispatch)
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Main);
