@@ -19,6 +19,7 @@ const App = () => (
       <Route path='/setting' exact component={ Setting } />
       <Route path='/video' exact component={ Video } />
       <Route path='/' exact component= { Root } />
+      <Route path='*' component={ Login } />
     </Switch>
   </div>
 );
