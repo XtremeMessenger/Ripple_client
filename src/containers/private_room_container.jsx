@@ -13,8 +13,6 @@ class PrivateRoom extends Component {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.getRoomHistory = this.getRoomHistory.bind(this)
-
-    this.handle
     this.state = {
       messages: []
     }
@@ -31,7 +29,7 @@ class PrivateRoom extends Component {
   componentWillReceiveProps(nextProps) {
     console.log('this is next prop', nextProps)
     this.setState({
-      messages: nextProps.currentRoomStore.messages
+      messages: nextProps.currentRoomStore.messages || []
       //messages: [nextProps.currentRoomStore.messages, ...this.state.messages]
     }, ()=> {
       console.log('this.state',this.state)
@@ -88,7 +86,6 @@ class PrivateRoom extends Component {
 
   render() {
     var messages = 'test'
-
     return (
       <div id="private_room">
         <div><h2>Private Room</h2></div>
@@ -97,7 +94,7 @@ class PrivateRoom extends Component {
         <input type='text' placeholder='Enter a message...' onKeyUp={this.handleSubmit} />
         {
           this.state.messages.length>0 ? 
-            this.state.messages[0].map((message, index) => {
+          this.state.messages[0].map((message, index) => {
               return <li id="chat_list" key={index}><b>{message.from}:</b>{message.text}</li>
             }) : 'test'
           
