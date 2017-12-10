@@ -111,6 +111,8 @@ class PrivateChat extends Component {
   }
 
   render() {
+
+    var context = this;
     return (
 
       <div id="private_chat">
@@ -120,12 +122,12 @@ class PrivateChat extends Component {
           <Link to="/video"><h2>VideoChat</h2></Link>
         </div>
         <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button>
-        <p> Username: {this.props.currentChatStore.currentUser} </p>
-        <p> Friend Name: {this.props.currentChatStore.currentFriend} </p>
+        <p> Username: {context.props.currentChatStore.currentUser} </p>
+        <p> Friend Name: {context.props.currentChatStore.currentFriend} </p>
         
         {
-          this.props.currentChatStore.messages.length>0 ? 
-            this.props.currentChatStore.messages[0].map((message, index) => {
+          context.props.currentChatStore.messages.length>0 ? 
+          context.props.currentChatStore.messages[0].map((message, index) => {
               return <li id="chat_list" key={index}><b>{message.from}:</b>{message.text}</li>
             }) : 'no message yet'
           

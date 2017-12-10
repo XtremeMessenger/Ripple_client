@@ -5,7 +5,9 @@ import { bindActionCreators } from 'redux';
 import {connect} from  'react-redux'
 import URL from '../../config/url.js'
 import RoomlistEntry from './roomlist_entry.jsx'
-import { setPrivateChat } from '../actions/setPrivateChat.jsx';
+import { setPrivateRoom } from '../actions/setPrivateRoom.jsx';
+import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
+
 
 class Roomlist extends Component {
   constructor(props) {
@@ -45,6 +47,11 @@ class Roomlist extends Component {
   }
   handleMakeRoom(){
     var context = this
+    var currentUser = this.props.currentUserStore
+    var rooms = this.state.roomsArray.slice()    
+    let userRef = {
+      username: currentUser.username
+    }
 
     const makeRoom = async () => {
 
@@ -75,13 +82,17 @@ class Roomlist extends Component {
         })
       })
     )
-      makeRoom()
     }
+    makeRoom()
   }
 
   handleClick(room){
     var context = this
     const privateRoom = async () => {
+
+      context.props.setCurrentChatView({
+        chatview: 2
+      })
 
       console.log('this.props.currentUserStore', context.props.currentUserStore.username)
       //console.log('this.props.currentRoomStore.currentFriend', context.props.currentRoomStore.currentRoom)
@@ -123,13 +134,15 @@ class Roomlist extends Component {
 function mapStateToProps(state) {
   return {
     currentUserStore: state.currentUserStore,
-    currentChatStore: state.currentChatStore
+    currentChatStore: state.currentChatStore,
+    currentChatView: state.currentChatView
   }
 }
 
 function matchDispatchToProps(dispatch) {
   // call selectUser in index.js
-  return bindActionCreators({ setPrivateChat: setPrivateChat }, dispatch)
+  return bindActionCreators({ setPrivateRoom: setPrivateRoom,
+    setCurrentChatView: setCurrentChatView }, dispatch)
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Roomlist);
