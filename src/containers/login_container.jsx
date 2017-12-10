@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Signup from './signup_container.jsx';
-import FIREBASE_API from '../../config.js';
+import FIREBASE from '../../config/firebase.js'
 import axios from 'axios';
 import { setCurrentUser } from '../actions/setCurrentUser.jsx';
 import URL from '../../config/url.js'
+import { Link } from 'react-router-dom';
 
 const firebase = require('firebase')
 var provider = new firebase.auth.FacebookAuthProvider();
@@ -55,7 +56,6 @@ class Login extends Component {
       firebase.auth.Auth.Persistence.LOCAL
 
       const getParameter = async () => {
-        //const response = await axios.post('http://www.jayop.com:3000/main/login', {
         const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/login`, {
           firebase_id: user.uid
         })
@@ -76,7 +76,6 @@ class Login extends Component {
       });
     }
 
-
   render() {
     const { email, password, submitted } = this.state;
     return (
@@ -85,6 +84,14 @@ class Login extends Component {
         <div className='row justify-content-center'>
           <div className='col-md-6'>
             <h2>Login</h2>
+              <p>
+                Don't have an account?
+                <span className="auth-link">
+                  <Link to="/signup">
+                    Sign up
+                  </Link>
+                </span>
+              </p>
               <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
                 <label htmlFor="email">Email</label>
                 <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} placeholder='email'/>
@@ -101,8 +108,6 @@ class Login extends Component {
               </div>
               <div className="form-group">
                 <button className="btn btn-primary" onClick={this.handleClickSubmit}>Login</button>
-                <button className="btn btn-primary btn-facebook" onClick={this.handleFacebookLogin}>Facebook</button>
-                <button className='btn btn-secondary btn-sign-up' onClick={this.handleRegister}>Sign Up</button>
               </div>
               <div id="credentials"><label> DeveloperOnly: <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} /></label></div> 
           </div>
@@ -120,7 +125,6 @@ function mapStateToProps(state) {
 }
 
 function matchDispatchToProps(dispatch) {
-  // call selectUser in index.js
   return bindActionCreators({ setCurrentUser: setCurrentUser }, dispatch)
 }
 

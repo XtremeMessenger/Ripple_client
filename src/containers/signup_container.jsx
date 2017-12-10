@@ -5,21 +5,12 @@ import { handleSignup } from '../actions/handleSignup.jsx'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { FormGroup } from 'react-bootstrap'
-import FIREBASE_API from '../../config.js'
+import { Link } from 'react-router-dom';
+import FIREBASE from '../../config/firebase.js'
 import URL from '../../config/url.js'
 
 const firebase = require("firebase");
-// console.log('API Key', FIREBASE_API.FIREBASE_API)
-// Initialize Firebase
-// TODO: Replace with your project's customized code snippet
-var config = {
-  apiKey: FIREBASE_API.FIREBASE_API,
-  authDomain: "xtrememessenger.firebaseapp.com",
-  databaseURL: "https://xtrememessenger.firebaseio.com",
-  projectId: "xtrememessenger",
-  storageBucket: "xtrememessenger.appspot.com"
-};
-firebase.initializeApp(config);
+firebase.initializeApp(FIREBASE.FIREBASE_CONFIG);
 
 class Signup extends Component {
   constructor(props) {
@@ -106,7 +97,15 @@ class Signup extends Component {
 
     return (
       <div id="sign_up_view">
-	<h2>Signup</h2>
+	    <h2>Signup</h2>
+        <p>
+          Already have an account?
+            <span className="auth-link">
+            <Link to="/login">
+              Login
+              </Link>
+          </span>
+        </p>
         <FormGroup id="signup">
           <div id="credentials"><label> Username: <input type="text" name="username" value={this.state.username} onChange={this.handleChange} /></label></div>
           <div id="credentials"><label> First Name: <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} /></label></div>
