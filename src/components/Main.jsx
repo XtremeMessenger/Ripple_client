@@ -15,6 +15,7 @@ import Video from './Video.jsx'
 import URL from '../../config/url.js'
 import { setCurrentUser } from '../actions/setCurrentUser.jsx';
 import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
+import jwtDecode from 'jwt-decode';
 
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
@@ -22,7 +23,10 @@ import axios from 'axios'
 class Main extends Component {
   constructor(props) {
     super(props)
+    this.getUserInfo = this.getUserInfo.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
     this.state = {
+      tokenvalid: true,
       currentUser: '',
       friendsArr: []
     }
@@ -33,8 +37,44 @@ class Main extends Component {
   //   // return !deepEquals(render(this.props), render(nextProps))
   // }
 
-  componentWillMount() {
-    //console.log('componentWillUpdate')
+  componentDidMount() {
+    try {
+      const { exp } = jwtDecode(localStorage.token);
+      let cutoff = Math.floor(Date.now() / 1000);
+      let timeleft = exp - cutoff - 3000;
+      console.log('timeleft ======= ', timeleft);
+      if (timeleft < 0) {
+        this.handleLogout();
+        // localStorage.removeItem('token');
+        // this.props.history.push('/login');
+      }
+    } catch (e) {
+      // this.setState({tokenvalid: false})
+      // this.props.history.push('/login');
+      this.handleLogout();
+    }
+    if (this.state.tokenvalid) {
+      this.getUserInfo()
+    }
+    //this.getUserInfo()
+  }
+
+  handleLogout() {
+    localStorage.removeItem('token');
+    this.setState({ tokenvalid: false })
+    this.props.setCurrentUser({
+      username: '',
+      firebase_id: '',
+      email: '',
+      first: '',
+      last: '',
+      quote: '',
+      icon: ''
+    })
+    this.props.history.push('/login');
+  }
+
+  getUserInfo() {
     var context = this;
     var friends = this.state.friendsArr.slice()
     const getParameter = async () => {
@@ -42,7 +82,7 @@ class Main extends Component {
       var response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/auth`, {
         firebase_id: localStorage.uid
       })
-      await context.setState({currentUser: response.data[0].username})
+      await context.setState({ currentUser: response.data[0].username })
       await context.props.setCurrentUser(response.data[0])
       console.log('response.data[0] in Main', response.data[0])
 
@@ -78,13 +118,13 @@ class Main extends Component {
     getParameter();
   }
 
-
   render() {
     return (
       <div className="main">
         This is Main Page
         <div>current User: {this.props.currentUserStore.username}</div>
         <div>current ChatView: {this.props.currentChatView.chatview}</div>
+        <span><input type="submit" value="Logout" onClick={this.handleLogout} /></span>
         <div><UserPanel /></div>
         {this.props.currentChatView.chatview === 0 ?
           <div><Chat /></div> : null}
