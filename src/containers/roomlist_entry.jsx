@@ -19,9 +19,18 @@ render() {
     console.log('this is that props shit in entry ' , this.props)
     var context = this;
     return (
-        <li onClick={context.handleRoomClick}> {context.props.id} : {context.props.room} </li>
+        <li onClick={context.handleRoomClick}> {context.props.id} : {context.props.room.roomname}, Owner: {context.props.room.resident} </li>
     )
 }
 
 
 }
+
+/*
+room.dataValues ===   { roomID: 2,
+  roomname: 'Lobby',
+  password: null,
+  resident: 'jay',
+  createdAt: 2017-12-11T18:44:16.000Z,
+  updatedAt: 2017-12-11T18:44:16.000Z }
+*/

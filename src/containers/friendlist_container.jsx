@@ -24,13 +24,14 @@ class Friendlist extends Component {
     var friends = this.state.friendsArr.slice()
     //retrieve friends for current user
     var currentUser = this.props.currentUserStore
-    console.log('currentUser', this.props.currentUserStore)
+    // console.log('currentUser', this.props.currentUserStore)
     let userRef = {
       user: this.props.currentUserStore
     }
-    console.log('currentUser', currentUser)
+    // console.log('currentUser', currentUser)
     // axios.post(`/main/getFriends`, userRef).then(function (response) {
-    axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`,userRef).then(function(response){
+    axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`,userRef)
+    .then(function(response){
       console.log('this is getFriends response', response)
       response.data.forEach(function(friend){
         friends.push(friend)
@@ -50,10 +51,10 @@ class Friendlist extends Component {
   }
 
   handleFindFriend() {
-    console.log(document.getElementById('friendSearchBar').value);
+    // console.log(document.getElementById('friendSearchBar').value);
     let newFriend = document.getElementById('friendSearchBar').value;
     let currentUser = this.props.currentUserStore;
-    console.log(' this is the current logged user ', currentUser)
+    // console.log(' this is the current logged user ', currentUser)
     let friendRequest = {
       requestee: currentUser,
       requested: newFriend
@@ -64,7 +65,7 @@ class Friendlist extends Component {
     // axios.post('/main/addFriend', friendRequest).then(function (response) {
     let context = this;
     axios.post(`${URL.LOCAL_SERVER_URL}/main/addFriend`, friendRequest).then(function (response) {
-      console.log('add friend success', response)
+      // console.log('add friend success', response)
       let friends = [];
       response.data.forEach(function (friend) {
         friends.push(friend)

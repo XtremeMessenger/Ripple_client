@@ -7,12 +7,15 @@ import axios from 'axios'
 import io from 'socket.io-client'
 import URL from '../../config/url.js'
 import { setPrivateRoom } from '../actions/setPrivateRoom.jsx';
+import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
 class PrivateRoom extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.getRoomHistory = this.getRoomHistory.bind(this)
+    this.handleCloseChat = this.handleCloseChat.bind(this)
+    
     this.state = {
       messages: []
     }
@@ -21,23 +24,25 @@ class PrivateRoom extends Component {
   componentDidMount() {
     //this.socket = io('http://chat.jayop.com')
     //this.getRoomHistory()
-    this.socket = io(URL.SOCKET_SERVER_URL)
-    this.socket.on('message', message => {
-      this.props.setPrivateRoom({ messages: [message, ...this.state.messages] })
-    })
-  }
-  componentWillReceiveProps(nextProps) {
-    console.log('this is next prop', nextProps)
-    this.setState({
-      messages: nextProps.currentRoomStore.messages || []
-      //messages: [nextProps.currentRoomStore.messages, ...this.state.messages]
-    }, ()=> {
-      console.log('this.state',this.state)
+    console.log('this is in private room container === ')
+
+    this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
+    this.socket.on('private', message => {
+      console.log('this is from socket io message', message)
+      console.log('this is messages ', this.props.currentRoomStore.messages)
+      var messageArray = this.props.currentRoomStore.messages;
+      messageArray[0].push(message)
+      this.props.setPrivateRoom({
+        currentUser: this.props.currentUserStore.username,
+        currentRoom: this.props.currentRoomStore.currentRoom,
+        messages: messageArray
+      })
+
     })
   }
  
   getRoomHistory() {
-    console.log('this is redux state before submit ===== ', this.props);
+    // console.log('this is redux state before submit ===== ', this.props);
 
   }
 
@@ -51,55 +56,57 @@ class PrivateRoom extends Component {
       var message = {
         
         from: this.props.currentUserStore.username,
-        to: this.props.currentRoomStore.currentRoom,
+        to: this.props.currentRoomStore.currentRoom.roomname,
         text: text
       }
 
-      this.socket.emit('message', [message.from, message.text])
+      this.socket.emit('private', [message.from, message.text])
       console.log('to send', message)
-      axios.post(`${URL.LOCAL_SERVER_URL}/main/privateRoomStore`, message).then(function (response) {
-      // axios.post(`/main/privateRoomStore`, message).then(function (response) {
-        console.log('add room success', response)
+      // axios.post(`${URL.LOCAL_SERVER_URL}/main/privateRoomStore`, message).then(function (response) {
+      // // axios.post(`/main/privateRoomStore`, message).then(function (response) {
+      //   console.log('add room success', response)
+      // })
+
+      var messageArray = this.props.currentRoomStore.messages;
+      console.log('messageArray', messageArray)
+      messageArray[0].push(message)
+      this.props.setPrivateRoom({
+        currentUser: this.props.currentUserStore.username,
+        currentRoom: this.props.currentRoomStore.currentRoom,
+        messages: messageArray
       })
+
       event.target.value = '';
-      var context = this
-      const getData = async () => {
 
-        console.log('this.props.currentUserStore', context.props.currentUserStore)
-        const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getPrivateRoomHistory`, {
-        // const response = await axios.post(`/main/getRooms`, {
-          from: context.props.currentUserStore.username,
-          to: context.props.currentRoomStore.currentRoom
-        })
-        await context.props.setPrivateRoom({
-          currentUser: context.props.currentUserStore.username,
-          currentRoom: context.props.currentRoomStore.currentRoom,
-          messages: response.data.messages
-        })
-
-        console.log('response response response ===', response)
-      }
-      getData()
     }
   }
 
+  handleCloseChat() {
+    this.props.setPrivateRoom({
+      currentUser: this.props.currentUserStore.username,
+      currentRoom: '',
+      messages: []
+    })
+    this.props.setCurrentChatView({
+      chatview: 0
+    })
+  }
 
   render() {
-    var messages = 'test'
+    var context = this;
     return (
       <div id="private_room">
         <div><h2>Private Room</h2></div>
+        <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button>
         <p> Username: {this.props.currentRoomStore.currentUser} </p>
-        <p> Room Name: {this.props.currentRoomStore.currentRoom} </p>
+        <p> Room Name: {this.props.currentRoomStore.currentRoom.roomname} </p>
         <input type='text' placeholder='Enter a message...' onKeyUp={this.handleSubmit} />
         {
-          this.state.messages.length>0 ? 
-          this.state.messages[0].map((message, index) => {
+          this.props.currentRoomStore.messages.length>0 ? 
+            this.props.currentRoomStore.messages[0].map((message, index) => {
               return <li id="chat_list" key={index}><b>{message.from}:</b>{message.text}</li>
-            }) : 'test'
-          
+            }) : 'no message yet'
         }
-        <ul>{messages}</ul>
       </div>
     )
   }
@@ -108,13 +115,16 @@ class PrivateRoom extends Component {
 function mapStateToProps(state) {
   return {
     currentRoomStore: state.currentRoomStore,
-    currentUserStore: state.currentUserStore
+    currentUserStore: state.currentUserStore,
+    currentChatView: state.currentChatView
   }
 }
 
 function matchDispatchToProps(dispatch) {
   // call selectUser in index.js
-  return bindActionCreators({ setPrivateRoom: setPrivateRoom }, dispatch)
+  return bindActionCreators(
+    { setPrivateRoom: setPrivateRoom,
+      setCurrentChatView: setCurrentChatView }, dispatch)
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(PrivateRoom);
