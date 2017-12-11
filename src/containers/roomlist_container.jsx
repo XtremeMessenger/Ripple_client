@@ -15,23 +15,23 @@ class Roomlist extends Component {
     this.handleMakeRoom = this.handleMakeRoom.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      roomsArray: [],
-      roomname: ''
+      roomsArray: []
     }
   }
 
   componentDidMount(){
     var context = this;
-    var rooms = this.state.roomsArray.slice()
+    var rooms = []
     //retrieve friends for current user
     var currentUser = this.props.currentUserStore
-    console.log('currentUser', this.props.currentUserStore.username)
+    // console.log('currentUser', this.props.currentUserStore)
     let userRef = {
-      username: currentUser.username
+      username: this.props.currentUserStore
     }
-    console.log('currentUser', currentUser)
+    // console.log('currentUser', currentUser)
     // axios.post(`/main/getRooms`, userRef).then(function (response) {
-    axios.post(`${URL.LOCAL_SERVER_URL}/main/getRooms`,userRef).then(function(response){
+    axios.post(`${URL.LOCAL_SERVER_URL}/main/getRooms`,userRef)
+    .then(function(response){
       console.log('this is getRooms response', response)
       response.data.forEach(function(room){
         rooms.push(room)
@@ -48,9 +48,9 @@ class Roomlist extends Component {
   handleMakeRoom(){
     var context = this
     var currentUser = this.props.currentUserStore
-    var rooms = this.state.roomsArray.slice()    
+    var rooms = [];
     let userRef = {
-      username: currentUser.username
+      user: this.props.currentUserStore
     }
 
     const makeRoom = async () => {
@@ -68,20 +68,16 @@ class Roomlist extends Component {
       // axios.post('/main/addRoom', roomRequest).then(function (response) {
       axios.post(`${URL.LOCAL_SERVER_URL}/main/addRoom`, roomRequest).then(function(response){
         console.log('add room success', response)
-      }).catch(function(err){
-        console.log('error in add room ', err)
-      }).then(
-      axios.post(`/main/getRooms`, userRef).then(function (response) {
-        // axios.post(`${URL.SERVER_URL}/main/getRooms`,userRef).then(function(response){
-        console.log('this is getRooms response', response)
+        let rooms = [];
         response.data.forEach(function (room) {
           rooms.push(room)
         })
         context.setState({
           roomsArray: rooms
         })
+      }).catch(function(err){
+        console.log('error in add room ', err)
       })
-    )
     }
     makeRoom()
   }
@@ -104,7 +100,7 @@ class Roomlist extends Component {
       await context.props.setPrivateRoom({
         currentUser: context.props.currentUserStore.username,
         currentRoom: room,
-        messages: response.data.messages
+        messages: [[]]
       })
 
       console.log('response response response ===', response)
@@ -122,7 +118,7 @@ class Roomlist extends Component {
         <div>
           Rooms: 
           <ul> {this.state.roomsArray.map(function(room, i){
-            return <RoomlistEntry room={room.roomname} key = {i} id = {i} onClick={context.handleClick}/> 
+            return <RoomlistEntry room={room} key = {i} id = {i} onClick={context.handleClick}/> 
           })} 
           </ul>
         </div>

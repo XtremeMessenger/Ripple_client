@@ -20,7 +20,6 @@ class PrivateChat extends Component {
     this.handleCloseChat = this.handleCloseChat.bind(this)
     // this.handleVideoChat = this.handleVideoChat.bind(this)
 
-    this.handle
     this.state = {
       messages: []
     }
