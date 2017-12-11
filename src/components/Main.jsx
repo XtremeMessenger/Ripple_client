@@ -19,13 +19,17 @@ import jwtDecode from 'jwt-decode';
 
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
+import { setInterval } from 'timers';
 
 class Main extends Component {
   constructor(props) {
     super(props)
     this.getUserInfo = this.getUserInfo.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
+    this.getTokenTimeLeft = this.getTokenTimeLeft.bind(this)
     this.state = {
+      token: '',
+      tokenTimeLeft: 0,
       tokenvalid: true,
       currentUser: '',
       friendsArr: []
@@ -38,6 +42,7 @@ class Main extends Component {
   // }
 
   componentDidMount() {
+    this.setState({ token: localStorage.token })
     try {
       const { exp } = jwtDecode(localStorage.token);
       let cutoff = Math.floor(Date.now() / 1000);
@@ -57,6 +62,16 @@ class Main extends Component {
       this.getUserInfo()
     }
     //this.getUserInfo()
+    setInterval(this.getTokenTimeLeft,1000);
+  }
+
+  getTokenTimeLeft() {
+    if (this.state.token) {
+      const { exp } = jwtDecode(this.state.token);
+      let cutoff = Math.floor(Date.now() / 1000);
+      let timeleft = exp - cutoff - 3000;
+      this.setState({ tokenTimeLeft: timeleft })
+    }
   }
 
   handleLogout() {
@@ -124,6 +139,8 @@ class Main extends Component {
         This is Main Page
         <div>current User: {this.props.currentUserStore.username}</div>
         <div>current ChatView: {this.props.currentChatView.chatview}</div>
+        <div>Session Timeout in:
+          {this.state.tokenTimeLeft > 0 ? ` ${this.state.tokenTimeLeft} sec`: ' session out'}</div>
         <span><input type="submit" value="Logout" onClick={this.handleLogout} /></span>
         <div><UserPanel /></div>
         {this.props.currentChatView.chatview === 0 ?
