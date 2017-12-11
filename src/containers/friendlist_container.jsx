@@ -48,22 +48,6 @@ class Friendlist extends Component {
     })
 
   }
-  // handleFindFriend(){
-  //   console.log(document.getElementById('friendSearchBar').value);
-  //   let newFriend = document.getElementById('friendSearchBar').value;
-  //   let currentUser = this.props.currentUserStore;
-  //   console.log(' this is the current logged user ',currentUser)
-  //   let friendRequest = { 
-  //     requestee: currentUser,
-  //     requested: newFriend
-  //   }
-  //   // axios.post('/main/addFriend', friendRequest).then(function (response) {
-  //   axios.post(`${URL.LOCAL_SERVER_URL}/main/addFriend`, friendRequest).then(function(response){
-  //     console.log('add friend success', response)
-  //   }).catch(function(err){
-  //     console.log('error in add friend ', err)
-  //   })
-  // }
 
   handleFindFriend() {
     console.log(document.getElementById('friendSearchBar').value);
@@ -78,25 +62,23 @@ class Friendlist extends Component {
       user: this.props.currentUserStore
     }
     // axios.post('/main/addFriend', friendRequest).then(function (response) {
+    let context = this;
     axios.post(`${URL.LOCAL_SERVER_URL}/main/addFriend`, friendRequest).then(function (response) {
       console.log('add friend success', response)
+      let friends = [];
+      response.data.forEach(function (friend) {
+        friends.push(friend)
+      })
+      context.setState({
+        friendsArr: friends
+      })
+      context.props.setCurrentFriends({
+        currentUser: context.props.currentUserStore.username,
+        currentFriends: friends
+      })
     }).catch(function (err) {
       console.log('error in add friend ', err)
-    }).then(
-      axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`, userRef).then(function (response) {
-        console.log('this is getFriends response', response)
-        response.data.forEach(function (friend) {
-          friends.push(friend)
-        })
-        context.setState({
-          friendsArr: friends
-        })
-        context.setCurrentFriends({
-          currentUser: this.currentUserStore.username,
-          currentFriends: friends
-        })
-      })
-    )
+    })
   }
 
   handleClick(friend){
@@ -108,13 +90,6 @@ class Friendlist extends Component {
         chatview: 1
       })
 
-      
-      // await context.props.setPrivateChat({
-      //   currentUser: context.props.currentUserStore.username,
-      //   currentFriend: friend,
-      //   // messages: response.data.messages
-      // })
-      
       console.log('this.props.currentFriends', context.props.currentFriends)
       //console.log('this.props.currentChatStore.currentFriend', context.props.currentChatStore.currentFriend)
       // const response = await axios.post(`/main/getPrivateChatHistory`, {
@@ -127,11 +102,6 @@ class Friendlist extends Component {
         currentFriend: friend,
         messages: response.data.messages
       })
-      // await context.props.setPrivateChat({
-      //   currentUser: context.props.currentUserStore.username,
-      //   currentFriend: friend,
-      //   messages: response.data.messages
-      // })
 
       console.log('response response response ===', response)
     }
