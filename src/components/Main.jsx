@@ -142,6 +142,7 @@ class Main extends Component {
           {this.state.tokenTimeLeft > 0 ? ` ${this.state.tokenTimeLeft} sec`: ' session out'}</div>
         <span><input type="submit" value="Logout" onClick={this.handleLogout} /></span>
         <div><UserPanel /></div>
+        <div><Friendlist /></div>
         {this.props.currentChatView.chatview === 0 ?
           <div><Chat /></div> : null}
         {this.props.currentChatView.chatview === 0 ?
@@ -150,7 +151,7 @@ class Main extends Component {
           <div><PrivateChat /></div> : null}
         {this.props.currentChatView.chatview === 2 ?
           <div><PrivateRoom /></div> : null}
-        <div><Friendlist /></div>
+        
         <div><Roomlist /></div>
       </div>
     )
