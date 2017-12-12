@@ -70,7 +70,7 @@ class Main extends Component {
     if (this.state.token) {
       const { exp } = jwtDecode(this.state.token);
       let cutoff = Math.floor(Date.now() / 1000);
-      let timeleft = exp - cutoff - 3000;
+      let timeleft = exp - cutoff;
       this.setState({ tokenTimeLeft: timeleft })
     }
   }
