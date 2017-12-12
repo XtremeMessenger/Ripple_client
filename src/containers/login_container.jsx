@@ -18,6 +18,7 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClickSubmit = this.handleClickSubmit.bind(this)
     this.handleChangeDeveloper = this.handleChangeDeveloper.bind(this)
+    this.handleEnter = this.handleEnter.bind(this)
     this.state = {
       username: '',
       password: '',
@@ -76,6 +77,12 @@ class Login extends Component {
       });
     }
 
+  handleEnter(event) {
+    if (event.keyCode === 13) {
+      this.handleClickSubmit(event);
+    }
+  }
+
   render() {
     const { email, password, submitted } = this.state;
     return (
@@ -109,7 +116,7 @@ class Login extends Component {
               <div className="form-group">
                 <button className="btn btn-primary" onClick={this.handleClickSubmit}>Login</button>
               </div>
-              <div id="credentials"><label> DeveloperOnly: <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} /></label></div> 
+              <div id="credentials"><label> DeveloperOnly: <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} onKeyUp={this.handleEnter}/></label></div> 
           </div>
         </div>
         </div>
