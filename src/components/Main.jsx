@@ -11,6 +11,7 @@ import PrivateRoom from '../containers/private_room_container.jsx'
 import Friendlist from '../containers/friendlist_container.jsx'
 import Roomlist from '../containers/roomlist_container.jsx'
 import UserPanel from '../containers/userpanel_container.jsx'
+import Lex from '../containers/lex_container/lex.jsx'
 import Video from './Video.jsx'
 import URL from '../../config/url.js'
 import { setCurrentUser } from '../actions/setCurrentUser.jsx';
@@ -99,14 +100,14 @@ class Main extends Component {
       })
       await context.setState({ currentUser: response.data[0].username })
       await context.props.setCurrentUser(response.data[0])
-      console.log('response.data[0] in Main', response.data[0])
+      // console.log('response.data[0] in Main', response.data[0])
 
       let userRef = {
         user: response.data[0]
       };
-      console.log('componentWillMount userRef', userRef)
+      // console.log('componentWillMount userRef', userRef)
       var response2 = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`, userRef)
-      console.log('this is response2', response2)
+      // console.log('this is response2', response2)
       await response2.data.forEach(function (friend) {
         friends.push(friend)
       })
@@ -128,7 +129,7 @@ class Main extends Component {
       //   }, () => {console.log('friendsarray after willmount',this.state.friendsArr)})
       // })
 
-      console.log('friendsarray after willmount', this.state.friendsArr)
+      // console.log('friendsarray after willmount', this.state.friendsArr)
     }
     getParameter();
   }
@@ -142,6 +143,7 @@ class Main extends Component {
           {this.state.tokenTimeLeft > 0 ? ` ${this.state.tokenTimeLeft} sec`: ' session out'}</div>
         <span><input type="submit" value="Logout" onClick={this.handleLogout} /></span>
         <div><UserPanel /></div>
+        <div><Lex /></div>
         <div><Friendlist /></div>
         {this.props.currentChatView.chatview === 0 ?
           <div><Chat /></div> : null}

@@ -29,7 +29,6 @@ class Roomlist extends Component {
       username: this.props.currentUserStore
     }
     // console.log('currentUser', currentUser)
-    // axios.post(`/main/getRooms`, userRef).then(function (response) {
     axios.post(`${URL.LOCAL_SERVER_URL}/main/getRooms`,userRef)
     .then(function(response){
       console.log('this is getRooms response', response)
@@ -65,7 +64,6 @@ class Roomlist extends Component {
       }
 
       console.log('roomRequest', roomRequest)
-      // axios.post('/main/addRoom', roomRequest).then(function (response) {
       axios.post(`${URL.LOCAL_SERVER_URL}/main/addRoom`, roomRequest).then(function(response){
         console.log('add room success', response)
         let rooms = [];
@@ -90,7 +88,7 @@ class Roomlist extends Component {
         chatview: 2
       })
 
-      console.log('this.props.currentUserStore', context.props.currentUserStore.username)
+      // console.log('this.props.currentUserStore', context.props.currentUserStore.username)
       //console.log('this.props.currentRoomStore.currentFriend', context.props.currentRoomStore.currentRoom)
       const response = await axios.post(`/main/getRooms`, {
       // const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateRoomHistory`, {
@@ -103,7 +101,7 @@ class Roomlist extends Component {
         messages: [[]]
       })
 
-      console.log('response response response ===', response)
+      // console.log('response response response ===', response)
     }
     privateRoom()
   }

@@ -22,10 +22,7 @@ class PrivateRoom extends Component {
   }
 
   componentDidMount() {
-    //this.socket = io('http://chat.jayop.com')
-    //this.getRoomHistory()
-    console.log('this is in private room container === ')
-
+    // console.log('this is in private room container === ')
     this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
     this.socket.on('private', message => {
       console.log('this is from socket io message', message)
@@ -63,12 +60,11 @@ class PrivateRoom extends Component {
       this.socket.emit('private', [message.from, message.text])
       console.log('to send', message)
       // axios.post(`${URL.LOCAL_SERVER_URL}/main/privateRoomStore`, message).then(function (response) {
-      // // axios.post(`/main/privateRoomStore`, message).then(function (response) {
       //   console.log('add room success', response)
       // })
 
       var messageArray = this.props.currentRoomStore.messages;
-      console.log('messageArray', messageArray)
+      // console.log('messageArray', messageArray)
       messageArray[0].push(message)
       this.props.setPrivateRoom({
         currentUser: this.props.currentUserStore.username,

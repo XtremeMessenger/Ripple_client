@@ -16,7 +16,7 @@ handleRoomClick(e){
 
 
 render() {
-    console.log('this is that props shit in entry ' , this.props)
+    // console.log('this is that props shit in entry ' , this.props)
     var context = this;
     return (
         <li onClick={context.handleRoomClick}> {context.props.id} : {context.props.room.roomname}, Owner: {context.props.room.resident} </li>
