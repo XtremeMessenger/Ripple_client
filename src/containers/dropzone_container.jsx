@@ -44,8 +44,7 @@ handleClick(file){
     uploader.listenOnInput(document.getElementById("siofu_input"));
 
     uploader.addEventListener("complete", function(event){
-      console.log('im sending this yo ',event.success);
-      console.log('im sending this yo ',event.file);
+      console.log('im sending this yo ',event);
       let fileNfo = {
         from: currentUser,
         to: currentFriend,
@@ -54,6 +53,7 @@ handleClick(file){
       axios.post(`${URL.LOCAL_SERVER_URL}/main/privateSendFile`, fileNfo).then(function (response) {
         // axios.post(`/main/privateChatStore`, message).then(function (response) {
           console.log('file record nfo', response)
+          
         })
     });
   }
