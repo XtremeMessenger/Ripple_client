@@ -17,37 +17,20 @@ export default class FileListEntry extends Component {
 handleFileClick(e){
     console.log('you clicked on a file ', this.props.file)
     this.props.onClick(this.props.file);
-
+    let contextOne = this.props.file;
+    console.log('context one ', contextOne)
     axios.post(`${URL.LOCAL_SERVER_URL}/main/downloadFile`, this.props.file).then(function (response) {
       // axios.post(`/main/privateChatStore`, message).then(function (response) {
-        console.log('downloadFile file data', response)
-        axios.get(`${URL.LOCAL_SERVER_URL}/download`).then(function (response) {
-          // axios.post(`/main/privateChatStore`, message).then(function (response) {
-            console.log('download file data', response)
-            window.open('/download')
-        })
+        let contextTwo = contextOne;
+        console.log('context two', contextTwo);
+        console.log('downloadFile file data', response);
+        
+        // axios.post(`${URL.LOCAL_SERVER_URL}/download`, contextTwo).then(function (response) {
+        //   // axios.post(`/main/privateChatStore`, message).then(function (response) {
+        //     console.log('download file data', contextTwo);
+            window.open(`/download/${contextTwo.fileName}` );
+        // })
     })
-    // AWS.config.update(
-    //   {
-    //     accessKeyId: cfg.aws_access_key_id,
-    //     secretAccessKey: cfg.aws_secret_access_key
-    //   }
-    // );
-    // var s3 = new AWS.S3();
-    // var opgg = s3.getObject(
-    //   { Bucket: "jayop", Key: 'index.html' },
-    //   function (error, data) {
-    //     if (error != null) {
-    //       alert("Failed to retrieve an object: " + error);
-    //     } else {
-    //       console.log(' this is the data yo ' ,data)
-    //       alert("Loaded " + data.ContentLength + " bytes");
-    //       // do something with data.Body
-          
-    //     }
-    //   }
-    // );
-
     
 }
 
