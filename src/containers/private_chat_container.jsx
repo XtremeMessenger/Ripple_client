@@ -38,6 +38,7 @@ class PrivateChat extends Component {
       this.props.setPrivateChat({
         currentUser: this.props.currentUserStore.username,
         currentFriend: this.props.currentChatStore.currentFriend,
+        directRoomId: this.props.currentChatStore.directRoomId,
         messages: messageArray
       })
 
@@ -50,8 +51,8 @@ class PrivateChat extends Component {
     //console.log('this.props.currentUserStore.username', this.props.currentUserStore)
     if (event.keyCode === 13 && text) {
       var message = {
+        directRoomId: this.props.currentChatStore.directRoomId,
         from: this.props.currentUserStore.username,
-        to: this.props.currentChatStore.currentFriend,
         text: text
       }
 
@@ -59,8 +60,7 @@ class PrivateChat extends Component {
       console.log('to send', message)
       // new message stores in db
       axios.post(`${URL.LOCAL_SERVER_URL}/main/privateChatStore`, message).then(function (response) {
-      // axios.post(`/main/privateChatStore`, message).then(function (response) {
-        console.log('add friend success', response)
+        console.log('chat store success', response)
       })
       var messageArray = this.props.currentChatStore.messages;
       console.log('messageArray[0]', messageArray[0])
@@ -68,40 +68,21 @@ class PrivateChat extends Component {
       this.props.setPrivateChat({
         currentUser: this.props.currentUserStore.username,
         currentFriend: this.props.currentChatStore.currentFriend,
-        messages: messageArray
+        directRoomId: this.props.currentChatStore.directRoomId,
+        messages: []
       })
 
       event.target.value = '';
 
-      // ================================================ //
-      // this code is to retrive messages from db
-      // var context = this
-      // const getData = async () => {
-        // const response = await axios.post(`${URL.SERVER_URL}/main/getPrivateChatHistory`, {
-        // const response = await axios.post(`/main/getPrivateChatHistory`, {
-        //   from: context.props.currentUserStore.username,
-        //   to: context.props.currentChatStore.currentFriend
-        // })
-        // await context.props.setPrivateChat({
-        //   currentUser: context.props.currentUserStore.username,
-        //   currentFriend: context.props.currentChatStore.currentFriend,
-        //   messages: response.data.messages
-        // })
-      // }
-      // getData()
-      // ================================================ //
     }
   }
 
-  // handleVideoChat() {
-  //   console.log('this.props.history', this.props)
-  //   this.props.history.push('/video')
-  // }
 
   handleCloseChat() {
     this.props.setPrivateChat({
       currentUser: this.props.currentUserStore.username,
       currentFriend: '',
+      directRoomId: null,
       messages: []
     })
     this.props.setCurrentChatView({
@@ -123,6 +104,7 @@ class PrivateChat extends Component {
         <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button>
         <p> Username: {context.props.currentChatStore.currentUser} </p>
         <p> Friend Name: {context.props.currentChatStore.currentFriend} </p>
+        <p> Direct Chatroom ID: {context.props.currentChatStore.directRoomId} </p>
         
         {
           context.props.currentChatStore.messages.length>0 ? 
