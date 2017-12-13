@@ -84,24 +84,29 @@ class Friendlist extends Component {
 
   handleClick(friend){
     var context = this
-    console.log('before click chatview', context.props.currentChatView)
+    // console.log('before click chatview', context.props.currentChatView)
     const privateChat = async () => {
       
       context.props.setCurrentChatView({
         chatview: 1
       })
 
-      console.log('this.props.currentFriends', context.props.currentFriends)
-      //console.log('this.props.currentChatStore.currentFriend', context.props.currentChatStore.currentFriend)
-      // const response = await axios.post(`/main/getPrivateChatHistory`, {
-      const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getPrivateChatHistory`, {
-        from: context.props.currentUserStore.username,
-        to: friend
+      // console.log('this.props.currentFriends', context.props.currentFriends)
+      const responseGetRoomID = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getDirectRoomID`, {
+        username: context.props.currentUserStore.username,
+        friendname: friend
       })
+      let directRoomId = responseGetRoomID.data.room_id
+      
+      const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getPrivateChatHistory`, {
+        directRoomId: directRoomId
+      })
+      console.log('this is getPrivateChatHistory response', response)
       await context.props.setPrivateChat({
         currentUser: context.props.currentUserStore.username,
         currentFriend: friend,
-        messages: response.data.messages
+        directRoomId: directRoomId,
+        messages: []
       })
 
       console.log('response response response ===', response)
