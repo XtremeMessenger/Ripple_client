@@ -25,12 +25,14 @@ handleFileClick(e){
         console.log('context two', contextTwo);
         console.log('downloadFile file data', response);
         
-        // axios.post(`${URL.LOCAL_SERVER_URL}/download`, contextTwo).then(function (response) {
-        //   // axios.post(`/main/privateChatStore`, message).then(function (response) {
-        //     console.log('download file data', contextTwo);
-            window.open(`/download/${contextTwo.fileName}` );
-        // })
+        // setTimeout( ()=>{
+            window.open(`/download/${contextTwo.fileName}`)
+        // }, 3000)
+        // axios.get(`/download/${contextTwo.fileName}`)
+        // yolo
     })
+
+    
     
 }
 
