@@ -101,6 +101,9 @@ class PrivateChat extends Component {
         <div id="videoChatButton">
           <Link to="/video"><h2>VideoChat</h2></Link>
         </div>
+        <div id="videoChatButton">
+          <Link to="/videoConference"><h2>Video Conference</h2></Link>
+        </div>
         <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button>
         <p> Username: {context.props.currentChatStore.currentUser} </p>
         <p> Friend Name: {context.props.currentChatStore.currentFriend} </p>

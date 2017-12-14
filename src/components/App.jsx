@@ -6,6 +6,7 @@ import Signup from '../containers/signup_container.jsx'
 import Main from './Main.jsx'
 import Setting from './Setting.jsx'
 import Video from './Video.jsx'
+import VideoConference from './VideoConference.jsx'
 
 import Root from './Root.jsx'
 import { Link } from 'react-router-dom';
@@ -18,6 +19,7 @@ const App = () => (
       <Route path='/main' exact component={ Main } />
       <Route path='/setting' exact component={ Setting } />
       <Route path='/video' exact component={ Video } />
+      <Route path='/videoConference' exact component={ VideoConference } />
       <Route path='/' component= { Main } />
     </Switch>
   </div>
