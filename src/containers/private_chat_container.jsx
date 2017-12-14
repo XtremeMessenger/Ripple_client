@@ -13,11 +13,14 @@ import { Switch, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import Functions from '../functions/functions.js';
+
 class PrivateChat extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCloseChat = this.handleCloseChat.bind(this)
+    this.handleMessageFromSocket = this.handleMessageFromSocket.bind(this)
     // this.handleVideoChat = this.handleVideoChat.bind(this)
 
     this.state = {
@@ -26,22 +29,23 @@ class PrivateChat extends Component {
   }
 
   componentDidMount() {
-    //this.socket = io('/')
-    //this.socket = io('http://chat.jayop.com')
-    // this.socket = io('http://localhost:3500')
-    this.socket = io(URL.SOCKET_SERVER_URL, {secure: true})
+    this.handleMessageFromSocket()
+  }
+
+  handleMessageFromSocket() {
+    this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
     this.socket.on('private', message => {
-      console.log('this is from socket io message', message)
-      console.log('this is messages ', this.props.currentChatStore.messages)
-      var messageArray = this.props.currentChatStore.messages;
-      messageArray[0].push(message)
+      console.log('message got from socket:', message)
+      // console.log('this is messages ', this.props.currentChatStore.messages)
+      let messageArray = this.props.currentChatStore.messages;
+      // console.log('this is messageArray', messageArray)
+      messageArray.push(Functions.socketToCurrentChatStore(message))
       this.props.setPrivateChat({
         currentUser: this.props.currentUserStore.username,
         currentFriend: this.props.currentChatStore.currentFriend,
         directRoomId: this.props.currentChatStore.directRoomId,
         messages: messageArray
       })
-
     })
   }
 
@@ -50,27 +54,31 @@ class PrivateChat extends Component {
     const text = event.target.value
     //console.log('this.props.currentUserStore.username', this.props.currentUserStore)
     if (event.keyCode === 13 && text) {
+      let date = Date.now();
+
       var message = {
         directRoomId: this.props.currentChatStore.directRoomId,
         from: this.props.currentUserStore.username,
-        text: text
+        text: text,
+        timestamp: date
       }
 
-      this.socket.emit('private', [message.from, message.text])
-      console.log('to send', message)
+      this.socket.emit('private', message)
+      console.log('message emitted thru socket', message)
       // new message stores in db
       axios.post(`${URL.LOCAL_SERVER_URL}/main/privateChatStore`, message).then(function (response) {
         console.log('chat store success', response)
       })
       var messageArray = this.props.currentChatStore.messages;
+      console.log('this is messageArray', messageArray)
       console.log('messageArray[0]', messageArray[0])
-      messageArray[0].push(message)
-      this.props.setPrivateChat({
-        currentUser: this.props.currentUserStore.username,
-        currentFriend: this.props.currentChatStore.currentFriend,
-        directRoomId: this.props.currentChatStore.directRoomId,
-        messages: []
-      })
+      // messageArray[0].push(message)
+      // this.props.setPrivateChat({
+      //   currentUser: this.props.currentUserStore.username,
+      //   currentFriend: this.props.currentChatStore.currentFriend,
+      //   directRoomId: this.props.currentChatStore.directRoomId,
+      //   messages: []
+      // })
 
       event.target.value = '';
 
@@ -111,8 +119,8 @@ class PrivateChat extends Component {
         
         {
           context.props.currentChatStore.messages.length>0 ? 
-          context.props.currentChatStore.messages[0].map((message, index) => {
-              return <li id="chat_list" key={index}><b>{message.from}:</b>{message.text}</li>
+          context.props.currentChatStore.messages.map((message, index) => {
+              return <li id="chat_list" key={index}><b>{message.from}: </b>{message.text} {message.timestamp}</li>
             }) : 'no message yet'
           
         }
