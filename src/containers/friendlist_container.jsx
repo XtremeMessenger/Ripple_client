@@ -8,6 +8,7 @@ import FriendlistEntry from './friendlist_entry.jsx'
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
+import Functions from '../functions/functions.js';
 
 class Friendlist extends Component {
   constructor(props) {
@@ -98,18 +99,22 @@ class Friendlist extends Component {
       })
       let directRoomId = responseGetRoomID.data.room_id
       
-      const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getPrivateChatHistory`, {
+      let response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getPrivateChatHistory`, {
         directRoomId: directRoomId
       })
-      console.log('this is getPrivateChatHistory response', response)
+      // let messageArray = [[]];
+      // messageArray[0].push(response)
+      // console.log('this is getPrivateChatHistory response', response)
+      var messageAry = Functions.messageObjToArray(response.data.messageObj)
+      // console.log('this is getPrivateChatHistory messageAry', messageAry)
       await context.props.setPrivateChat({
         currentUser: context.props.currentUserStore.username,
         currentFriend: friend,
         directRoomId: directRoomId,
-        messages: []
+        messages: messageAry
       })
 
-      console.log('response response response ===', response)
+      //console.log('response response response ===', response)
     }
     privateChat()
     
