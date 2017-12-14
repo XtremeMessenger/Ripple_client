@@ -363,7 +363,7 @@ class VideoConference extends Component {
         // ......................................................
         var connection = new RTCMultiConnection();
         // by default, socket.io server is assumed to be deployed on your own URL
-        connection.socketURL = 'http://localhost:3500';
+        connection.socketURL = URL.WEBRTC_SERVER_URL;
         // comment-out below line if you do not have your own socket.io server
         // connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
         connection.socketMessageEvent = 'video-conference-demo';
