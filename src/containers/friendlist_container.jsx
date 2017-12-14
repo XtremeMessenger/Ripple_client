@@ -102,11 +102,12 @@ class Friendlist extends Component {
       let response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getPrivateChatHistory`, {
         directRoomId: directRoomId
       })
-      // let messageArray = [[]];
-      // messageArray[0].push(response)
-      console.log('this is getPrivateChatHistory response', response)
-      var messageAry = Functions.messageObjToArray(response.data.messageObj)
-      console.log('this is getPrivateChatHistory messageAry', messageAry)
+
+      console.log('this is getPrivateChatHistory response.data', response.data)
+      var messageAry = []
+      if (response.data.length !== 0) {
+        messageAry = Functions.messageObjToArray(response.data.messageObj)
+      }
       await context.props.setPrivateChat({
         currentUser: context.props.currentUserStore.username,
         currentFriend: friend,
@@ -114,7 +115,7 @@ class Friendlist extends Component {
         messages: messageAry
       })
 
-      //console.log('response response response ===', response)
+      console.log('this.props.currentChatStore.messages', this.props.currentChatStore.messages)
     }
     privateChat()
     
