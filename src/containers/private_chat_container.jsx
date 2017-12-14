@@ -18,9 +18,10 @@ import Functions from '../functions/functions.js';
 class PrivateChat extends Component {
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleMessageToSocket = this.handleMessageToSocket.bind(this)
     this.handleCloseChat = this.handleCloseChat.bind(this)
     this.handleMessageFromSocket = this.handleMessageFromSocket.bind(this)
+    this.handleStartNewChat = this.handleStartNewChat.bind(this)
     // this.handleVideoChat = this.handleVideoChat.bind(this)
 
     this.state = {
@@ -39,7 +40,7 @@ class PrivateChat extends Component {
       // console.log('this is messages ', this.props.currentChatStore.messages)
       let messageArray = this.props.currentChatStore.messages;
       // console.log('this is messageArray', messageArray)
-      messageArray.push(Functions.socketToCurrentChatStore(message))
+      messageArray.push(message)
       this.props.setPrivateChat({
         currentUser: this.props.currentUserStore.username,
         currentFriend: this.props.currentChatStore.currentFriend,
@@ -49,8 +50,8 @@ class PrivateChat extends Component {
     })
   }
 
-  handleSubmit(event) {
-    console.log('handleSubmit invoked')
+  handleMessageToSocket(event) {
+    console.log('handleMessageToSocket invoked')
     const text = event.target.value
     //console.log('this.props.currentUserStore.username', this.props.currentUserStore)
     if (event.keyCode === 13 && text) {
@@ -69,22 +70,40 @@ class PrivateChat extends Component {
       axios.post(`${URL.LOCAL_SERVER_URL}/main/privateChatStore`, message).then(function (response) {
         console.log('chat store success', response)
       })
-      var messageArray = this.props.currentChatStore.messages;
+      let messageArray = this.props.currentChatStore.messages;
       console.log('this is messageArray', messageArray)
-      console.log('messageArray[0]', messageArray[0])
-      // messageArray[0].push(message)
-      // this.props.setPrivateChat({
-      //   currentUser: this.props.currentUserStore.username,
-      //   currentFriend: this.props.currentChatStore.currentFriend,
-      //   directRoomId: this.props.currentChatStore.directRoomId,
-      //   messages: []
-      // })
+      messageArray.push(message)
+      this.props.setPrivateChat({
+        currentUser: this.props.currentUserStore.username,
+        currentFriend: this.props.currentChatStore.currentFriend,
+        directRoomId: this.props.currentChatStore.directRoomId,
+        messages: messageArray
+      })
 
       event.target.value = '';
 
     }
   }
 
+  handleStartNewChat() {
+    let date = Date.now();
+    var message = {
+      directRoomId: this.props.currentChatStore.directRoomId,
+      from: this.props.currentUserStore.username,
+      text: 'first chat initiated',
+      timestamp: date
+    }
+    axios.post(`${URL.LOCAL_SERVER_URL}/main/createDirectChat`, message).then(function (response) {
+      console.log('chat store success', response)
+    })
+    this.props.setPrivateChat({
+      currentUser: this.props.currentUserStore.username,
+      currentFriend: this.props.currentChatStore.currentFriend,
+      directRoomId: this.props.currentChatStore.directRoomId,
+      messages: [message]
+    })
+
+  }
 
   handleCloseChat() {
     this.props.setPrivateChat({
@@ -121,11 +140,14 @@ class PrivateChat extends Component {
           context.props.currentChatStore.messages.length>0 ? 
           context.props.currentChatStore.messages.map((message, index) => {
               return <li id="chat_list" key={index}><b>{message.from}: </b>{message.text} {message.timestamp}</li>
-            }) : 'no message yet'
-          
+            }) 
+            : "No Message Yet"
         }
-
-        <input type='text' placeholder='Enter a message...' onKeyUp={this.handleSubmit} />
+        {
+          context.props.currentChatStore.messages.length > 0 ?
+            <input type='text' placeholder='Enter a message...' onKeyUp={this.handleMessageToSocket} /> :
+            <span><input type="submit" value="Start New Chat" onClick={this.handleStartNewChat} /></span>
+        }
       </div>
     )
   }
