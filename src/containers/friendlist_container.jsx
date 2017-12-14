@@ -104,9 +104,9 @@ class Friendlist extends Component {
       })
       // let messageArray = [[]];
       // messageArray[0].push(response)
-      // console.log('this is getPrivateChatHistory response', response)
+      console.log('this is getPrivateChatHistory response', response)
       var messageAry = Functions.messageObjToArray(response.data.messageObj)
-      // console.log('this is getPrivateChatHistory messageAry', messageAry)
+      console.log('this is getPrivateChatHistory messageAry', messageAry)
       await context.props.setPrivateChat({
         currentUser: context.props.currentUserStore.username,
         currentFriend: friend,
