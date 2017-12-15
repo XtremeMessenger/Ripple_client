@@ -24,6 +24,7 @@ class PrivateChatBox extends Component {
     // this.handleCloseChat = this.handleCloseChat.bind(this)
     this.handleMessageFromSocket = this.handleMessageFromSocket.bind(this)
     this.handleStartNewChat = this.handleStartNewChat.bind(this)
+    this.handleClickMessage = this.handleClickMessage.bind(this)
     // this.handleVideoChat = this.handleVideoChat.bind(this)
 
     this.state = {
@@ -122,6 +123,10 @@ class PrivateChatBox extends Component {
   //   })
   // }
 
+  handleClickMessage(e) {
+    // alert('you clicked')
+  }
+
   render() {
 
     var context = this;
@@ -144,7 +149,7 @@ class PrivateChatBox extends Component {
         {
           context.props.currentChatStore.messages.length>0 ? 
           context.props.currentChatStore.messages.map((message, index) => {
-              return <li id="chat_list" key={index}><b>{message.from}: </b>{message.text} {message.timestamp}</li>
+              return <li id="chat_list" key={index}><b>{message.from}: </b>{message.text} {message.timestamp} </li>
             }) 
             : "No Message Yet"
         }

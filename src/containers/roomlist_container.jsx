@@ -116,7 +116,7 @@ class Roomlist extends Component {
         <div>
           Rooms: 
           <ul> {this.state.roomsArray.map(function(room, i){
-            return <RoomlistEntry room={room} key = {i} id = {i} onClick={context.handleClick}/> 
+            return <RoomlistEntry room={room} key = {i} id = {i} onClick={this.handleClick}/> 
           })} 
           </ul>
         </div>
