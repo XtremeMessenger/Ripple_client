@@ -56,6 +56,11 @@ class Friendlist extends Component {
     let newFriend = document.getElementById('friendSearchBar').value;
     let currentUser = this.props.currentUserStore;
     // console.log(' this is the current logged user ', currentUser)
+
+    if (newFriend === currentUser.username) {
+      alert('cannot add friend myself')
+    } else {
+
     let friendRequest = {
       requestee: currentUser,
       requested: newFriend
@@ -85,9 +90,13 @@ class Friendlist extends Component {
     }).catch(function (err) {
       console.log('error in add friend ', err)
     })
+
+  }
   }
 
   handleClick(friend){
+
+
 
     var context = this
     // console.log('before click chatview', context.props.currentChatView)
@@ -123,7 +132,7 @@ class Friendlist extends Component {
       console.log('this.props.currentChatStore.messages', this.props.currentChatStore.messages)
     }
     privateChat()
-    
+
   }
 
   render() {
