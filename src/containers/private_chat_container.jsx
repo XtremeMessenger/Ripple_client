@@ -14,6 +14,8 @@ import { browserHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Functions from '../functions/functions.js';
+import PropTypes from 'prop-types'
+
 
 class PrivateChat extends Component {
   constructor(props) {
@@ -152,6 +154,20 @@ class PrivateChat extends Component {
     )
   }
 }
+
+PrivateChat.propTypes = {
+  currentChatStore: PropTypes.shape({
+   messages: PropTypes.array.isRequired,
+   currentUser: PropTypes.string.isRequired,
+   currentFriend: PropTypes.string.isRequired
+  }),
+  currentUserStore: PropTypes.shape({
+    username: PropTypes.string.isRequired
+  }),
+  currentChatView: PropTypes.number.isRequired
+
+};
+
 
 function mapStateToProps(state) {
   return {

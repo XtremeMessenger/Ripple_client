@@ -13,6 +13,7 @@ import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 import io from 'socket.io-client'
 import URL from '../../config/url.js'
 import 'webrtc-adapter';
+import PropTypes from 'prop-types'
 
 
 
@@ -457,6 +458,20 @@ console.log('before navigator.mediaDevices.getUserMedia')
     )
   }
 }
+
+Video.propTypes = {
+  currentChatStore: PropTypes.shape({
+   messages: PropTypes.array.isRequired,
+   currentUser: PropTypes.string.isRequired,
+   currentFriend: PropTypes.string.isRequired
+  }),
+  currentUserStore: PropTypes.shape({
+    username: PropTypes.string.isRequired
+  }),
+  currentChatView: PropTypes.number.isRequired
+
+};
+
 
 function mapStateToProps(state) {
   return {
