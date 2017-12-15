@@ -5,6 +5,7 @@ import axios from 'axios'
 import io from 'socket.io-client'
 import { connect } from 'react-redux'
 import URL from '../../config/url.js'
+import PropTypes from 'prop-types'
 
 class Chat extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class Chat extends Component {
       messages: []
     }
   }
+
 
   componentDidMount() {
     // this.socket = io('http://localhost:3500')
@@ -54,6 +56,17 @@ class Chat extends Component {
     )
   }
 }
+
+
+Chat.propTypes = {
+  messages: PropTypes.array,
+  currentUserStore: PropTypes.shape({
+    username: PropTypes.string.isRequired
+  })
+
+};
+
+  
 
 function mapStateToProps(state) {
   return {

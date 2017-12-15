@@ -4,6 +4,7 @@ import {connect} from  'react-redux'
 import AWS from 'aws-sdk';
 import cfg from '../../config/S3key.js';
 import URL from '../../config/url';
+import PropTypes from 'prop-types'
 // import $ from 'jquery';
 
 
@@ -44,8 +45,13 @@ render() {
     //console.log('this is the sheeet props ', props)
     return (
         <li onClick={this.handleFileClick}> {this.props.id} : {this.props.file.fileName} </li>
-    )
+        )
+    }
 }
 
+FileListEntry.propTypes = {
+    file: PropTypes.shape({
+     fileName: PropTypes.string.isRequired
+    })
+  };
 
-}
