@@ -16,6 +16,8 @@ import Video from './Video.jsx'
 import URL from '../../config/url.js'
 import { setCurrentUser } from '../actions/setCurrentUser.jsx';
 import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
+import { setPrivateChat } from '../actions/setPrivateChat.jsx';
+import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 import jwtDecode from 'jwt-decode';
 
 import { FormGroup } from 'react-bootstrap'
@@ -86,6 +88,15 @@ class Main extends Component {
       last: '',
       quote: '',
       icon: ''
+    })
+    this.props.setPrivateChat({
+      currentUser: this.props.currentUserStore.username,
+      currentFriend: '',
+      directRoomId: null,
+      messages: []
+    })
+    this.props.setCurrentChatView({
+      chatview: 0
     })
     this.props.history.push('/login');
   }
@@ -172,7 +183,9 @@ function matchDispatchToProps(dispatch) {
   // call selectUser in index.js
   return bindActionCreators(
     { setCurrentUser: setCurrentUser,
-    setCurrentFriends: setCurrentFriends }, dispatch)
+      setPrivateChat: setPrivateChat,
+      setCurrentFriends: setCurrentFriends,
+      setCurrentChatView: setCurrentChatView }, dispatch)
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Main);
