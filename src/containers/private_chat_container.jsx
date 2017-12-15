@@ -50,13 +50,13 @@ class PrivateChat extends Component {
     })
   }
 
-  handleMessageToSocket(event) {
+  async handleMessageToSocket(event) {
     console.log('handleMessageToSocket invoked')
     const text = event.target.value
-    //console.log('this.props.currentUserStore.username', this.props.currentUserStore)
+    console.log('this.props.currentUserStore.username', this.props.currentUserStore)
     if (event.keyCode === 13 && text) {
       let date = Date.now();
-
+      await alert('right after clicked', this.props.currentChatStore)
       var message = {
         directRoomId: this.props.currentChatStore.directRoomId,
         from: this.props.currentUserStore.username,
@@ -67,19 +67,19 @@ class PrivateChat extends Component {
       this.socket.emit('private', message)
       console.log('message emitted thru socket', message)
       // new message stores in db
-      axios.post(`${URL.LOCAL_SERVER_URL}/main/privateChatStore`, message).then(function (response) {
+      await axios.post(`${URL.LOCAL_SERVER_URL}/main/privateChatStore`, message).then(function (response) {
         console.log('chat store success', response)
       })
       let messageArray = this.props.currentChatStore.messages;
       console.log('this is messageArray', messageArray)
       messageArray.push(message)
-      this.props.setPrivateChat({
+      await this.props.setPrivateChat({
         currentUser: this.props.currentUserStore.username,
         currentFriend: this.props.currentChatStore.currentFriend,
         directRoomId: this.props.currentChatStore.directRoomId,
         messages: messageArray
       })
-
+      await alert('right after clicked', this.props.currentChatStore)
       event.target.value = '';
 
     }
@@ -132,7 +132,7 @@ class PrivateChat extends Component {
           <Link to="/videoConference"><h2>Video Conference</h2></Link>
         </div>
         <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button>
-        <p> Username: {context.props.currentChatStore.currentUser} </p>
+        <p> Username: {context.props.currentUserStore.username} </p>
         <p> Friend Name: {context.props.currentChatStore.currentFriend} </p>
         <p> Direct Chatroom ID: {context.props.currentChatStore.directRoomId} </p>
         
