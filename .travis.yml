@@ -3,9 +3,9 @@ node_js: node
 cache: 
   directories: 
     - "node_modules"
-before_install: cd 
+before_install: ls 
 install: 
   - npm install
-before_script: cd 
+before_script:  
 script:
   - npm run webpack
