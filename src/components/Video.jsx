@@ -6,7 +6,7 @@ import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import PrivateChatBox from '../containers/private_chatbox.jsx'
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
@@ -442,18 +442,8 @@ console.log('before navigator.mediaDevices.getUserMedia')
           </div>
 
         <button id="closeVideoButton" onClick={this.handleCloseVideo}>Close Video</button>
-        <div>Current User: {this.props.currentChatStore.currentUser}</div>
-        <div>Current User: {this.props.currentChatStore.currentFriend}</div>
+        <div><PrivateChatBox /></div>
         <div id="dropzone"><Dropzone /></div>
-        <div id="private_chat"> Chat Window
-          {
-            this.props.currentChatStore.messages.length > 0 ?
-              this.props.currentChatStore.messages[0].map((message, index) => {
-                return <li id="chat_list" key={index}><b>{message.from}:</b>{message.text}</li>
-              }) : 'no message yet'
-
-          }
-        </div>
       </div>
     )
   }
