@@ -3,9 +3,9 @@ node_js: node
 cache: 
   directories: 
     - "node_modules"
-before_install: cd Ripple_client
+before_install: cd 
 install: 
   - npm install
-before_script: cd Ripple_client
+before_script: cd 
 script:
   - npm run webpack
