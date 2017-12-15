@@ -66,29 +66,34 @@ class Friendlist extends Component {
     // axios.post('/main/addFriend', friendRequest).then(function (response) {
     let context = this;
     axios.post(`${URL.LOCAL_SERVER_URL}/main/addFriend`, friendRequest).then(function (response) {
-      // console.log('add friend success', response)
-      let friends = [];
-      response.data.forEach(function (friend) {
-        friends.push(friend)
-      })
-      context.setState({
-        friendsArr: friends
-      })
-      context.props.setCurrentFriends({
-        currentUser: context.props.currentUserStore.username,
-        currentFriends: friends
-      })
+      console.log('add friend response', response)
+      if (typeof response.data === 'string') {
+        alert(response.data)
+      } else {
+        let friends = [];
+        response.data.forEach(function (friend) {
+          friends.push(friend)
+        })
+        context.setState({
+          friendsArr: friends
+        })
+        context.props.setCurrentFriends({
+          currentUser: context.props.currentUserStore.username,
+          currentFriends: friends
+        })
+      }
     }).catch(function (err) {
       console.log('error in add friend ', err)
     })
   }
 
   handleClick(friend){
+
     var context = this
     // console.log('before click chatview', context.props.currentChatView)
     const privateChat = async () => {
       
-      context.props.setCurrentChatView({
+      await context.props.setCurrentChatView({
         chatview: 1
       })
 
