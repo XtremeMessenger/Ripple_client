@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {connect} from  'react-redux'
+import PropTypes from 'prop-types'
 
 
 export default class RoomlistEntry extends Component {
@@ -25,6 +26,14 @@ render() {
 
 
 }
+
+RoomlistEntry.propTypes = {
+    room: PropTypes.shape({
+     roomname: PropTypes.string.isRequired,
+     resident: PropTypes.string.isRequired
+    })  
+  };
+  
 
 /*
 room.dataValues ===   { roomID: 2,

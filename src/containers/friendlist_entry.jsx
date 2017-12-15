@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {connect} from  'react-redux'
+import PropTypes from 'prop-types'
+import ReactDOM from 'react-dom'
+
 
 
 export default class FriendlistEntry extends Component {
@@ -23,3 +26,10 @@ render() {
 
 
 }
+
+FriendlistEntry.propTypes = {
+    friend: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+
+  };
+  
