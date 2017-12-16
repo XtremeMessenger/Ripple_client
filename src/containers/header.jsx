@@ -27,11 +27,13 @@ import { setCurrentUser } from '../actions/setCurrentUser.jsx';
 import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
+import { setCurrentRequests } from '../actions/setCurrentRequests.jsx';
 import jwtDecode from 'jwt-decode';
 
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import { setInterval } from 'timers';
+import FriendrequestEntry from './friendrequst_entry.jsx'
 // import { browserHistory } from 'react-router';
 // import { Redirect } from 'react-router';
 
@@ -41,6 +43,8 @@ class Header extends Component {
     this.getUserInfo = this.getUserInfo.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
     this.getTokenTimeLeft = this.getTokenTimeLeft.bind(this)
+    this.getFriendRequests = this.getFriendRequests.bind(this)
+    this.handleRequestClick = this.handleRequestClick.bind(this)
     this.state = {
       token: '',
       tokenTimeLeft: 0,
@@ -152,14 +156,44 @@ class Header extends Component {
     getParameter();
   }
 
+  async getFriendRequests() {
+    let currentUser = this.props.currentUserStore;
+    let friendReqeustResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriendRequests`, currentUser)
+    console.log('friendReqeustResponse', friendReqeustResponse)
+    await this.props.setCurrentRequests({
+      currentUser: this.props.currentUserStore.username,
+      currentRequests: friendReqeustResponse.data.data
+    })
+    console.log('after store requests', this.props.currentRequestsStore.currentRequests)
+  }
+
+  async handleRequestClick(request, choice) {
+    console.log('your choice', request.requestID, request.requestee, choice)
+    let decision = {
+      requestee: request.requestee,
+      requested: this.props.currentUserStore.username,
+      decision: choice
+    }
+    console.log('decision === ', decision)
+    let decisionResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/decideFriend`, decision)
+  }
 
   render() {
+    var context = this;
     return (
       <div className="header">
         <div>current User: {this.props.currentUserStore.username}</div>
         <div>current ChatView: {this.props.currentChatView.chatview}</div>
         <div>Session Timeout in:
           {this.state.tokenTimeLeft > 0 ? ` ${this.state.tokenTimeLeft} sec` : ' session out'}</div>
+        <span><input type="submit" value="Check Friend Request" onClick={this.getFriendRequests} /></span>
+        <div>
+          Friend Requests:
+          <div> {this.props.currentRequestsStore.currentRequests.map(function (request, i) {
+            return <FriendrequestEntry request={request} key={i} id={i} onClick={context.handleRequestClick}/>
+          })}
+          </div>
+        </div>
         <span><input type="submit" value="Logout" onClick={this.handleLogout} /></span>
       </div>
     )
@@ -170,7 +204,8 @@ function mapStateToProps(state) {
   return {
     currentUserStore: state.currentUserStore,
     currentChatView: state.currentChatView,
-    currentFriendsStore: state.currentFriendsStore
+    currentFriendsStore: state.currentFriendsStore,
+    currentRequestsStore: state.currentRequestsStore
   }
 }
 
@@ -181,7 +216,8 @@ function matchDispatchToProps(dispatch) {
       setCurrentUser: setCurrentUser,
       setPrivateChat: setPrivateChat,
       setCurrentFriends: setCurrentFriends,
-      setCurrentChatView: setCurrentChatView
+      setCurrentChatView: setCurrentChatView,
+      setCurrentRequests: setCurrentRequests
     }, dispatch)
 }
 
