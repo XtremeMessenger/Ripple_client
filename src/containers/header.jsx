@@ -164,6 +164,23 @@ class Header extends Component {
     }
     console.log('decision === ', decision)
     let decisionResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/decideFriend`, decision)
+    this.getFriendRequests()
+    let userRef = {
+      user: this.props.currentUserStore
+    }
+    let getFriendsResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`, userRef)
+    // console.log('this is response2', response2)
+
+    let friends = [];
+    getFriendsResponse.data.forEach(function (friend) {
+      friends.push(friend)
+    })
+    this.props.setCurrentFriends({
+      currentUser: this.props.currentUserStore.username,
+      currentFriends: friends
+    })
+    console.log('after set current friends in decision ',this.props.currentFriendsStore)
+    this.props.browserHistory.history.push('/')
   }
 
   handleFlagFromSocket() {
@@ -191,7 +208,7 @@ class Header extends Component {
         <div>current ChatView: {this.props.currentChatView.chatview}</div>
         <div>Session Timeout in:
           {this.state.tokenTimeLeft > 0 ? ` ${this.state.tokenTimeLeft} sec` : ' session out'}</div>
-        <span><input type="submit" value="Check Friend Request" onClick={this.getFriendRequests} /></span>
+        <Button bsStyle="primary" onClick={this.getFriendRequests}>Check Friend Request</Button >
         <div>
           Friend Requests:
           <div> {this.props.currentRequestsStore.currentRequests.map(function (request, i) {
