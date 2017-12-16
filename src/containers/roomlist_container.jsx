@@ -113,13 +113,13 @@ class Roomlist extends Component {
         <h2>Create Room</h2>
         <input id="roomSearchBar"></input>
         <button id="createRoomButton" onClick={this.handleMakeRoom}>Create</button>
-        {/* <div>
+        <div>
           Rooms: 
           <ul> {this.state.roomsArray.map(function(room, i){
             return <RoomlistEntry room={room} key = {i} id = {i} onClick={this.handleClick}/> 
           })} 
           </ul>
-        </div> */}
+        </div>
       </div>
     )
   }

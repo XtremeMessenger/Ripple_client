@@ -165,7 +165,7 @@ class Main extends Component {
         <span><input type="submit" value="Logout" onClick={this.handleLogout} /></span> */}
         <div><Header history={this.props.history} /></div>
         <div><UserPanel /></div>
-        <div><Lex /></div>
+        {/* <div><Lex /></div> */}
         <div><Friendlist /></div>
         {this.props.currentChatView.chatview === 0 ?
           <div><Chat /></div> : null}
@@ -176,7 +176,7 @@ class Main extends Component {
         {this.props.currentChatView.chatview === 2 ?
           <div><PrivateRoom /></div> : null}
         
-        <div><Roomlist /></div>
+        {/* <div><Roomlist /></div> */}
       </div>
     )
   }
