@@ -34,6 +34,7 @@ import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import { setInterval } from 'timers';
 import FriendrequestEntry from './friendrequst_entry.jsx'
+import io from 'socket.io-client'
 // import { browserHistory } from 'react-router';
 // import { Redirect } from 'react-router';
 
@@ -45,6 +46,7 @@ class Header extends Component {
     this.getTokenTimeLeft = this.getTokenTimeLeft.bind(this)
     this.getFriendRequests = this.getFriendRequests.bind(this)
     this.handleRequestClick = this.handleRequestClick.bind(this)
+    this.handleFlagFromSocket = this.handleFlagFromSocket.bind(this)
     this.state = {
       token: '',
       tokenTimeLeft: 0,
@@ -76,6 +78,7 @@ class Header extends Component {
     }
     //this.getUserInfo()
     setInterval(this.getTokenTimeLeft, 1000);
+    this.handleFlagFromSocket()
   }
 
   getTokenTimeLeft() {
@@ -176,6 +179,17 @@ class Header extends Component {
     }
     console.log('decision === ', decision)
     let decisionResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/decideFriend`, decision)
+  }
+
+  handleFlagFromSocket() {
+    this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
+    this.socket.on('request', request => {
+      console.log('request got from socket:', request)
+
+      if (request.requested === this.props.currentUserStore.username) {
+        alert('you got a friend request from ' + request.requestee)
+      }
+    })
   }
 
   render() {

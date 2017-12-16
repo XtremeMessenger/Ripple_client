@@ -9,6 +9,7 @@ import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
 import Functions from '../functions/functions.js';
+import io from 'socket.io-client'
 
 class Friendlist extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class Friendlist extends Component {
     .catch(function(err){
       console.log('error in POST request to url /getFriends', err)
     })
-
+    this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
   }
 
   async handleFindFriend() {
@@ -77,6 +78,12 @@ class Friendlist extends Component {
         //send friend request
         let requestResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/requestFriend`, friendRequest)
         console.log('add friend requestResponse', requestResponse)
+        let socketFriendRequest = {
+          requestee: currentUser.username,
+          requested: newFriend
+        }
+        this.socket.emit('request', socketFriendRequest)
+
         alert('friend request sent ' + requestResponse.data.alert)
         // this code is to set all currentfriend to props
         // let friends = [];
