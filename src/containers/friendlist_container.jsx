@@ -51,7 +51,7 @@ class Friendlist extends Component {
 
   }
 
-  handleFindFriend() {
+  async handleFindFriend() {
     // console.log(document.getElementById('friendSearchBar').value);
     let newFriend = document.getElementById('friendSearchBar').value;
     let currentUser = this.props.currentUserStore;
@@ -61,37 +61,37 @@ class Friendlist extends Component {
       alert('cannot add friend myself')
     } else {
 
-    let friendRequest = {
-      requestee: currentUser,
-      requested: newFriend
-    }
-    let userRef = {
-      user: this.props.currentUserStore
-    }
-    // axios.post('/main/addFriend', friendRequest).then(function (response) {
-    let context = this;
-    axios.post(`${URL.LOCAL_SERVER_URL}/main/addFriend`, friendRequest).then(function (response) {
-      console.log('add friend response', response)
-      if (typeof response.data === 'string') {
-        alert(response.data)
-      } else {
-        let friends = [];
-        response.data.forEach(function (friend) {
-          friends.push(friend)
-        })
-        context.setState({
-          friendsArr: friends
-        })
-        context.props.setCurrentFriends({
-          currentUser: context.props.currentUserStore.username,
-          currentFriends: friends
-        })
+      let friendRequest = {
+        requestee: currentUser,
+        requested: newFriend
       }
-    }).catch(function (err) {
-      console.log('error in add friend ', err)
-    })
-
-  }
+      let userRef = {
+        user: this.props.currentUserStore
+      }
+      let context = this;
+      let findFriendResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/findFriend`, friendRequest)
+      // console.log('add friend findFriendResponse', findFriendResponse)
+      if (findFriendResponse.data.error) {
+        alert(findFriendResponse.data.alert)
+      } else {
+        //send friend request
+        let requestResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/requestFriend`, friendRequest)
+        console.log('add friend requestResponse', requestResponse)
+        alert('friend request sent ' + requestResponse.data.alert)
+        // this code is to set all currentfriend to props
+        // let friends = [];
+        // response.data.forEach(function (friend) {
+        //   friends.push(friend)
+        // })
+        // context.setState({
+        //   friendsArr: friends
+        // })
+        // context.props.setCurrentFriends({
+        //   currentUser: context.props.currentUserStore.username,
+        //   currentFriends: friends
+        // })
+      }
+    }
   }
 
   handleClick(friend){
