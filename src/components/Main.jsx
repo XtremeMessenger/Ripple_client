@@ -42,6 +42,11 @@ class Main extends Component {
     }
   }
 
+  componentWillMount() {
+    this.props.setBrowserHistory({
+      history: this.props.history
+    })
+  }
   // shouldComponentUpdate(nextProps) {
   //   return true;
   //   // return !deepEquals(render(this.props), render(nextProps))
@@ -69,9 +74,7 @@ class Main extends Component {
     }
     //this.getUserInfo()
     setInterval(this.getTokenTimeLeft,1000);
-    this.props.setBrowserHistory({
-      history: this.props.history
-    })
+
   }
 
   getTokenTimeLeft() {
