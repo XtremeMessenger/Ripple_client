@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import { browserHistory } from 'react-router';
 import Login from '../containers/login_container.jsx'
 import Signup from '../containers/signup_container.jsx'
 import Header from '../containers/header.jsx'

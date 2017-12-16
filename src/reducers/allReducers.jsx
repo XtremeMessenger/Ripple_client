@@ -6,6 +6,7 @@ import currentRoomStore from './private_room_reducer.jsx';
 import currentChatView from './current_chat_viewing_reducer.jsx';
 import currentFriendsStore from './current_friends_reducer.jsx';
 import currentRequestsStore from './current_reqeusts_reducer.jsx';
+import browserHistory from './browser_history_reducer.jsx'
 
 //combine in to one big object
 const AllReducers = combineReducers({
@@ -15,7 +16,8 @@ const AllReducers = combineReducers({
   currentRoomStore: currentRoomStore,
   currentChatView: currentChatView,
   currentFriendsStore: currentFriendsStore,
-  currentRequestsStore: currentRequestsStore
+  currentRequestsStore: currentRequestsStore,
+  browserHistory: browserHistory
 });
 
 export default AllReducers;

@@ -20,6 +20,7 @@ import { setCurrentUser } from '../actions/setCurrentUser.jsx';
 import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
+import { setBrowserHistory } from '../actions/setBrowserHistory.jsx';
 import jwtDecode from 'jwt-decode';
 
 import { FormGroup } from 'react-bootstrap'
@@ -68,6 +69,9 @@ class Main extends Component {
     }
     //this.getUserInfo()
     setInterval(this.getTokenTimeLeft,1000);
+    this.props.setBrowserHistory({
+      history: this.props.history
+    })
   }
 
   getTokenTimeLeft() {
@@ -179,7 +183,8 @@ function mapStateToProps(state) {
   return {
     currentUserStore: state.currentUserStore,
     currentChatView: state.currentChatView,
-    currentFriendsStore: state.currentFriendsStore
+    currentFriendsStore: state.currentFriendsStore,
+    browserHistory: state.browserHistory
   }
 }
 
@@ -189,7 +194,9 @@ function matchDispatchToProps(dispatch) {
     { setCurrentUser: setCurrentUser,
       setPrivateChat: setPrivateChat,
       setCurrentFriends: setCurrentFriends,
-      setCurrentChatView: setCurrentChatView }, dispatch)
+      setCurrentChatView: setCurrentChatView,
+      setBrowserHistory: setBrowserHistory
+     }, dispatch)
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Main);
