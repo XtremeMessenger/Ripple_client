@@ -48,8 +48,12 @@ class Main extends Component {
     })
   }
   // shouldComponentUpdate(nextProps) {
-  //   return true;
-  //   // return !deepEquals(render(this.props), render(nextProps))
+  //   // alert(this.props.currentFriendsStore.currentFriends.length !== nextProps.currentFriendsStore.currentFriends.length)
+  //   return this.props.currentFriendsStore.currentFriends.length !== nextProps.currentFriendsStore.currentFriends.length;
+  // }
+
+  // componentWillUpdate() {
+
   // }
 
   componentDidMount() {
