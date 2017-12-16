@@ -1,24 +1,9 @@
-// import React, { Component } from 'react'
-// import { connect } from 'react-redux';
-// import { Switch, Route } from 'react-router-dom';
-// import { browserHistory } from 'react-router';
-// import { Link } from 'react-router-dom';
-
-// import { FormGroup } from 'react-bootstrap'
-// import axios from 'axios'
-// import { bindActionCreators } from 'redux';
-// import { setCurrentUser } from '../actions/setCurrentUser.jsx';
-// import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
-// import { setPrivateChat } from '../actions/setPrivateChat.jsx';
-// import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
-// import { setInterval } from 'timers';
-// import jwtDecode from 'jwt-decode';
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-
+import { Button } from 'react-bootstrap'
 
 import { bindActionCreators } from 'redux';
 
@@ -35,8 +20,7 @@ import axios from 'axios'
 import { setInterval } from 'timers';
 import FriendrequestEntry from './friendrequst_entry.jsx'
 import io from 'socket.io-client'
-// import { browserHistory } from 'react-router';
-// import { Redirect } from 'react-router';
+
 
 class Header extends Component {
   constructor(props) {
@@ -47,6 +31,7 @@ class Header extends Component {
     this.getFriendRequests = this.getFriendRequests.bind(this)
     this.handleRequestClick = this.handleRequestClick.bind(this)
     this.handleFlagFromSocket = this.handleFlagFromSocket.bind(this)
+    this.handleEditProfile = this.handleEditProfile.bind(this)
     this.state = {
       token: '',
       tokenTimeLeft: 0,
@@ -112,7 +97,7 @@ class Header extends Component {
       chatview: 0
     })
     console.log('this.props', this.props)
-    this.props.history.push('/login');
+    this.props.browserHistory.history.push('/login')
   }
 
   getUserInfo() {
@@ -192,6 +177,12 @@ class Header extends Component {
     })
   }
 
+  handleEditProfile() {
+    // alert('edit profile button clicked')
+    console.log('browserHistory', this.props.browserHistory)
+    this.props.browserHistory.history.push('/setting')
+  }
+
   render() {
     var context = this;
     return (
@@ -208,7 +199,8 @@ class Header extends Component {
           })}
           </div>
         </div>
-        <span><input type="submit" value="Logout" onClick={this.handleLogout} /></span>
+        <Button bsStyle="warning" onClick={this.handleEditProfile}>EDIT USER PROFILE</Button >
+        <Button bsStyle="danger" onClick={this.handleLogout}>Logout</Button >
       </div>
     )
   }
@@ -219,7 +211,8 @@ function mapStateToProps(state) {
     currentUserStore: state.currentUserStore,
     currentChatView: state.currentChatView,
     currentFriendsStore: state.currentFriendsStore,
-    currentRequestsStore: state.currentRequestsStore
+    currentRequestsStore: state.currentRequestsStore,
+    browserHistory: state.browserHistory
   }
 }
 
