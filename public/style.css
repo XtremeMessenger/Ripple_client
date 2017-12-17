@@ -17,7 +17,7 @@ text-align: center;
 }
 
 #chat{
-background-color:	rgb(249, 14, 14);
+background-color:	rgb(0, 157, 255);
 }
 
 #private_chat{
@@ -27,6 +27,16 @@ background-color:	rgb(81, 93, 181);
 #dropzone{
 background-color:	rgb(244, 244, 7);
 }
+
+.footer{
+background-color:	rgb(255, 0, 0);
+}
+
+
+
+
+
+
 
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */

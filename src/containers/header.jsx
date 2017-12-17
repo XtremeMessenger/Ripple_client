@@ -180,7 +180,7 @@ class Header extends Component {
       currentFriends: friends
     })
     console.log('after set current friends in decision ',this.props.currentFriendsStore)
-    this.props.browserHistory.history.push('/')
+    // this.props.browserHistory.history.push('/')
   }
 
   handleFlagFromSocket() {

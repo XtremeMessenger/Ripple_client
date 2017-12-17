@@ -14,6 +14,7 @@ import Roomlist from '../containers/roomlist_container.jsx'
 import UserPanel from '../containers/userpanel_container.jsx'
 import Lex from '../containers/lex_container/lex.jsx'
 import Header from '../containers/header.jsx'
+import Footer from '../containers/footer.jsx'
 import Video from './Video.jsx'
 import URL from '../../config/url.js'
 import { setCurrentUser } from '../actions/setCurrentUser.jsx';
@@ -179,7 +180,7 @@ class Main extends Component {
           <div><Private /></div> : null}
         {this.props.currentChatView.chatview === 2 ?
           <div><PrivateRoom /></div> : null}
-        
+        <div><Footer /></div>
         {/* <div><Roomlist /></div> */}
       </div>
     )
