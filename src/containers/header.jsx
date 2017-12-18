@@ -203,7 +203,7 @@ class Header extends Component {
   render() {
     var context = this;
     return (
-      <div className="header">
+      <div className="header" id="header">
         <div>current User: {this.props.currentUserStore.username}</div>
         <div>current ChatView: {this.props.currentChatView.chatview}</div>
         <div>Session Timeout in:

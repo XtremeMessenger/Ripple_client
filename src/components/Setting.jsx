@@ -68,7 +68,7 @@ class Setting extends Component {
 
   render() {
     return (
-      <div className="setting">
+      <div className="setting" id="setting">
         <div><Header /></div>
         <img src={this.props.currentUserStore.icon} width="100" height="100" />
         <FormGroup>

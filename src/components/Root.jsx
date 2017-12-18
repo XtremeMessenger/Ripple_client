@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 const Root = () => (
-  <div className="first-page">
+  <div className="first-page" id="root">
    <div className="login-button">
       <Link to="/login">Login</Link>
     </div>

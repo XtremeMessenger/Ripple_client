@@ -44,7 +44,7 @@ componentWillMount(){
 render() {
     //console.log('this is the sheeet props ', props)
     return (
-        <li onClick={this.handleFileClick}> {this.props.id} : {this.props.file.fileName} </li>
+        <li id="files" onClick={this.handleFileClick}> {this.props.id} : {this.props.file.fileName} </li>
         )
     }
 }

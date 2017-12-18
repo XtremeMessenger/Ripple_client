@@ -90,7 +90,7 @@ class Login extends Component {
         <div className="container login-signup-wrappers">
         <div className='row justify-content-center'>
           <div className='col-md-6'>
-            <h2>Login</h2>
+            <h2 id="login">Login</h2>
               <p>
                 Don't have an account?
                 <span className="auth-link">
@@ -100,23 +100,23 @@ class Login extends Component {
                 </span>
               </p>
               <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Email</label> <br></br>
                 <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} placeholder='email'/>
                 {submitted && !email &&
                     <div className="help-block">Username is required</div>
                 }
               </div>
               <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Password</label><br></br>
                 <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} placeholder='Password' />
                 {submitted && !password &&
                     <div className="help-block">Password is required</div>
                 }
               </div>
               <div className="form-group">
-                <button className="btn btn-primary" onClick={this.handleClickSubmit}>Login</button>
+                <button className="btn btn-primary"  onClick={this.handleClickSubmit}>Login</button>
               </div>
-              <div id="credentials"><label> DeveloperOnly: <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} onKeyUp={this.handleEnter}/></label></div> 
+              <div id="credentials"><label> DeveloperOnly:<br></br> <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} onKeyUp={this.handleEnter}/></label></div> 
           </div>
         </div>
         </div>

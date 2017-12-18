@@ -100,7 +100,7 @@ class Signup extends Component {
 
     return (
       <div id="sign_up_view">
-	    <h2>Signup</h2>
+	    <h2 id="signin">Signup</h2>
         <p>
           Already have an account?
             <span className="auth-link">
@@ -110,19 +110,19 @@ class Signup extends Component {
           </span>
         </p>
         <FormGroup id="signup">
-          <div id="credentials"><label> Username: <input type="text" name="username" value={this.state.username} onChange={this.handleChange} /></label></div>
-          <div id="credentials"><label> First Name: <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} /></label></div>
-          <div id="credentials"><label> Last Name: <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} /></label></div>
-          <div id="credentials"><label> Quote: <input type="text" name="quote" value={this.state.quote} onChange={this.handleChange} /></label></div>
+          <div id="credentials"><label> Username: <br></br><input type="text" name="username" value={this.state.username} onChange={this.handleChange} /></label></div>
+          <div id="credentials"><label> First Name: <br></br><input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} /></label></div>
+          <div id="credentials"><label> Last Name: <br></br><input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} /></label></div>
+          <div id="credentials"><label> Quote: <br></br><input type="text" name="quote" value={this.state.quote} onChange={this.handleChange} /></label></div>
           <div id="credentials">
-          <label> Choose an Icon: </label>
+          <label> Choose an Icon: <br></br></label>
           <img src="https://thumbs.dreamstime.com/z/businessman-profile-icon-male-portrait-business-man-flat-design-vector-illustration-55382689.jpg" width="100" height="100" onClick={this.handleIconClick}></img>
           <img src="https://thumbs.dreamstime.com/z/face-woman-hairdo-face-appearance-single-icon-flat-style-vector-symbol-stock-illustration-face-98467159.jpg" width="100" height="100" onClick={this.handleIconClick}></img>
           </div>
-          <div id="credentials"><label> Password: <input type="text" name="password" value={this.state.password} onChange={this.handleChange} /></label></div>
-          <div id="credentials"><label> Email: <input type="text" name="email" value={this.state.email} onChange={this.handleChange} /></label></div>
+          <div id="credentials"><label> Password: <br></br><input type="text" name="password" value={this.state.password} onChange={this.handleChange} /></label></div>
+          <div id="credentials"><label> Email: <br></br><input type="text" name="email" value={this.state.email} onChange={this.handleChange} /></label></div>
           <span><input type="submit" value="Signup" onClick={this.handleClickSubmit} /></span>
-          <div id="credentials"><label> DeveloperOnly: <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} onKeyUp={this.handleEnter} /></label></div>
+          <div id="credentials"><label> DeveloperOnly:<br></br> <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} onKeyUp={this.handleEnter} /></label></div>
         </FormGroup>
       </div>
     )
