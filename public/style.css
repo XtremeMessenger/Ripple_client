@@ -1,37 +1,106 @@
 #yolo{
 /* background-image: url(https://i.pinimg.com/originals/65/c0/c6/65c0c6dd2fec6d01dd5934789f8a4129.gif); */
-background-color: rgb(10, 152, 55);
+background-color: white;
 height: 100vh;
 background-size: cover;
+padding: 10px;
+border: solid red;
+}
+
+#main{
+    padding: 10px;
+    border: solid black;
+}
+
+#root{
+    padding: 10px;
+    border: solid green;
+}
+
+#setting{
+    padding: 10px;
+    border: solid blue;
 }
 
 #sign_up_view{
-text-align: center;
+    text-align: center;
+    padding: 10px;
+    border: solid rgb(35, 37, 35);
+    text-align: center;
+    font-style: italic;
+    color: rgb(166, 194, 176);
+    background-color: rgb(0, 0, 0);
+    height: 100vh;
+}
+#signin{
+    color: rgb(233, 132, 86);
 }
 #login_view{
 text-align: center;
+padding: 10px;
+border: solid rgb(35, 37, 35);
+text-align: center;
+font-style: italic;
+color: rgb(166, 194, 176);
+background-color: rgb(0, 0, 0);
+height: 100vh;
+}
+#login{
+    color: rgb(233, 132, 86);
+}
+/* .btn{
+    color: green;
+    background-color: green;
+} */
+.btn:active{
+    background-color: black;
+}
+.btn:hover{
+    background-color: black;
+}
+.btn-primary{
+    color: rgb(25, 214, 25);
+    background-color: rgb(20, 19, 19);
+    /* background-position: 30px; */
 }
 
 #private_room{
     background-color: rgb(49, 191, 66);
+    padding: 10px;
+    border: solid black;
+    
 }
 
 #chat{
 background-color:	rgb(0, 157, 255);
+padding: 10px;
+border: solid ;
 }
 
 #private_chat{
 background-color:	rgb(81, 93, 181);
+padding: 10px;
+border: solid pink;
 }
-
+#files{
+    padding: 10px;
+    border: solid brown;
+}
 #dropzone{
 background-color:	rgb(244, 244, 7);
+padding: 10px;
+border: solid pink;
 }
 
 .footer{
 background-color:	rgb(255, 0, 0);
+padding: 10px;
+border: solid red;
 }
-
+#header{
+    padding: 10px;
+    border: solid blue;
+}
 
 
 
@@ -120,7 +189,7 @@ background-color:	rgb(255, 0, 0);
     -moz-box-shadow:inset 0px 39px 0px -24px #e67a73;
     -webkit-box-shadow:inset 0px 39px 0px -24px #e67a73;
     box-shadow:inset 0px 39px 0px -24px #e67a73;
-    background-color:#e4685d;
+    background-color:#000000;
     -moz-border-radius:4px;
     -webkit-border-radius:4px;
     border-radius:4px;
@@ -133,11 +202,12 @@ background-color:	rgb(255, 0, 0);
     text-shadow:0px 1px 0px #b23e35;
   }
   button:hover {
-    background-color:#eb675e;
+    background-color:#050303;
   }
   button:active {
     position:relative;
     top:1px;
+    background-color: black;
   }
   
   button[disabled], input[disabled] {

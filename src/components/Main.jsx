@@ -162,7 +162,7 @@ class Main extends Component {
 
   render() {
     return (
-      <div className="main">
+      <div className="main" id="main">
         {/* <div>current User: {this.props.currentUserStore.username}</div>
         <div>current ChatView: {this.props.currentChatView.chatview}</div>
         <div>Session Timeout in:
