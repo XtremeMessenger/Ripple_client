@@ -8,9 +8,9 @@ import { bindActionCreators } from 'redux';
 import Chat from '../containers/chat_container.jsx'
 // import PrivateChat from '../containers/private_chat_container.jsx'
 import Private from '../containers/private_container.jsx'
-import PrivateRoom from '../containers/private_room_container.jsx'
+// import PrivateRoom from '../containers/private_room_container.jsx'
 import Friendlist from '../containers/friendlist_container.jsx'
-import Roomlist from '../containers/roomlist_container.jsx'
+// import Roomlist from '../containers/roomlist_container.jsx'
 import UserPanel from '../containers/userpanel_container.jsx'
 import Lex from '../containers/lex_container/lex.jsx'
 import Header from '../containers/header.jsx'
@@ -178,8 +178,8 @@ class Main extends Component {
           <div id="chat">No Chat Room Opened</div> : null}
         {this.props.currentChatView.chatview === 1 ? 
           <div><Private /></div> : null}
-        {this.props.currentChatView.chatview === 2 ?
-          <div><PrivateRoom /></div> : null}
+        {/* {this.props.currentChatView.chatview === 2 ?
+          <div><PrivateRoom /></div> : null} */}
         <div><Footer /></div>
         {/* <div><Roomlist /></div> */}
       </div>
