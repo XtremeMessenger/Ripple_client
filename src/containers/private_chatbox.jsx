@@ -149,7 +149,7 @@ class PrivateChatBox extends Component {
         {
           context.props.currentChatStore.messages.length>0 ? 
           context.props.currentChatStore.messages.map((message, index) => {
-              return <li id="chat_list" key={index}><b>{message.from}: </b>{message.text} {message.timestamp} </li>
+              return <li id="chat_list" key={index}><b>{message.from}: </b>{message.text} { Functions.timestampToDate(message.timestamp) } </li>
             }) 
             : "No Message Yet"
         }
