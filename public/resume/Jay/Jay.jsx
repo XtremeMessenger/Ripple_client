@@ -19,7 +19,7 @@ class Jay extends Component {
     return (
       <div className="jay">
         This is Jay Page
-        <a href="https://drive.google.com/open?id=1etJGtB_PnCyL5RP1WIclD68jPM2MgsCP">Resume</a>
+        <a href="www.jaycv.com">Resume</a>
         <Button bsStyle="warning" onClick={this.handleRetuen}>RETURN</Button >
       </div>
     )
