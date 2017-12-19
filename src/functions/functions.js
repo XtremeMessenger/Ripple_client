@@ -2,7 +2,7 @@ module.exports.messageObjToArray = (obj) => {
   return Object
     .entries(obj)
     .map((value) => (value[1]))
-    .sort((a,b) => (a.timestamp - b.timestamp))
+    .sort((b,a) => (a.timestamp - b.timestamp))
 }
 
 module.exports.timestampToDate = (timestamp) => {
@@ -27,7 +27,10 @@ module.exports.timestampToDate = (timestamp) => {
   }
 
   // ie: 2013-02-18, 8:35 AM	
-  time = yyyy + '-' + mm + '-' + dd + ', ' + h + ':' + min + ' ' + ampm;
+  // time = yyyy + '-' + mm + '-' + dd + ', ' + h + ':' + min + ' ' + ampm;
+
+  // ie: 02/18/2013, 8:35 AM	
+  time = h + ':' + min + ' ' + ampm + ', ' + mm + '/' + dd;
 
   return time;
 }
