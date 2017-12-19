@@ -119,7 +119,7 @@ text-align: center;
     border: solid brown;
 }
 #dropzone{
-background-color:	rgb(244, 244, 7);
+background-color:	rgb(255, 255, 255);
 padding: 10px;
 margin: 15px;
 border: solid pink;
@@ -147,6 +147,7 @@ font-style: italic;
 }
 
 .video-container{
+    background-color: white;
     position: relative;
     padding-bottom: 35%; /* 16:9 */
     padding-top: 25px;
