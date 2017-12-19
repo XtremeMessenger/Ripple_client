@@ -11,7 +11,7 @@ import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
 import io from 'socket.io-client'
-import URL from '../../config/url.js'
+// import URL from '../../config/url.js'
 import 'webrtc-adapter';
 //import {getHTMLMediaElement} from '../../node_modules/rtcmulticonnection-v3/dev/getHTMLMediaElement.js';
 import Script from 'react-load-script'
@@ -46,12 +46,12 @@ class VideoConference extends Component {
         
             mediaElement.controls = false;
         
-            var buttons = config.buttons || ['mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop'];
+            var buttons =  ['mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop'];
             buttons.has = function(element) {
                 return buttons.indexOf(element) !== -1;
             };
         
-            config.toggle = config.toggle || [];
+            config.toggle =  [];
             config.toggle.has = function(element) {
                 return config.toggle.indexOf(element) !== -1;
             };
@@ -119,8 +119,19 @@ class VideoConference extends Component {
                 var stop = document.createElement('div');
                 stop.className = 'control stop';
                 mediaControls.appendChild(stop);
-        
+                let localVideo = mediaElement
+                console.log('local video', localVideo)
+                let stream = localVideo.srcObject;
+                let tracks = stream.getTracks();
+
                 stop.onclick = function() {
+                    tracks.forEach(function(track) {
+                        track.stop();
+                      });
+                    
+                      localVideo.srcObject = null;
+                    
+                      localVideo.src = null;
                     mediaElementContainer.style.opacity = 0;
                     setTimeout(function() {
                         if (mediaElementContainer.parentNode) {
@@ -350,20 +361,20 @@ class VideoConference extends Component {
             disableInputButtons();
             connection.join(document.getElementById('room-id').value);
         };
-        document.getElementById('open-or-join-room').onclick = function() {
-            disableInputButtons();
-            connection.openOrJoin(document.getElementById('room-id').value, function(isRoomExist, roomid) {
-                if (!isRoomExist) {
-                    showRoomURL(roomid);
-                }
-            });
-        };
+        // document.getElementById('open-or-join-room').onclick = function() {
+        //     disableInputButtons();
+        //     connection.openOrJoin(document.getElementById('room-id').value, function(isRoomExist, roomid) {
+        //         if (!isRoomExist) {
+        //             showRoomURL(roomid);
+        //         }
+        //     });
+        // };
         // ......................................................
         // ..................RTCMultiConnection Code.............
         // ......................................................
         var connection = new RTCMultiConnection();
         // by default, socket.io server is assumed to be deployed on your own URL
-        connection.socketURL = URL.WEBRTC_SERVER_URL;
+        connection.socketURL = "http://localhost:3700";
         // comment-out below line if you do not have your own socket.io server
         // connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
         connection.socketMessageEvent = 'video-conference-demo';
@@ -409,7 +420,7 @@ class VideoConference extends Component {
             }
         };
         function disableInputButtons() {
-            document.getElementById('open-or-join-room').disabled = true;
+            // document.getElementById('open-or-join-room').disabled = true;
             document.getElementById('open-room').disabled = true;
             document.getElementById('join-room').disabled = true;
             document.getElementById('room-id').disabled = true;
@@ -487,34 +498,23 @@ class VideoConference extends Component {
       render(){
           return (
             <div>
-            
-            <Script
-            url="https://cdn.webrtc-experiment.com/RTCMultiConnection.js"
-            onLoad={this.startConference.bind(this)}
-            onError={this.handleScriptError.bind(this)} />
-      
+                <Script
+                url="https://cdn.webrtc-experiment.com/RTCMultiConnection.js"
+                onLoad={this.startConference.bind(this)}
+                onError={this.handleScriptError.bind(this)} />
+        
+                    <section className="make-center">
+                        <input type="text" id="room-id" placeholder="abcdef" />
+                        <button id="open-room">Open Room</button>
+                        <button id="join-room">Join Room</button>
 
-  <section className="make-center">
-  <input type="text" id="room-id" placeholder="abcdef" />
-  <button id="open-room">Open Room</button>
-  <button id="join-room">Join Room</button>
-  <button id="open-or-join-room">Auto Open Or Join Room</button>
+                        <div id="room-urls"></div>
 
-  <div id="room-urls"></div>
-
-  <div id="videos-container"></div>
-</section>
-
-<script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
-<script src="/dev/getHTMLMediaElement.js"></script>
-<script src="/dev/adapter.js"></script>
-<script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
-</div>            
-
+                        <div id="videos-container"></div>
+                    </section>
+            </div>            
           )
       }
-
-
 }
 
 function mapStateToProps(state) {

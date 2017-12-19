@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Signup from './signup_container.jsx';
-import FIREBASE from '../../config/firebase.js'
+// import FIREBASE from '../../config/firebase.js'
 import axios from 'axios';
 import { setCurrentUser } from '../actions/setCurrentUser.jsx';
-import URL from '../../config/url.js'
+// import URL from '../../config/url.js'
 import { Link } from 'react-router-dom';
 
 const firebase = require('firebase')
@@ -57,7 +57,7 @@ class Login extends Component {
       firebase.auth.Auth.Persistence.LOCAL
 
       const getParameter = async () => {
-        const response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/login`, {
+        const response = await axios.post(`/main/login`, {
           firebase_id: user.uid
         })
         context.props.setCurrentUser(response.data[0])
