@@ -4,7 +4,7 @@ import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import io from 'socket.io-client'
 import { connect } from 'react-redux'
-import URL from '../../config/url.js'
+// import URL from '../../config/url.js'
 import PropTypes from 'prop-types'
 
 class Chat extends Component {
@@ -19,7 +19,7 @@ class Chat extends Component {
 
   componentDidMount() {
     // this.socket = io('http://localhost:3500')
-    this.socket = io(URL.SOCKET_SERVER_URL)
+    this.socket = io("http://localhost:3500")
     // this.socket.on('message', message => {
     //   this.setState({ messages: [message, ...this.state.messages] })
     // })

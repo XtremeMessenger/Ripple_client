@@ -11,7 +11,7 @@ import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
 import io from 'socket.io-client'
-import URL from '../../config/url.js'
+// import URL from '../../config/url.js'
 import 'webrtc-adapter';
 import PropTypes from 'prop-types'
 
@@ -40,6 +40,50 @@ class Video extends Component {
     // })
     this.props.currentChatStore.currentUser
     this.props.currentChatStore.currentFriend
+
+    //draggable elements
+    dragElement(document.getElementById(("remoteVideo")));
+    dragElement(document.getElementById(("localVideo")));
+    
+    function dragElement(elmnt) {
+      var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      if (document.getElementById(elmnt.id + "header")) {
+        /* if present, the header is where you move the DIV from:*/
+        document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+      } else {
+        /* otherwise, move the DIV from anywhere inside the DIV:*/
+        elmnt.onmousedown = dragMouseDown;
+      }
+    
+      function dragMouseDown(e) {
+        e = e || window.event;
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+      }
+    
+      function elementDrag(e) {
+        e = e || window.event;
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+      }
+    
+      function closeDragElement() {
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+    }
+    
   }
 
   handleCloseVideo() {
@@ -70,10 +114,18 @@ class Video extends Component {
         
         window.room = prompt("Enter room name:");
         var isInitiator;
-        var socket = io.connect(URL.SOCKET_SERVER_URL);
+        var socket = io.connect("http://localhost:3500");
+        if(room === ""){
+          alert('Please enter valid room name')
+          return;
+        }
         
-    
-        if (room !== "") {
+        if (room === null){
+          alert('Please enter valid room name')
+          return;
+        }
+        
+        if (room !== "" || null) {
           console.log('Message from client: Asking to join room ' + room);
           socket.emit('create or join', room);
         }
@@ -148,17 +200,18 @@ class Video extends Component {
         let remoteVideo = document.getElementById('remoteVideo');
         
     
-console.log('before navigator.mediaDevices.getUserMedia')
+        console.log('before navigator.mediaDevices.getUserMedia')
 
-        navigator.mediaDevices.getUserMedia({
-          audio: true,
-          video: true
-        })
-.then(gotStream)
-.catch(function(e) {
-  alert('getUserMedia() error: ' + e.name);
-});
-    
+        if(room!== null || ""){
+          navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: true
+          })
+          .then(gotStream)
+          .catch(function(e) {
+            alert('getUserMedia() error: ' + e.name);
+          });
+        }
         function gotStream(stream) {
           console.log('Adding local stream.');
           localVideo.src = window.URL.createObjectURL(stream);
@@ -431,17 +484,15 @@ console.log('before navigator.mediaDevices.getUserMedia')
     let context = this
     return (
       <div className="video">
-
-        <video id="localVideo" muted="muted" width="200" height="180" autoPlay></video>
-        <video id="remoteVideo" autoPlay></video>
-
-          <div>
-            <button id="startButton" onClick={this.handleVideoClick}>Start</button>
-            <button id="callButton">Call</button>
+        <div className="video-container">
+          <video id="remoteVideo" width="580" height="400"autoPlay></video>
+          <video id="localVideo" muted="muted" width="200" height="180" autoPlay></video>
+        </div>
+          <div className="startcall">
+            <button id="startButton" onClick={this.handleVideoClick}>Start Call</button>
             <button id="hangupButton" onClick={this.handleHangUp}>Hang Up</button>
-          </div>
-
-        <button id="closeVideoButton" onClick={this.handleCloseVideo}>Close Video</button>
+            <button id="closeVideoButton" onClick={this.handleCloseVideo}>Back to Main</button>
+        </div>
         <div><PrivateChatBox /></div>
         <div id="dropzone"><Dropzone /></div>
       </div>

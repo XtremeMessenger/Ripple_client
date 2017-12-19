@@ -119,7 +119,7 @@ text-align: center;
     border: solid brown;
 }
 #dropzone{
-background-color:	rgb(244, 244, 7);
+background-color:	rgb(255, 255, 255);
 padding: 10px;
 margin: 15px;
 border: solid pink;
@@ -146,8 +146,50 @@ font-style: italic;
 
 }
 
+.video-container{
+    background-color: white;
+    position: relative;
+    padding-bottom: 35%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+  }
 
+#closeVideoButton{
+    text-align: center;
+}
+#localVideo{
+    position: absolute;
+    top: 70%;  /* position the top  edge of the element at the middle of the parent */
+    left: 45%; /* position the left edge of the element at the middle of the parent */
+    display: block;
+    size: contain;
+    margin: 0 auto;
+    background-color: white;
+    background: url("https://cdn.dribbble.com/users/359314/screenshots/2379673/untitled-3.gif");
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: center;        
+    border-radius: 10px;
+    border: 10px outset rgb(156, 207, 231);
+}
 
+#remoteVideo{
+    position: absolute;
+    top: 35%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+
+    transform: translate(-50%, -50%); 
+    display: block;    
+    margin: 0 auto;
+    background-color: white;
+    
+    background: url("https://cdn.dribbble.com/users/359314/screenshots/2379673/untitled-3.gif");
+    background-size: 30%;
+    background-repeat: no-repeat;   
+    background-position: center;    
+    border-radius: 10px;    
+    border: 10px outset rgb(156, 207, 231);
+}
 
 
 

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import io from 'socket.io-client'
 import SocketIOFileUpload from 'socketio-file-upload';
-import URL from '../../config/url.js';
+// import URL from '../../config/url.js';
 import { connect } from 'react-redux';
 import { FormGroup } from 'react-bootstrap';
 import FileListEntry from './file_list_entry.jsx'
@@ -25,12 +25,12 @@ handleClick(file){
     let files = [];
     let currentUser = this.props.currentChatStore.currentUser;
     let currentFriend = this.props.currentChatStore.currentFriend;
-    var socket = io.connect(URL.SOCKET_SERVER_URL);
+    var socket = io.connect("http://localhost:3500");
     var uploader = new SocketIOFileUpload(socket);
     let loggedUser = {
       user: currentUser
     }
-    axios.post(`${URL.LOCAL_SERVER_URL}/main/getFiles`,loggedUser).then(function(response){
+    axios.post(`/main/getFiles`,loggedUser).then(function(response){
       console.log('this is getFiles response ', response)
       response.data.forEach(function(file){
         files.push(file)
@@ -50,7 +50,7 @@ handleClick(file){
         to: currentFriend,
         fileName: event.file.name
       }
-      axios.post(`${URL.LOCAL_SERVER_URL}/main/privateSendFile`, fileNfo).then(function (response) {
+      axios.post(`/main/privateSendFile`, fileNfo).then(function (response) {
         // axios.post(`/main/privateChatStore`, message).then(function (response) {
           console.log('file record nfo', response)
           
