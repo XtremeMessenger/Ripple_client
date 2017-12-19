@@ -85,36 +85,17 @@ class Friendlist extends Component {
         this.socket.emit('request', socketFriendRequest)
 
         alert('friend request sent ' + requestResponse.data.alert)
-        // this code is to set all currentfriend to props
-        // let friends = [];
-        // response.data.forEach(function (friend) {
-        //   friends.push(friend)
-        // })
-        // context.setState({
-        //   friendsArr: friends
-        // })
-        // context.props.setCurrentFriends({
-        //   currentUser: context.props.currentUserStore.username,
-        //   currentFriends: friends
-        // })
       }
     }
   }
 
   handleClick(friend){
-
-
-
     var context = this
-    // console.log('before click chatview', context.props.currentChatView)
     const privateChat = async () => {
-      
       await context.props.setCurrentChatView({
         chatview: 1
       })
-
-      // console.log('this.props.currentFriends', context.props.currentFriends)
-      const responseGetRoomID = await axios.post(`/main/getDirectRoomID`, {
+      const responseGetRoomID = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getDirectRoomID`, {
         username: context.props.currentUserStore.username,
         friendname: friend
       })
