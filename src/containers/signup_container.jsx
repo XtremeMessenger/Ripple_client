@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { FormGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import FIREBASE from '../../config/firebase.js'
-// import URL from '../../config/url.js'
+import URL from '../../config/url.js'
 
 const firebase = require("firebase");
 firebase.initializeApp(FIREBASE.FIREBASE_CONFIG);
@@ -82,7 +82,7 @@ class Signup extends Component {
         icon: context.state.icon
       }
       //axios.post('http://www.jayop.com:3000/main/signup', newUser)
-      axios.post(`/main/signup`, newUser)
+      axios.post(`${URL.SERVER_URL}/main/signup`, newUser)
       .then(response => {
         console.log('sign up response ', response.data)
         context.props.history.push('/login')

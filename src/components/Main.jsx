@@ -17,7 +17,7 @@ import Lex from '../containers/lex_container/lex.jsx'
 import Header from '../containers/header.jsx'
 import Footer from '../containers/footer.jsx'
 import Video from './Video.jsx'
-// import URL from '../../config/url.js'
+import URL from '../../config/url.js'
 import { setCurrentUser } from '../actions/setCurrentUser.jsx';
 import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
@@ -122,7 +122,7 @@ class Main extends Component {
     var friends = this.state.friendsArr.slice()
     const getParameter = async () => {
       //const response = await axios.post('http://www.jayop.com:3000/main/login', {
-      var response = await axios.post(`/main/auth`, {
+      var response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/auth`, {
         firebase_id: localStorage.uid
       })
       await context.setState({ currentUser: response.data[0].username })
@@ -133,7 +133,7 @@ class Main extends Component {
         user: response.data[0]
       };
       // console.log('componentWillMount userRef', userRef)
-      var response2 = await axios.post(`/main/getFriends`, userRef)
+      var response2 = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`, userRef)
       // console.log('this is response2', response2)
       await response2.data.forEach(function (friend) {
         friends.push(friend)

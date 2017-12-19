@@ -3,7 +3,7 @@ import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import { bindActionCreators } from 'redux';
 import {connect} from  'react-redux'
-// import URL from '../../config/url.js'
+import URL from '../../config/url.js'
 import RoomlistEntry from './roomlist_entry.jsx'
 import { setPrivateRoom } from '../actions/setPrivateRoom.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
@@ -29,7 +29,7 @@ class Roomlist extends Component {
       username: this.props.currentUserStore
     }
     // console.log('currentUser', currentUser)
-    axios.post(`/main/getRooms`,userRef)
+    axios.post(`${URL.LOCAL_SERVER_URL}/main/getRooms`,userRef)
     .then(function(response){
       console.log('this is getRooms response', response)
       response.data.forEach(function(room){
@@ -64,7 +64,7 @@ class Roomlist extends Component {
       }
 
       console.log('roomRequest', roomRequest)
-      axios.post(`/main/addRoom`, roomRequest).then(function(response){
+      axios.post(`${URL.LOCAL_SERVER_URL}/main/addRoom`, roomRequest).then(function(response){
         console.log('add room success', response)
         let rooms = [];
         response.data.forEach(function (room) {
