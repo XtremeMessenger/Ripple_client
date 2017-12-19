@@ -95,6 +95,7 @@ class Friendlist extends Component {
       await context.props.setCurrentChatView({
         chatview: 1
       })
+
       const responseGetRoomID = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getDirectRoomID`, {
         username: context.props.currentUserStore.username,
         friendname: friend
