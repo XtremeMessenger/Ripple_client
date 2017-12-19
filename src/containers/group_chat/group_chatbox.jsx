@@ -45,7 +45,7 @@ class GroupChatBox extends Component {
         // console.log('this is messages ', this.props.currentGroupChatStore.messages)
         let messageArray = this.props.currentGroupChatStore.messages;
         // console.log('this is messageArray', messageArray)
-        messageArray.push(message)
+        messageArray.unshift(message)
         this.props.setGroupChat({
           currentUser: this.props.currentUserStore.username,
           currentRoom: this.props.currentGroupChatStore.currentRoom,
@@ -76,7 +76,7 @@ class GroupChatBox extends Component {
       })
       let messageArray = this.props.currentGroupChatStore.messages;
       console.log('this is messageArray', messageArray)
-      messageArray.push(message)
+      messageArray.unshift(message)
       
       this.props.setGroupChat({
         currentUser: this.props.currentUserStore.username,

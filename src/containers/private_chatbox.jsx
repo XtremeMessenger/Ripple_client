@@ -46,7 +46,7 @@ class PrivateChatBox extends Component {
         // console.log('this is messages ', this.props.currentChatStore.messages)
         let messageArray = this.props.currentChatStore.messages;
         // console.log('this is messageArray', messageArray)
-        messageArray.push(message)
+        messageArray.unshift(message)
         this.props.setPrivateChat({
           currentUser: this.props.currentUserStore.username,
           currentFriend: this.props.currentChatStore.currentFriend,
@@ -78,7 +78,7 @@ class PrivateChatBox extends Component {
       })
       let messageArray = this.props.currentChatStore.messages;
       console.log('this is messageArray', messageArray)
-      messageArray.push(message)
+      messageArray.unshift(message)
       
       this.props.setPrivateChat({
         currentUser: this.props.currentUserStore.username,
