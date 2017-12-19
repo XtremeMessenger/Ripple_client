@@ -32,6 +32,7 @@ class Header extends Component {
     this.handleRequestClick = this.handleRequestClick.bind(this)
     this.handleFlagFromSocket = this.handleFlagFromSocket.bind(this)
     this.handleEditProfile = this.handleEditProfile.bind(this)
+    this.getFriends = this.getFriends.bind(this)
     this.state = {
       token: '',
       tokenTimeLeft: 0,
@@ -104,20 +105,16 @@ class Header extends Component {
     var context = this;
     var friends = this.state.friendsArr.slice()
     const getParameter = async () => {
-      //const response = await axios.post('http://www.jayop.com:3000/main/login', {
       var response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/auth`, {
         firebase_id: localStorage.uid
       })
       await context.setState({ currentUser: response.data[0].username })
       await context.props.setCurrentUser(response.data[0])
-      // console.log('response.data[0] in Main', response.data[0])
 
       let userRef = {
         user: response.data[0]
       };
-      // console.log('componentWillMount userRef', userRef)
       var response2 = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`, userRef)
-      // console.log('this is response2', response2)
       await response2.data.forEach(function (friend) {
         friends.push(friend)
       })
@@ -129,17 +126,6 @@ class Header extends Component {
         currentUser: response.data[0].username,
         currentFriends: friends
       }, () => { console.log('friendsarray after willmount', context.state.friendsArr) })
-      // .then(function (response) {
-      //   console.log('this is getFriends response', response)
-      //   response.data.forEach(function (friend) {
-      //     friends.push(friend)
-      //   })
-      //   context.setState({
-      //     friendsArr: friends
-      //   }, () => {console.log('friendsarray after willmount',this.state.friendsArr)})
-      // })
-
-      // console.log('friendsarray after willmount', this.state.friendsArr)
     }
     getParameter();
   }
@@ -147,12 +133,12 @@ class Header extends Component {
   async getFriendRequests() {
     let currentUser = this.props.currentUserStore;
     let friendReqeustResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriendRequests`, currentUser)
-    console.log('friendReqeustResponse', friendReqeustResponse)
+    // console.log('friendReqeustResponse', friendReqeustResponse)
     await this.props.setCurrentRequests({
       currentUser: this.props.currentUserStore.username,
       currentRequests: friendReqeustResponse.data.data
     })
-    console.log('after store requests', this.props.currentRequestsStore.currentRequests)
+    // console.log('after store requests', this.props.currentRequestsStore.currentRequests)
   }
 
   async handleRequestClick(request, choice) {
@@ -164,13 +150,20 @@ class Header extends Component {
     }
     console.log('decision === ', decision)
     let decisionResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/decideFriend`, decision)
-    this.getFriendRequests()
+    if (choice) {
+      this.socket.emit('accept', decision)
+      this.getFriendRequests()
+      this.getFriends()
+    }
+    // this.props.browserHistory.history.push('/')
+  }
+
+  async getFriends() {
+    console.log('getFriends invoked')
     let userRef = {
       user: this.props.currentUserStore
     }
     let getFriendsResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`, userRef)
-    // console.log('this is response2', response2)
-
     let friends = [];
     getFriendsResponse.data.forEach(function (friend) {
       friends.push(friend)
@@ -179,8 +172,7 @@ class Header extends Component {
       currentUser: this.props.currentUserStore.username,
       currentFriends: friends
     })
-    console.log('after set current friends in decision ',this.props.currentFriendsStore)
-    // this.props.browserHistory.history.push('/')
+    console.log('after set current friends in decision ', this.props.currentFriendsStore)
   }
 
   handleFlagFromSocket() {
@@ -190,6 +182,15 @@ class Header extends Component {
 
       if (request.requested === this.props.currentUserStore.username) {
         alert('you got a friend request from ' + request.requestee)
+        this.getFriendRequests()
+      }
+    })
+    this.socket.on('accept', accept => {
+      console.log('accepted from socket:', accept)
+
+      if (accept.requestee === this.props.currentUserStore.username) {
+        alert('you and ' + accept.requested + ' are friends now')
+        this.getFriends()
       }
     })
   }

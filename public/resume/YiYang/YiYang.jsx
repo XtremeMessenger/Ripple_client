@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux';
+import URL from '../../../config/personal/yiyang/url.js'
 
 class YiYang extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class YiYang extends Component {
     return (
       <div className="YiYang">
         This is YiYang Page
-        <a href="https://drive.google.com/open?id=1GJNezOawJ6-e_PXhxYTG8P4sGTx7-diP">Resume</a>
+        <a href={URL.RESUME}>Resume</a>
         <Button bsStyle="warning" onClick={this.handleRetuen}>RETURN</Button >
       </div>
     )

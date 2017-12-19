@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
+import URL from '../../../config/personal/ruslan/url.js'
 
 class Ruslan extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class Ruslan extends Component {
     return (
       <div className="Ruslan">
         This is Ruslan Page
+        {/* <a href={URL.RESUME}>Resume</a> */}
         <Button bsStyle="warning" onClick={this.handleRetuen}>RETURN</Button >
       </div>
     )
