@@ -11,7 +11,7 @@ import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
 import io from 'socket.io-client'
-// import URL from '../../config/url.js'
+import URL from '../../config/url.js'
 import 'webrtc-adapter';
 //import {getHTMLMediaElement} from '../../node_modules/rtcmulticonnection-v3/dev/getHTMLMediaElement.js';
 import Script from 'react-load-script'
@@ -351,16 +351,6 @@ class VideoConference extends Component {
             return mediaElementContainer;
         }
 
-        document.getElementById('open-room').onclick = function() {
-            disableInputButtons();
-            connection.open(document.getElementById('room-id').value, function() {
-                showRoomURL(connection.sessionid);
-            });
-        };
-        document.getElementById('join-room').onclick = function() {
-            disableInputButtons();
-            connection.join(document.getElementById('room-id').value);
-        };
         // document.getElementById('open-or-join-room').onclick = function() {
         //     disableInputButtons();
         //     connection.openOrJoin(document.getElementById('room-id').value, function(isRoomExist, roomid) {
@@ -374,7 +364,7 @@ class VideoConference extends Component {
         // ......................................................
         var connection = new RTCMultiConnection();
         // by default, socket.io server is assumed to be deployed on your own URL
-        connection.socketURL = "http://localhost:3700";
+        connection.socketURL = URL.WEBRTC_SERVER_URL;
         // comment-out below line if you do not have your own socket.io server
         // connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
         connection.socketMessageEvent = 'video-conference-demo';
@@ -385,6 +375,22 @@ class VideoConference extends Component {
         connection.sdpConstraints.mandatory = {
             OfferToReceiveAudio: true,
             OfferToReceiveVideo: true
+        };
+
+
+        document.getElementById('open-room').onclick = function() {
+            disableInputButtons();
+            let id = document.getElementById('room-id').value;
+            console.log('room id is ', id)
+            showRoomURL(id)
+            connection.open(document.getElementById('room-id').value, function() {
+                console.log('in connection.open callback')
+                showRoomURL(connection.sessionid);
+            });
+        };
+        document.getElementById('join-room').onclick = function() {
+            disableInputButtons();
+            connection.join(document.getElementById('room-id').value);
         };
         connection.videosContainer = document.getElementById('videos-container');
         connection.onstream = function(event) {
@@ -429,6 +435,7 @@ class VideoConference extends Component {
         // ......................Handling Room-ID................
         // ......................................................
         function showRoomURL(roomid) {
+            console.log('showRoomURL function ', roomid)
             var roomHashURL = '#' + roomid;
             var roomQueryStringURL = '?roomid=' + roomid;
             var html = '<h2>Unique URL for your room:</h2><br>';

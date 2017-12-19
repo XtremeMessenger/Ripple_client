@@ -11,7 +11,7 @@ import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
 import io from 'socket.io-client'
-// import URL from '../../config/url.js'
+import URL from '../../config/url.js'
 import 'webrtc-adapter';
 import PropTypes from 'prop-types'
 
@@ -114,7 +114,7 @@ class Video extends Component {
         
         window.room = prompt("Enter room name:");
         var isInitiator;
-        var socket = io.connect("http://localhost:3500");
+        var socket = io.connect(URL.SOCKET_SERVER_URL);
         if(room === ""){
           alert('Please enter valid room name')
           return;

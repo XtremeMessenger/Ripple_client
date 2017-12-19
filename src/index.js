@@ -5,6 +5,7 @@ import { createStore } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 import AllReducers from './reducers/allReducers.jsx';
 import App from './components/App.jsx';
+import 'babel-polyfill'
 
 //main application storage
 const store = createStore(AllReducers);
