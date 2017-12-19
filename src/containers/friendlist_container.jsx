@@ -34,7 +34,7 @@ class Friendlist extends Component {
     // axios.post(`/main/getFriends`, userRef).then(function (response) {
     axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`,userRef)
     .then(function(response){
-      console.log('this is getFriends response', response)
+      // console.log('this is getFriends response', response)
       response.data.forEach(function(friend){
         friends.push(friend)
       })

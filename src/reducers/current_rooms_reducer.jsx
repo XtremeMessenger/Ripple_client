@@ -1,13 +1,11 @@
 export default function (state = {
   currentUser: '',
-  currentRoom: '',
-  messages: []
+  currentRooms: []
 }, action) {
-  if (action.type === "SET_PRIVATE_ROOM") {
+  if (action.type === "SET_CURRENT_ROOMS") {
     return Object.assign({}, state, {
       currentUser: action.payload.currentUser,
-      currentRoom: action.payload.currentRoom,
-      messages: action.payload.messages
+      currentRooms: action.payload.currentRooms
     })
   }
   return state;
