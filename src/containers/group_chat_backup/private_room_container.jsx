@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import io from 'socket.io-client'
-// import URL from '../../config/url.js'
+import URL from '../../config/url.js'
 import { setPrivateRoom } from '../actions/setPrivateRoom.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 import PropTypes from 'prop-types'
@@ -24,7 +24,7 @@ class PrivateRoom extends Component {
 
   componentDidMount() {
     // console.log('this is in private room container === ')
-    this.socket = io("http://localhost:3500", { secure: true })
+    this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
     this.socket.on('private', message => {
       console.log('this is from socket io message', message)
       console.log('this is messages ', this.props.currentRoomStore.messages)

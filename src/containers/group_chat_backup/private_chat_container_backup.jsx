@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import io from 'socket.io-client'
-// import URL from '../../config/url.js'
+import URL from '../../config/url.js'
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 
@@ -36,7 +36,7 @@ class PrivateChat extends Component {
   }
 
   handleMessageFromSocket() {
-    this.socket = io("http://localhost:3500", { secure: true })
+    this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
     this.socket.on('private', message => {
       console.log('message got from socket:', message)
 
@@ -72,7 +72,7 @@ class PrivateChat extends Component {
       this.socket.emit('private', message)
       console.log('message emitted thru socket', message)
       // new message stores in db
-      await axios.post(`/main/privateChatStore`, message).then(function (response) {
+      await axios.post(`${URL.LOCAL_SERVER_URL}/main/privateChatStore`, message).then(function (response) {
         console.log('chat store success', response)
       })
       let messageArray = this.props.currentChatStore.messages;
@@ -98,7 +98,7 @@ class PrivateChat extends Component {
       text: 'first chat initiated',
       timestamp: date
     }
-    axios.post(`/main/createDirectChat`, message).then(function (response) {
+    axios.post(`${URL.LOCAL_SERVER_URL}/main/createDirectChat`, message, message).then(function (response) {
       console.log('chat store success', response)
     })
     this.props.setPrivateChat({

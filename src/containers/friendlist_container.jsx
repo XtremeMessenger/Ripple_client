@@ -3,7 +3,7 @@ import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import { bindActionCreators } from 'redux';
 import {connect} from  'react-redux'
-// import URL from '../../config/url.js'
+import URL from '../../config/url.js'
 import FriendlistEntry from './friendlist_entry.jsx'
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
@@ -32,7 +32,7 @@ class Friendlist extends Component {
     }
     // console.log('currentUser', currentUser)
     // axios.post(`/main/getFriends`, userRef).then(function (response) {
-    axios.post(`/main/getFriends`,userRef)
+    axios.post(`${URL.LOCAL_SERVER_URL}/main/getFriends`,userRef)
     .then(function(response){
       // console.log('this is getFriends response', response)
       response.data.forEach(function(friend){
@@ -101,7 +101,7 @@ class Friendlist extends Component {
       })
       let directRoomId = responseGetRoomID.data.room_id
       
-      let response = await axios.post(`/main/getPrivateChatHistory`, {
+      let response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getPrivateChatHistory`, {
         directRoomId: directRoomId
       })
 
