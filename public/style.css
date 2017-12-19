@@ -1,27 +1,40 @@
 #yolo{
-/* background-image: url(https://i.pinimg.com/originals/65/c0/c6/65c0c6dd2fec6d01dd5934789f8a4129.gif); */
-background-color: white;
+background-image: url(https://i.pinimg.com/originals/65/c0/c6/65c0c6dd2fec6d01dd5934789f8a4129.gif);
+background-color: rgb(0, 0, 0);
 height: 100vh;
 background-size: cover;
 padding: 10px;
-border: solid red;
+/* border: solid rgb(32, 183, 221); */
+text-align: center;
 }
 
 #main{
+    height: 100vh;
     padding: 10px;
-    border: solid black;
+    /* border: solid rgb(243, 2, 2); */
 }
-
+#chat_list{
+    background-color: rgb(255, 255, 255);
+    margin: 10px;
+    /* padding: 10px; */
+}
 #root{
     padding: 10px;
-    border: solid green;
+    background-color: black;
+    /* border: solid green; */
 }
 
 #setting{
     padding: 10px;
     border: solid blue;
 }
-
+#chat{
+    background-color:	rgb(9, 34, 10);
+    border: solid ;
+    border-color: rgb(57, 0, 245);
+    float: left;
+    height: 30vh;
+    }
 #sign_up_view{
     text-align: center;
     padding: 10px;
@@ -47,59 +60,90 @@ height: 100vh;
 }
 #login{
     color: rgb(233, 132, 86);
+    text-align: center;
 }
-/* .btn{
-    color: green;
+.btn{
+    color: rgb(255, 255, 255);
     background-color: green;
-} */
-.btn:active{
-    background-color: black;
 }
-.btn:hover{
-    background-color: black;
-}
-.btn-primary{
-    color: rgb(25, 214, 25);
-    background-color: rgb(20, 19, 19);
+
+    
     /* background-position: 30px; */
+
+#buttonlogin{
+    background-color: rgb(20, 19, 19);
+    color: black;
+    
+    
 }
 
 #private_room{
     background-color: rgb(49, 191, 66);
     padding: 10px;
     border: solid black;
+    margin: 15px;
     
 }
 
-#chat{
-background-color:	rgb(0, 157, 255);
-padding: 10px;
-border: solid ;
+#userinfo{
+    border: solid;
+    border-color: rgb(236, 29, 29);
+    float: left;    
+    
 }
-
+#videoChatButton{
+    padding: 5px;
+    float: left;
+}
+#private_chatt{
+    margin: 15px;
+    /* border: solid red; */
+    float: right;
+}
 #private_chat{
-background-color:	rgb(81, 93, 181);
-padding: 10px;
-border: solid pink;
+/* background-color:	rgb(170, 170, 170); */
+height: 40vh;
+width: 40vw;
+margin: 15px;
+/* border: solid blue; */
+color: rgb(74, 105, 190);
+overflow-y: auto;
+text-align: center;
+
+/* border: solid pink; */
+
 }
 #files{
-    padding: 10px;
+    /* padding: 10px; */
+    margin: 15px;
     border: solid brown;
 }
 #dropzone{
 background-color:	rgb(244, 244, 7);
 padding: 10px;
+margin: 15px;
 border: solid pink;
 }
 
-.footer{
-background-color:	rgb(255, 0, 0);
-padding: 10px;
-border: solid red;
+#footer{
+/* margin: 15px; */
+/* background-color:	rgb(239, 235, 247); */
+
+/* border: solid rgb(230, 207, 35); */
+position:absolute;
+bottom:0;
+width:100%;
+height:5%;   /* Height of the footer */
+font-style: italic;
+
+
 }
 #header{
-    padding: 10px;
-    border: solid blue;
+    margin: 15px;
+    /* padding: 10px; */
+    border: solid rgb(0, 0, 0);
+    float: left;
+
 }
 
 
@@ -170,7 +214,7 @@ border: solid red;
   }
   
   a, h2 {
-      color: #EC008C;
+      color: rgb(108, 212, 39);
   }
   
   a:hover {
@@ -186,20 +230,15 @@ border: solid red;
   }
   
   button {
-    -moz-box-shadow:inset 0px 39px 0px -24px #e67a73;
-    -webkit-box-shadow:inset 0px 39px 0px -24px #e67a73;
-    box-shadow:inset 0px 39px 0px -24px #e67a73;
+    
     background-color:#000000;
-    -moz-border-radius:4px;
-    -webkit-border-radius:4px;
+    margin: 5px;
     border-radius:4px;
-    border:1px solid #ffffff;
     display:inline-block;
     cursor:pointer;
-    color:#ffffff;
+    color:#317bd1;
     padding:6px 15px;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #b23e35;
+
   }
   button:hover {
     background-color:#050303;
@@ -218,7 +257,9 @@ border: solid red;
     border: 1px solid #dcd7d7!important;
     cursor: not-allowed!important;
   }
-  
+  Link{
+      background-color: pink;
+  }
   .menu-explorer {
       color: transparent!important;
       display: block;
@@ -489,5 +530,57 @@ input[type="range"]::-webkit-slider-thumb {
     height: 26px;
 }
 #lex{
+
+
 background-color:	rgb(159, 7, 254);
+}
+
+.btn:active{
+    background-color: black;
+}
+.btn:hover{
+    background-color: black;
+}
+.btn:focus{
+    background-color: black;
+}
+.btn-primary{
+    background-color: black;
+    
+}
+#chatInfo{
+    padding: 10px;
+ 
+}
+/* .w3-black{
+    background-color: black;
+2} */
+#fwendentry{
+    background-color: rgb(0, 0, 0);
+    color: rgb(182, 236, 184);
+    border-color:  black;
+    text-align: center;
+}
+.friendlist{
+    width: 20%;
+    height: 30%;
+    bottom:0px;
+    margin: 15px;
+    /* background-color: rgb(130, 123, 146); */
+    float: right;
+    /* height: 15%;
+    width: 15%; */
+    overflow-y: scroll;
+    text-align: left;
+}
+
+.templete{
+    background-color: red;
+}
+
+#innerfooter{
+    bottom: 0px;
+}
+#innerchat{
+    background-color: blue;
 }
