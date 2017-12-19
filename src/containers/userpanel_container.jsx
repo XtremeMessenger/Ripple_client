@@ -11,12 +11,13 @@ class UserPanel extends Component {
     }
 
     render(){
+        // className="w3-panel w3-blue"
         return(
-            <div className="w3-panel w3-blue">
+            <div  id="userinfo">
                 <img src={this.props.currentUserStore.icon} width="100" height="100" />
                 <p> Username: {this.props.currentUserStore.username} </p>
                 {/* <p> Email: {this.props.currentUserStore.email} </p> */}
-                <p> Hello, {this.props.currentUserStore.first} {this.props.currentUserStore.last} </p>
+                <p> Hello, {this.props.currentUserStore.first} </p>
                 <p> Quote: {this.props.currentUserStore.quote} </p>
                 {/* <p> Icon Image </p> */}
             </div>

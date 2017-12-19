@@ -13,7 +13,7 @@ class Footer extends Component {
 
   render() {
     return (
-      <div className="footer">
+      <div id="footer">
         <Link to="/jay">Jay</Link>
         <Link to="/ruslan">Ruslan</Link>
         <Link to="/yiyang">YiYang</Link>

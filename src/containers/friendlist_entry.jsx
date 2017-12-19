@@ -20,7 +20,7 @@ handleFriendClick(e){
 
 render() {
     return (
-        <li onClick={this.handleFriendClick}> {this.props.id} : {this.props.friend} </li>
+        <button id="fwendentry" onClick={this.handleFriendClick}> {this.props.id} : {this.props.friend} </button>
     )
 }
 

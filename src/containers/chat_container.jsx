@@ -50,8 +50,13 @@ class Chat extends Component {
     return (
       <div id="chat">
         {/* <h1 id="chat-user">Current User: {this.props.currentUser}</h1> */}
-        <input type='text' placeholder='Enter a message...' onKeyUp={this.handleSubmit} />
+        <div>
         {messages}
+        </div>
+        <br></br>
+        <div>
+        <input type='text' placeholder='Enter a message...' onKeyUp={this.handleSubmit} />
+        </div>
       </div>
     )
   }

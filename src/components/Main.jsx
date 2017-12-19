@@ -170,13 +170,13 @@ class Main extends Component {
           {this.state.tokenTimeLeft > 0 ? ` ${this.state.tokenTimeLeft} sec`: ' session out'}</div>
         <span><input type="submit" value="Logout" onClick={this.handleLogout} /></span> */}
         <div><Header history={this.props.history} /></div>
-        <div><UserPanel /></div>
+        {/* <div><UserPanel /></div> */}
         {/* <div><Lex /></div> */}
         <div><Friendlist /></div>
         {this.props.currentChatView.chatview === 0 ?
-          <div><Chat /></div> : null}
+          <div innerchat><Chat /></div> : null}
         {this.props.currentChatView.chatview === 0 ?
-          <div id="chat">No Chat Room Opened</div> : null}
+          <div>No Chat Room Opened</div> : null}
         {this.props.currentChatView.chatview === 1 ? 
           <div><Private /></div> : null}
         {this.props.currentChatView.chatview === 2 ?

@@ -133,7 +133,7 @@ class PrivateChatBox extends Component {
     return (
 
       <div id="private_chat">
-        <div><h2>Private Chat</h2></div>
+        {/* <div><h2>Private Chat</h2></div> */}
         {/* <button id="videoChatButton" onClick={this.handleVideoChat}>Video Chat</button> */}
         {/* <div id="videoChatButton">
           <Link to="/video"><h2>VideoChat</h2></Link>
@@ -142,10 +142,16 @@ class PrivateChatBox extends Component {
           <Link to="/videoConference"><h2>Video Conference</h2></Link>
         </div> */}
         {/* <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button> */}
-        <p> Username: {context.props.currentUserStore.username} </p>
-        <p> Friend Name: {context.props.currentChatStore.currentFriend} </p>
-        <p> Direct Chatroom ID: {context.props.currentChatStore.directRoomId} </p>
-        
+        {/* <p id="chatInfo"> Username: {context.props.currentUserStore.username} </p>
+        <p id="chatInfo"> Friend Name: {context.props.currentChatStore.currentFriend} </p>
+        <p id="chatInfo"> Direct Chatroom ID: {context.props.currentChatStore.directRoomId} </p>
+         */}
+          {
+          context.props.currentChatStore.messages.length > 0 ?
+          
+            <input type='text' placeholder='Enter a message...' onKeyUp={this.handleMessageToSocket} /> :
+            <span><input type="submit" value="Start New Chat" onClick={this.handleStartNewChat} /></span>
+        }
         {
           context.props.currentChatStore.messages.length>0 ? 
           context.props.currentChatStore.messages.map((message, index) => {
@@ -153,11 +159,7 @@ class PrivateChatBox extends Component {
             }) 
             : "No Message Yet"
         }
-        {
-          context.props.currentChatStore.messages.length > 0 ?
-            <input type='text' placeholder='Enter a message...' onKeyUp={this.handleMessageToSocket} /> :
-            <span><input type="submit" value="Start New Chat" onClick={this.handleStartNewChat} /></span>
-        }
+       
       </div>
     )
   }
