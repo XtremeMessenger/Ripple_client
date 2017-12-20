@@ -49,18 +49,11 @@ class Private extends Component {
     return (
 
       <div id="private_chatt">
-        {/* <div>Private Chat</div> */}
-        {/* <button id="videoChatButton" onClick={this.handleVideoChat}>Video Chat</button> */}
         <button id="closeChatButton" onClick={this.handleCloseChat}>Close</button>
         <div id="videoChatButton">
           <button><Link id="linkstyle" to="/video">VideoChat</Link></button>
         </div>
-        <div id="videoChatButton">
-        <button><Link id="linkstyle" to="/videoConference">Video Conference</Link></button>
-        </div>
-        
         <div><PrivateChatBox /></div>
-        
       </div>
     )
   }
