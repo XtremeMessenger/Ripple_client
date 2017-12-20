@@ -225,7 +225,7 @@ class Header extends Component {
         <Button id="headerbutton" bsStyle="primary" onClick={this.handleEditProfile}>EDIT USER PROFILE</Button >
         <Button id="headerbutton" bsStyle="primary" onClick={this.handleLogout}>Logout</Button >
         </div>
-        <div id="headerinfo"><span id="headerspan">logged in as:</span> {this.props.currentUserStore.username}   |   session ends in:
+        <div id="headerinfo"><span id="headerspan">logged in as:</span> {this.props.currentUserStore.username}   <span id="common">-</span>   session ends in:
           {this.state.tokenTimeLeft > 0 ? ` ${this.state.tokenTimeLeft} sec` : ' session out'}</div>
         
         <div></div>

@@ -12,6 +12,7 @@ font-family: 'Indie Flower', cursive;
 }
 #common{
     color: green;
+    margin-left: 10px;
 }
 #main{
     height: 100vh;
@@ -35,7 +36,7 @@ font-family: 'Indie Flower', cursive;
 #setting{
     padding: 10px;
     text-align: left;
-    border: solid green;
+    /* border: solid green; */
     color: white;
     width: 33%;
     /* border: solid blue; */
@@ -43,7 +44,7 @@ font-family: 'Indie Flower', cursive;
 #chat{
     visibility: hidden;
     background-color:	rgb(9, 34, 10);
-    border: solid ;
+    /* border: solid ; */
     /* border-color: rgb(21, 240, 185); */
     
     width: 300px;
@@ -54,7 +55,7 @@ font-family: 'Indie Flower', cursive;
 #sign_up_view{
     text-align: center;
     padding: 10px;
-    border: solid rgb(35, 37, 35);
+    /* border: solid rgb(35, 37, 35); */
     text-align: center;
     font-style: italic;
     color: rgb(166, 194, 176);
@@ -81,7 +82,7 @@ font-family: 'Indie Flower', cursive;
     visibility: hidden
 } */
 #common3{
-    color: rgb(55, 14, 103);
+    color: rgb(98, 37, 172);
     font: bold;
     font-size: 150%;
     font-family: serif;
@@ -116,6 +117,7 @@ height: 100vh;
 }
 #friendsComponent{
     text-align: left;
+    height: 565px;
 }
 #fwendentry{
     background-color: rgb(0, 0, 0);
@@ -127,22 +129,25 @@ height: 100vh;
     width: 24%;
     height: 85%;
     margin: 10px;
+    padding: 15px;
     float: left;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     text-align: left;
-    background-color: black;
-    border: solid rgb(46, 7, 164);
+    background-color: rgb(29, 29, 29);
+    /* border: solid rgb(46, 7, 164); */
 }
 #private_chat{
     margin: 10px;
     height: 500px;
     text-align: left;
     overflow-y: scroll;
+    padding: 15px;
     }
     #private_chatt{
+        padding: 15px;
         margin: 10px;
         background-color: black;
-        border: solid rgb(59, 21, 198);
+        /* border: solid rgb(59, 21, 198); */
         float: right;
         width: 45%;
         height: 45%;
@@ -155,20 +160,24 @@ height: 100vh;
 #innerchat{
     background-color: blue;
 }
-/* #spaceit{
-    padding: 10px;
-    margin: 10px;
-} */
+#linkstyle{
+    text-decoration: none;
+}
+#spaceit{
+    /* padding: 10px; */
+    margin-left: 10px;
+}
 #roomsComponent{
-    background-color: black;
+    background-color: rgb(34, 33, 33);
+    padding: 15px;
     margin: 10px;
     text-align: left;
     float: right;
     position: relative;
-    border: solid rgb(57, 18, 201);
+    /* border: solid rgb(57, 18, 201); */
     width: 24%;
-    height: 85%;
-    overflow-y: scroll;
+    height: 565px;
+    /* overflow-y: scroll; */
 }
 #chat_list{
     /* border: solid rgb(39, 132, 148); */
@@ -181,7 +190,7 @@ height: 100vh;
     width: 45%;
     height: 500px;
     background: black;
-    border: solid rgb(46, 19, 177);
+    /* border: solid rgb(46, 19, 177); */
     text-align: center;
     overflow-y: scroll;
 }
@@ -245,7 +254,7 @@ font-style: italic;
     color: blue;
 }
 #wtf{
-    border: solid red;
+    /* border: solid red; */
     float: right;
     width: 40%;
     height: 50%;
@@ -268,7 +277,7 @@ font-style: italic;
   }
 
 #closeVideoButton{
-    text-align: center;
+    float: right;
 }
 #localVideo{
     position: absolute;
