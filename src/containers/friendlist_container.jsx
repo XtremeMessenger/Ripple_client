@@ -128,7 +128,7 @@ class Friendlist extends Component {
     var context = this;
     return (
       <div className="friendlist" id="friendsComponent">
-        <h2>Find Friend</h2>
+        <h2 id="spaceit">Friends</h2>
         <input id="friendSearchBar"></input>
         <button id="findFriendButton" onClick={this.handleFindFriend}>add</button>
         <div>
