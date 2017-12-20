@@ -39,9 +39,9 @@ class Roomlist extends Component {
   async handleCreateRoom() {
     // console.log(document.getElementById('roomSearchBar').value);
     let newRoom = document.getElementById('roomSearchBar').value;
-    console.log('newRoom', newRoom)
+    // console.log('newRoom', newRoom)
     let currentUser = this.props.currentUserStore.username;
-    console.log(' this is the current logged user ', currentUser)
+    // console.log(' this is the current logged user ', currentUser)
 
     let roomRequest = {
       username: currentUser,
