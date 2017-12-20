@@ -39,9 +39,9 @@ class GroupChatBox extends Component {
     this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
     this.socket.on('group', message => {
       console.log('message got from socket:', message)
-
-      if (message.roomID === this.props.currentGroupChatStore.roomID 
-        && this.props.currentGroupChatStore.roomID !== null) {
+      console.log('this.props.currentGroupChatStore.roomID ', this.props.currentGroupChatStore.roomID )
+      if (message.roomID === this.props.currentGroupChatStore.currentRoom.roomID 
+        && this.props.currentGroupChatStore.currentRoom.roomID !== null) {
         // console.log('this is messages ', this.props.currentGroupChatStore.messages)
         let messageArray = this.props.currentGroupChatStore.messages;
         // console.log('this is messageArray', messageArray)
@@ -80,7 +80,7 @@ class GroupChatBox extends Component {
       
       this.props.setGroupChat({
         currentUser: this.props.currentUserStore.username,
-        currentRoom: this.props.currentGroupChatStore,
+        currentRoom: this.props.currentGroupChatStore.currentRoom,
         messages: messageArray
       })
     }

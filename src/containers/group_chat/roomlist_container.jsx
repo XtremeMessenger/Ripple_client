@@ -69,11 +69,12 @@ class Roomlist extends Component {
 
     console.log('roomID', room.roomID)
     let response = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getGroupChatHistory`, room)
-
-    console.log('this is getgroupChatHistory response.data', response)
+  
+    console.log('this is getgroupChatHistory response.data', response.data)
     var messageAry = []
     if (response.data.length !== 0) {
-      messageAry = Functions.messageObjToArray(response.data.messageObj)
+      messageAry = response.data.messageArray.reverse()
+      // messageAry = Functions.messageObjToArray(response.data.messageObj)
     }
     await this.props.setGroupChat({
       currentUser: this.props.currentUserStore.username,
