@@ -26,7 +26,7 @@ render() {
                 onClick={(e) => this.handleRequest(true)}
             >ACCEPT
             </Button >
-            <Button bsStyle="danger"
+            <Button bsStyle="primary"
                 onClick={(e) => this.handleRequest(false)}
             >REJECT
             </Button >
