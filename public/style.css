@@ -1,7 +1,7 @@
 #yolo{
 /* background-image: url(https://i.pinimg.com/originals/65/c0/c6/65c0c6dd2fec6d01dd5934789f8a4129.gif); */
-/* background-image: url(http://bitcoinist.com/wp-content/uploads/2017/07/ripple-cover.jpg); */
-background-image: url(https://avante.biz/wp-content/uploads/Dark-Themed-Wallpapers/Dark-Themed-Wallpapers-005.jpg);
+/* background-image: url(http://cdn.wonderfulengineering.com/wp-content/uploads/2013/12/metal-wallpaper-3.jpg); */
+background-image: url(https://i.pinimg.com/originals/fa/c8/e2/fac8e2092454c87a0b82bfa75a315875.jpg);
 background-color: rgb(31, 29, 29);
 height: 100vh;
 background-size: cover;
@@ -84,7 +84,7 @@ font-family: 'Indie Flower', cursive;
 #common3{
     color: rgb(98, 37, 172);
     font: bold;
-    font-size: 150%;
+    font-size: 115%;
     font-family: serif;
 }
 #login_view{
@@ -121,9 +121,15 @@ height: 100vh;
 }
 #fwendentry{
     background-color: rgb(0, 0, 0);
-    color: rgb(182, 236, 184);
-    border-color:  rgb(237, 2, 2);
+    color: rgb(205, 29, 26);
+    border-color:  rgb(136, 128, 128);
     text-align: center;
+}
+#fwendentry:hover{
+    background-color: rgb(72, 214, 24);
+}
+Button:hover{
+    background-color: rgb(72, 214, 24);
 }
 .friendlist{
     width: 24%;
@@ -383,6 +389,7 @@ font-style: italic;
   
   a:hover {
       color: #671345;
+      background-color: rgb(38, 220, 38);
   }
   
   .highlighted {
@@ -404,8 +411,9 @@ font-style: italic;
     padding:6px 15px;
 
   }
+  
   button:hover {
-    background-color:#050303;
+    background-color:#78eb25;
   }
   button:active {
     position:relative;
@@ -703,7 +711,7 @@ background-color:	rgb(159, 7, 254);
     background-color: black;
 }
 .btn:hover{
-    background-color: black;
+    background-color: rgb(58, 226, 32);
 }
 .btn:focus{
     background-color: black;
