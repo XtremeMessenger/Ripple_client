@@ -131,7 +131,7 @@ class Friendlist extends Component {
         <h2 id="spaceit">Friends</h2>
         <input id="friendSearchBar"></input>
         <button id="findFriendButton" onClick={this.handleFindFriend}>add</button>
-        <div>
+        <div id="friendslist2">
           <span id="common">My Friends: </span>
           <ul> {context.props.currentFriendsStore.currentFriends.map(function(friend, i){
             return <FriendlistEntry friend={friend} key = {i} id = {i} onClick={context.handleClick}/> 

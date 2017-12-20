@@ -118,6 +118,9 @@ height: 100vh;
 #friendsComponent{
     text-align: left;
     height: 565px;
+    /* padding: 15px;
+    margin: 15px; */
+    overflow-y: scroll;
 }
 #fwendentry{
     background-color: rgb(0, 0, 0);
@@ -131,6 +134,14 @@ height: 100vh;
 Button:hover{
     background-color: rgb(72, 214, 24);
 }
+/* #friendslist2{
+    overflow-y: scroll;
+    height: 80%;
+}
+#roomlist{
+    overflow-y: scroll;
+    height: 80%;
+} */
 .friendlist{
     width: 24%;
     height: 85%;
@@ -173,6 +184,22 @@ Button:hover{
     /* padding: 10px; */
     margin-left: 10px;
 }
+#roomuser{
+    color: rgb(98, 37, 172);
+    font: bold;
+    font-size: 115%;
+    font-family: serif;
+}
+#roommessage{
+    font-family: Times;
+    color: rgb(0, 0, 0);
+    font-size: 125%;
+}
+#timestamp{
+    float: right;
+    font-family: Geneva;
+    color: rgb(48, 48, 57);
+}
 #roomsComponent{
     background-color: rgb(34, 33, 33);
     padding: 15px;
@@ -183,13 +210,11 @@ Button:hover{
     /* border: solid rgb(57, 18, 201); */
     width: 24%;
     height: 565px;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 }
-#chat_list{
-    /* border: solid rgb(39, 132, 148); */
-    /* height: 50px; */
-}
+
 #Group_chat{
+    padding-right: 20px;
     margin: 10px;
     /* border: solid blue; */
     float: right;
@@ -267,6 +292,13 @@ font-style: italic;
     overflow-y: scroll;
     
 
+}
+#finally{
+    height: 300px;
+    overflow: scroll;
+}
+.video{
+    height: 1000px;
 }
 #header{
     margin: 10px;
