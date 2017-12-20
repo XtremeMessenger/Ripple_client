@@ -23,6 +23,7 @@ class Roomlist extends Component {
   }
 
   componentDidMount(){
+    this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
     this.handleGetRooms();
   }
 
@@ -58,10 +59,9 @@ class Roomlist extends Component {
         currentUser: this.props.currentUserStore.username,
         currentRooms: newRoomResponse.data.data
       })
+      this.socket.emit('newroom', 'newroom')
       // console.log('this.props.currentRoomsStore', this.props.currentRoomsStore)
     }
-    
-
   }
 
   async handleRoomClick(room){

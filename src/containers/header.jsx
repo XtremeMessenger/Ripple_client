@@ -13,6 +13,7 @@ import { setCurrentFriends } from '../actions/setCurrentFriends.jsx';
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 import { setCurrentRequests } from '../actions/setCurrentRequests.jsx';
+import { setCurrentRooms } from '../actions/setCurrentRooms.jsx';
 import jwtDecode from 'jwt-decode';
 
 import { FormGroup } from 'react-bootstrap'
@@ -175,6 +176,16 @@ class Header extends Component {
     console.log('after set current friends in decision ', this.props.currentFriendsStore)
   }
 
+  async handleGetRooms() {
+    let getRoomResponse = await axios.post(`${URL.LOCAL_SERVER_URL}/main/getRooms`, {})
+    console.log('getRoomResponse', getRoomResponse.data)
+    this.props.setCurrentRooms({
+      currentUser: this.props.currentUserStore.username,
+      currentRooms: getRoomResponse.data.data
+    })
+    console.log('this.props.currentRoomStore', this.props.currentRoomStore)
+  }
+
   handleFlagFromSocket() {
     this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
     this.socket.on('request', request => {
@@ -192,6 +203,10 @@ class Header extends Component {
         alert('you and ' + accept.requested + ' are friends now')
         this.getFriends()
       }
+    })
+    this.socket.on('newroom', newroom => {
+      console.log('newroom from socket:', newroom)
+      this.handleGetRooms()
     })
   }
 
@@ -234,6 +249,7 @@ function mapStateToProps(state) {
     currentChatView: state.currentChatView,
     currentFriendsStore: state.currentFriendsStore,
     currentRequestsStore: state.currentRequestsStore,
+    currentRoomsStore: state.currentRoomsStore,
     browserHistory: state.browserHistory
   }
 }
@@ -246,7 +262,8 @@ function matchDispatchToProps(dispatch) {
       setPrivateChat: setPrivateChat,
       setCurrentFriends: setCurrentFriends,
       setCurrentChatView: setCurrentChatView,
-      setCurrentRequests: setCurrentRequests
+      setCurrentRequests: setCurrentRequests,
+      setCurrentRooms: setCurrentRooms
     }, dispatch)
 }
 
