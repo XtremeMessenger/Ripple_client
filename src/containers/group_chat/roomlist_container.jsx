@@ -96,7 +96,7 @@ class Roomlist extends Component {
         <input id="spaceit" id="roomSearchBar"></input>
         <button id="findRoomButton" onClick={this.handleCreateRoom}>Create</button>
         <div>
-          {/* Rooms:  */}
+          <span id="common">Rooms: </span>
           <ul> {context.props.currentRoomsStore.currentRooms.map(function(room, i){
             return <RoomlistEntry room={room} key = {i} id = {i} onClick={context.handleRoomClick}/> 
           })} 

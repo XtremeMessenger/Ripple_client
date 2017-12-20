@@ -214,7 +214,7 @@ class Header extends Component {
           {this.state.tokenTimeLeft > 0 ? ` ${this.state.tokenTimeLeft} sec` : ' session out'}</div>
         
         <div></div>
-        <Button id="headerbutton" bsStyle="primary" onClick={this.getFriendRequests}>Check Friend Request</Button >
+        {/* <Button id="headerbutton" bsStyle="primary" onClick={this.getFriendRequests}>Check Friend Request</Button > */}
 
 
           <div > {this.props.currentRequestsStore.currentRequests.map(function (request, i) {

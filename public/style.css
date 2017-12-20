@@ -8,8 +8,11 @@ background-size: cover;
 padding: 10px;
 /* border: solid rgb(32, 183, 221); */
 /* text-align: center; */
+font-family: 'Indie Flower', cursive;
 }
-
+#common{
+    color: green;
+}
 #main{
     height: 100vh;
     padding: 10px;
@@ -60,6 +63,28 @@ padding: 10px;
 }
 #signin{
     color: rgb(233, 132, 86);
+}
+#common2{
+    color: red;
+}
+#time{
+    float: right;
+    font-family: Geneva;
+    color: rgb(48, 48, 57);
+}
+#messagebrah{
+    font-family: Times;
+    color: rgb(0, 0, 0);
+    font-size: 125%;
+}
+/* ::-webkit-scrollbar-track{
+    visibility: hidden
+} */
+#common3{
+    color: rgb(55, 14, 103);
+    font: bold;
+    font-size: 150%;
+    font-family: serif;
 }
 #login_view{
 text-align: center;
@@ -147,6 +172,7 @@ height: 100vh;
 }
 #chat_list{
     /* border: solid rgb(39, 132, 148); */
+    /* height: 50px; */
 }
 #Group_chat{
     margin: 10px;

@@ -20,7 +20,7 @@ handleRoomClick(e){
 
 render() {
     return (
-        <button onClick={this.handleRoomClick}> {this.props.room.roomID}, Name: {this.props.room.roomname}, Owner: {this.props.room.owner} </button>
+        <button onClick={this.handleRoomClick}> <span id="common2">Name:</span> {this.props.room.roomname}, <span id="common2">Owner:</span> {this.props.room.owner} </button>
     )
 }
 
