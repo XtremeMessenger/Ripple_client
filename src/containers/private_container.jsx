@@ -51,6 +51,7 @@ class Private extends Component {
       <div id="private_chatt">
         {/* <div>Private Chat</div> */}
         {/* <button id="videoChatButton" onClick={this.handleVideoChat}>Video Chat</button> */}
+        <button id="closeChatButton" onClick={this.handleCloseChat}>Close</button>
         <div id="videoChatButton">
           <button><Link to="/video">VideoChat</Link></button>
         </div>
@@ -59,7 +60,7 @@ class Private extends Component {
         </div>
         
         <div><PrivateChatBox /></div>
-        <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button>
+        
       </div>
     )
   }
