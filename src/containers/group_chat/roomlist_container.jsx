@@ -92,17 +92,17 @@ class Roomlist extends Component {
     var context = this;
     return (
       <div className="Roomlist" id="roomsComponent">
-        <h2>Create Room</h2>
-        <input id="roomSearchBar"></input>
+        <h2 id="spaceit">Create Room</h2>
+        <input id="spaceit" id="roomSearchBar"></input>
         <button id="findRoomButton" onClick={this.handleCreateRoom}>Create</button>
         <div>
-          Rooms: 
+          {/* Rooms:  */}
           <ul> {context.props.currentRoomsStore.currentRooms.map(function(room, i){
             return <RoomlistEntry room={room} key = {i} id = {i} onClick={context.handleRoomClick}/> 
           })} 
           </ul>
         </div>
-        {<div>current chat view: {context.props.currentChatView.chatview}</div>}
+        {/* {<div>current chat view: {context.props.currentChatView.chatview}</div>} */}
       </div>
     )
   }

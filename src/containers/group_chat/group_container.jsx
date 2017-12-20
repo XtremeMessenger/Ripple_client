@@ -48,15 +48,16 @@ class Group extends Component {
     return (
 
       <div id="Group_chat">
-        <div><h2>Group Chat</h2></div>
+      <button id="closeChatButton" onClick={this.handleCloseChat}>Close</button>s
+        {/* <div><h2>Group Chat</h2></div> */}
         {/* <button id="videoChatButton" onClick={this.handleVideoChat}>Video Chat</button> */}
         <div id="videoChatButton">
-          <Link to="/video"><h2>VideoChat</h2></Link>
+        <button><Link to="/video">VideoChat</Link> </button>
         </div>
         <div id="videoChatButton">
-          <Link to="/videoConference"><h2>Video Conference</h2></Link>
+          <button><Link to="/videoConference">Video Conference</Link> </button>
         </div>
-        <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button>
+        
         <div><GroupChatBox /></div>
       </div>
     )

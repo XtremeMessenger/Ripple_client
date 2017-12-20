@@ -203,22 +203,26 @@ class Header extends Component {
 
   render() {
     var context = this;
+    // className="header"
     return (
-      <div className="header" id="header">
-        <div>current User: {this.props.currentUserStore.username}</div>
-        <div>current ChatView: {this.props.currentChatView.chatview}</div>
-        <div>Session Timeout in:
+      <div  id="header">
+       <div id="idc">
+        <Button id="headerbutton" bsStyle="primary" onClick={this.handleEditProfile}>EDIT USER PROFILE</Button >
+        <Button id="headerbutton" bsStyle="primary" onClick={this.handleLogout}>Logout</Button >
+        </div>
+        <div id="headerinfo"><span id="headerspan">logged in as:</span> {this.props.currentUserStore.username}   |   session ends in:
           {this.state.tokenTimeLeft > 0 ? ` ${this.state.tokenTimeLeft} sec` : ' session out'}</div>
-        <Button bsStyle="primary" onClick={this.getFriendRequests}>Check Friend Request</Button >
-        <div>
-          Friend Requests:
-          <div> {this.props.currentRequestsStore.currentRequests.map(function (request, i) {
+        
+        <div></div>
+        <Button id="headerbutton" bsStyle="primary" onClick={this.getFriendRequests}>Check Friend Request</Button >
+
+
+          <div > {this.props.currentRequestsStore.currentRequests.map(function (request, i) {
             return <FriendrequestEntry request={request} key={i} id={i} onClick={context.handleRequestClick}/>
           })}
           </div>
-        </div>
-        <Button bsStyle="warning" onClick={this.handleEditProfile}>EDIT USER PROFILE</Button >
-        <Button bsStyle="danger" onClick={this.handleLogout}>Logout</Button >
+
+       
       </div>
     )
   }

@@ -138,7 +138,7 @@ class Friendlist extends Component {
           })} 
           </ul>
         </div>
-        {<div>current chat view: {context.props.currentChatView.chatview}</div>}
+        {/* {<div>current chat view: {context.props.currentChatView.chatview}</div>} */}
       </div>
     )
   }

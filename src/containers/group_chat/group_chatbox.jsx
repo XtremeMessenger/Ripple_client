@@ -106,10 +106,11 @@ class GroupChatBox extends Component {
           <Link to="/videoConference"><h2>Video Conference</h2></Link>
         </div> */}
         {/* <button id="closeChatButton" onClick={this.handleCloseChat}>Close Chat Window</button> */}
-        <p> Username: {context.props.currentUserStore.username} </p>
+        {/* <p> Username: {context.props.currentUserStore.username} </p>
         <p> Room Name: {context.props.currentGroupChatStore.currentRoom.roomname} </p>
         <p> Chatroom ID: {context.props.currentGroupChatStore.currentRoom.roomID} </p>
-        
+         */}
+          <input type='text' placeholder='Enter a message...' onKeyUp={this.handleMessageToSocket} />
         {
           context.props.currentGroupChatStore.messages.length>0 ? 
           context.props.currentGroupChatStore.messages.map((message, index) => {
@@ -117,7 +118,7 @@ class GroupChatBox extends Component {
             }) 
             : "No Message Yet"
         }
-        <input type='text' placeholder='Enter a message...' onKeyUp={this.handleMessageToSocket} />
+       
       </div>
     )
   }

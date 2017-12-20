@@ -72,14 +72,14 @@ class Setting extends Component {
         <div><Header /></div>
         <img src={this.props.currentUserStore.icon} width="100" height="100" />
         <FormGroup>
-        <p> Username: {this.props.currentUserStore.username} </p>
+        {/* <p> Username: {this.props.currentUserStore.username} </p> */}
         {/* <p> Email: {this.props.currentUserStore.email} </p> */}
-        <p> FirstName: {this.props.currentUserStore.first} </p>
-        <div><label> New First Name: <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} /></label></div>
-        <p> LastName: {this.props.currentUserStore.last} </p>
-        <div><label> New Last Name: <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} /></label></div>
-        <p> Quote: {this.props.currentUserStore.quote} </p>
-        <div><label> New Quote: <input type="text" name="quote" value={this.state.quote} onChange={this.handleChange} /></label></div>
+        {/* <p> FirstName: {this.props.currentUserStore.first} </p> */}
+        <div><label> New First Name: <input type="text" name="firstname" value={this.state.firstname} onChange={this.handleChange} /></label></div><br></br>
+        {/* <p> LastName: {this.props.currentUserStore.last} </p> */}
+        <div><label> New Last Name: <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange} /></label></div><br></br>
+        <p> Current motto: {this.props.currentUserStore.quote} </p><br></br>
+        <div><label> New motto: <input type="text" name="quote" value={this.state.quote} onChange={this.handleChange} /></label></div><br></br>
           <div>
             <label> Choose a New Icon: </label>
             <img src="https://thumbs.dreamstime.com/z/businessman-profile-icon-male-portrait-business-man-flat-design-vector-illustration-55382689.jpg" width="100" height="100" onClick={this.handleIconClick}></img>

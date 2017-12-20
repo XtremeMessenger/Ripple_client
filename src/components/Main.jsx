@@ -172,17 +172,19 @@ class Main extends Component {
         <div><Header history={this.props.history} /></div>
         {/* <div><UserPanel /></div> */}
         {/* <div><Lex /></div> */}
+        <div><Roomlist /></div>
+        
         <div><Friendlist /></div>
         {this.props.currentChatView.chatview === 0 ?
           <div innerchat><Chat /></div> : null}
-        {this.props.currentChatView.chatview === 0 ?
-          <div>No Chat Room Opened</div> : null}
+        {/* {this.props.currentChatView.chatview === 0 ?
+          <div>No Chat Room Opened</div> : null} */}
         {this.props.currentChatView.chatview === 1 ? 
           <div><Private /></div> : null}
-        {this.props.currentChatView.chatview === 2 ?
+       {this.props.currentChatView.chatview === 2 ?
           <div><Group /></div> : null}
         <div><Footer /></div>
-        <div><Roomlist /></div>
+       
       </div>
     )
   }
