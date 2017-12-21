@@ -25,8 +25,13 @@ class Video extends Component {
   constructor(props) {
     super(props)
     this.handleClose = this.handleClose.bind(this)
+    this.handleCallRequest = this.handleCallRequest.bind(this)
+    this.handleFlagFromSocket = this.handleFlagFromSocket.bind(this)
+    this.handleVideoRequest = this.handleVideoRequest.bind(this)
     this.state = {
-
+      showCalling: false,
+      callingFrom: null,
+      hashKey: null,
     }
   }
 
@@ -39,7 +44,8 @@ class Video extends Component {
     // })
     this.props.currentChatStore.currentUser
     this.props.currentChatStore.currentFriend
-
+    this.handleFlagFromSocket()
+    // this.connection = new RTCMultiConnection();
     //draggable elements
     // dragElement(document.getElementById(("remoteVideo")));
     // dragElement(document.getElementById(("localVideo")));
@@ -422,7 +428,15 @@ class Video extends Component {
     // ......................................................
     // ..................RTCMultiConnection Code.............
     // ......................................................
-    var connection = new RTCMultiConnection();
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    // var connection = new RTCMultiConnection();
+    this.connection = new RTCMultiConnection();
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    let connection = this.connection;
     // by default, socket.io server is assumed to be deployed on your own URL
     connection.socketURL = URL.WEBRTC_SERVER_URL;
     // comment-out below line if you do not have your own socket.io server
@@ -449,6 +463,7 @@ class Video extends Component {
         showRoomURL(connection.sessionid);
       });
     };
+
     document.getElementById('join-room').onclick = function () {
       //disableInputButtons();
       let id = context.props.currentChatStore.directRoomId;
@@ -554,8 +569,84 @@ class Video extends Component {
     //   disableInputButtons();
     // }
   }
+  /////////// start component function end
+
+  handleFlagFromSocket() {
+    this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
+    /*
+    obj = {
+      requestee:
+      requested:
+      hashKey:
+      result:
+    }
+    */
+
+    this.socket.on('videoRequest', videoRequest => {
+      console.log('videoRequest got from socket:', videoRequest)
+
+      if (videoRequest.requested === this.props.currentUserStore.username) {
+        alert('you got a video request from ' + videoRequest.requestee)
+        this.setState({ showCalling: true, callingFrom: videoRequest.requestee, hashKey: videoRequest.hashKey})
+      }
+    })
 
 
+    this.socket.on('videoReqResult', videoReqResult => {
+      console.log('videoReqResult from socket:', videoReqResult)
+
+      if (videoReqResult.requestee === this.props.currentUserStore.username) {
+        if (videoReqResult.result) {
+          console.log('you and ' + videoReqResult.requested + ' are now on video chat')
+          this.connection.join(videoReqResult.hashKey)
+          this.setState({ showCalling: false, callingFrom: null })
+        } else {
+          console.log(videoReqResult.requested + ' declined video chat')
+          this.setState({ showCalling: false, callingFrom: null })
+        }
+      }
+    })
+  }
+
+  handleCallRequest() {
+    let date = Date.now();
+    let videoRequest = {
+      requestee: this.props.currentChatStore.currentUser,
+      requested: this.props.currentChatStore.currentFriend,
+      hashKey: date,
+      result: null
+    }
+    this.socket.emit('videoRequest', videoRequest)
+    console.log('videoRequest emitted thru socket', videoRequest)
+  }
+
+  async handleVideoRequest(result) {
+    // alert(result)
+    if (result) {
+      await this.connection.open(this.state.hashKey, function () {
+        console.log('in connection.open callback')
+        showRoomURL(connection.sessionid);
+      });
+
+      let videoReqResult = {
+        requestee: this.props.currentChatStore.currentFriend,
+        requested: this.props.currentChatStore.currentUser,
+        hashKey: this.state.hashKey,
+        result: result
+      }
+      this.socket.emit('videoReqResult', videoReqResult)
+      console.log('videoReqResult emitted thru socket', videoReqResult)
+
+    }
+    let videoReqResult = {
+      requestee: this.props.currentChatStore.currentUser,
+      requested: this.props.currentChatStore.currentFriend,
+      hashKey: this.state.hashKey,
+      result: result
+    }
+    this.socket.emit('videoReqResult', videoReqResult)
+    console.log('videoReqResult emitted thru socket', videoReqResult)
+  }
 
   handleScriptError() {
     console.log('error loading script')
@@ -580,10 +671,16 @@ class Video extends Component {
           <div>Current User: {this.props.currentUserStore.username} </div>
           <div> Current Friend: { this.props.currentChatStore.currentFriend } </div>
           <div> directRoomId: {this.props.currentChatStore.directRoomId} </div>
-
+            <Button bsStyle="warning" onClick={this.handleCallRequest}>MAKE VIDEO CALL</Button >
           <button id="open-room">Open Room</button>
           <button id="join-room">Join Room</button>
             <Button bsStyle="warning" onClick={this.handleClose}>CLOSE VIDEO</Button >
+          <div>{this.state.showCalling ?
+              <div>
+              Calling from: {this.state.callingFrom} 
+              <Button bsStyle="warning" onClick={(e) => this.handleVideoRequest(true)}>ACCEPT</Button >
+              <Button bsStyle="warning" onClick={(e) => this.handleVideoRequest(false)}>DECLINE</Button ></div>
+            : null}</div>
           <div id="room-urls"></div>
 
           <div id="videos-container"></div>
