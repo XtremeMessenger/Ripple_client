@@ -28,10 +28,12 @@ class Video extends Component {
     this.handleCallRequest = this.handleCallRequest.bind(this)
     this.handleFlagFromSocket = this.handleFlagFromSocket.bind(this)
     this.handleVideoRequest = this.handleVideoRequest.bind(this)
+    this.handleDisconnect = this.handleDisconnect.bind(this)
     this.state = {
       showCalling: false,
       callingFrom: null,
       hashKey: null,
+      disconnect: false
     }
   }
 
@@ -583,11 +585,19 @@ class Video extends Component {
     }
     */
 
+    this.socket.on('closeVideo', closeVideo => {
+      console.log('closeVideo got from socket:', closeVideo)
+
+      if (closeVideo.requested === this.props.currentUserStore.username) {
+        window.location.reload();
+      }
+    })
+
     this.socket.on('videoRequest', videoRequest => {
       console.log('videoRequest got from socket:', videoRequest)
 
       if (videoRequest.requested === this.props.currentUserStore.username) {
-        alert('you got a video request from ' + videoRequest.requestee)
+        // alert('you got a video request from ' + videoRequest.requestee)
         this.setState({ showCalling: true, callingFrom: videoRequest.requestee, hashKey: videoRequest.hashKey})
       }
     })
@@ -649,8 +659,23 @@ class Video extends Component {
     console.log('error loading script')
   }
 
+  handleDisconnect() {
+    // this.setState({ callingFrom: null, hashKey: null })
+    // let myNode = document.getElementById('videos-container');
+    // myNode = removeAllChildrenFromNode(myNode);
+    // this.connection.close()
+    // this.props.browserHistory.history.push('/main')
+    // this.setState({disconnect: true})
+  }
+
   handleClose() {
-    this.props.browserHistory.history.push('/main')
+    let closeVideo = {
+      requestee: this.props.currentChatStore.currentUser,
+      requested: this.props.currentChatStore.currentFriend,
+      hashKey: this.state.hashKey
+    }
+    this.socket.emit('closeVideo', closeVideo)
+    window.location.reload();
   }
 
   render() {
@@ -658,6 +683,7 @@ class Video extends Component {
     return (
       <div id="dropzone">
         <div>{this.props.currentUserStore.username ? null : <Redirect to="/main" />}</div>
+        {/* <div>{this.state.disconnect ? <Redirect to="/main" /> : null}</div> */}
         <div>
         <Script
           url="https://cdn.webrtc-experiment.com/RTCMultiConnection.js"
@@ -670,6 +696,7 @@ class Video extends Component {
           <div> Current Friend: { this.props.currentChatStore.currentFriend } </div>
           <div> directRoomId: {this.props.currentChatStore.directRoomId} </div>
             <Button bsStyle="warning" onClick={this.handleCallRequest}>MAKE VIDEO CALL</Button >
+            {/* <Button bsStyle="warning" onClick={this.handleDisconnect}>DISCONNECT VIDEO</Button > */}
             <Button bsStyle="warning" onClick={this.handleClose}>CLOSE VIDEO</Button >
           <div>{this.state.showCalling ?
               <div>
@@ -714,6 +741,18 @@ function mapStateToProps(state) {
     browserHistory: state.browserHistory
   }
 }
+
+// function removeAllChildrenFromNode(node) {
+//   var shell;
+//   // do not copy the contents
+//   shell = node.cloneNode(false);
+
+//   if (node.parentNode) {
+//     node.parentNode.replaceChild(shell, node);
+//   }
+
+//   return shell;
+// }
 
 // function matchDispatchToProps(dispatch) {
 //   // call selectUser in index.js

@@ -1,6 +1,6 @@
 export default function (state = {
-  currentUser: null,
-  currentRoom: null,
+  currentUser: '',
+  currentRoom: '',
   messages: []
 }, action) {
   if (action.type === "SET_GROUP_CHAT") {

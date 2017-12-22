@@ -13,8 +13,18 @@
 
 <body>
   <div id="root"></div>
+  <script>
+  function getResumePath() {
+    if (['localhost', '127.0.0.1'].indexOf(window.location.hostname) === -1) {
+      return "bundle.js";
+    }
+    return "bundle-min.js";
+  }
+  var File1 = getResumePath()
+  document.write("<script src='"+ File1 + "'></" + "script>")
+  </script>
   <script src="js/lib/adapter.js"></script>  
-  <script src="bundle.js"></script>
+  <script src={link}></script>
   <script src="/siofu/client.js"></script>
 </body>
 

@@ -22,7 +22,7 @@ class Ruslan extends Component {
       <div className="Ruslan">
         <div>{this.props.currentUserStore.username ? null : <Redirect to="/main" />}</div>
         This is Ruslan Page
-        {/* <a href={URL.RESUME}>Resume</a> */}
+        <a href={URL.RESUME}>Resume</a>
         <Button bsStyle="warning" onClick={this.handleRetuen}>RETURN</Button >
       </div>
     )
