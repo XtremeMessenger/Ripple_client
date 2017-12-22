@@ -6,7 +6,7 @@ import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import GroupChatBox from '../containers/group_chat/group_chatbox.jsx'
+import GroupChatBox from './chatbox/group_chatbox.jsx'
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 import { Button } from 'react-bootstrap'
@@ -702,7 +702,7 @@ class VideoConference extends Component {
         </section>
       </div>  
           <div><GroupChatBox /></div>
-        <div id="dropzone"><Dropzone /></div>
+        {/* <div id="dropzone"><Dropzone /></div> */}
       </div>
     )
   }

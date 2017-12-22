@@ -116,7 +116,7 @@ class Login extends Component {
               <div className="form-group">
                 <button id="loginbutton" className="btn btn-primary" type="button" onClick={this.handleClickSubmit}>Login</button>
               </div>
-              <div id="credentials"><label> DeveloperOnly:<br></br> <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} onKeyUp={this.handleEnter}/></label></div> 
+              <div id="credentials"><label> Quick Login:<br></br> <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} onKeyUp={this.handleEnter}/></label></div> 
           </div>
         </div>
         </div>

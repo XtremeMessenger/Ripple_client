@@ -6,7 +6,7 @@ import { FormGroup } from 'react-bootstrap'
 import axios from 'axios'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import PrivateChatBox from '../containers/private_chatbox.jsx'
+import PrivateChatBox from './chatbox/private_chatbox.jsx'
 import { setPrivateChat } from '../actions/setPrivateChat.jsx';
 import { setCurrentChatView } from '../actions/setCurrentChatView.jsx';
 import { Button } from 'react-bootstrap'

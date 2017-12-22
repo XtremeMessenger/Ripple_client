@@ -122,7 +122,7 @@ class Signup extends Component {
           <div id="credentials"><label> Password: <br></br><input type="text" name="password" value={this.state.password} onChange={this.handleChange} /></label></div>
           <div id="credentials"><label> Email: <br></br><input type="text" name="email" value={this.state.email} onChange={this.handleChange} /></label></div>
           <span><input type="submit" value="Signup" onClick={this.handleClickSubmit} /></span>
-          <div id="credentials"><label> DeveloperOnly:<br></br> <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} onKeyUp={this.handleEnter} /></label></div>
+          <div id="credentials"><label> Quick Signup:<br></br> <input type="text" name="all" value={this.state.username} onChange={this.handleChangeDeveloper} onKeyUp={this.handleEnter} /></label></div>
         </FormGroup>
       </div>
     )
