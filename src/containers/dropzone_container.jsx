@@ -12,6 +12,9 @@ class Dropzone extends Component {
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this);
+    this.handleFlagFromSocket = this.handleFlagFromSocket.bind(this)
+    this.handleFileUploaded = this.handleFileUploaded.bind(this)
+    this.getFileList = this.getFileList.bind(this)
     this.state = {
         filesToDownload: []
     }
@@ -21,12 +24,16 @@ handleClick(file){
 }
 
   componentDidMount(){
+    this.handleFlagFromSocket()
+
     let context = this;
     let files = [];
     let currentUser = this.props.currentChatStore.currentUser;
     let currentFriend = this.props.currentChatStore.currentFriend;
     var socket = io.connect(URL.SOCKET_SERVER_URL);
     var uploader = new SocketIOFileUpload(socket);
+
+    this.getFileList()
     let loggedUser = {
       user: currentUser
     }
@@ -53,10 +60,48 @@ handleClick(file){
       axios.post(`${URL.LOCAL_SERVER_URL}/main/privateSendFile`, fileNfo).then(function (response) {
         // axios.post(`/main/privateChatStore`, message).then(function (response) {
           console.log('file record nfo', response)
-          
+        context.handleFileUploaded()
         })
     });
   }
+
+  getFileList() {
+    let context = this;
+    let files = [];
+    let loggedUser = {
+      user: this.props.currentChatStore.currentUser
+    }
+    axios.post(`${URL.LOCAL_SERVER_URL}/main/getFiles`, loggedUser).then(function (response) {
+      console.log('this is getFiles response ', response)
+      response.data.forEach(function (file) {
+        files.push(file)
+      })
+      context.setState({
+        filesToDownload: files
+      })
+    })
+  }
+
+  handleFlagFromSocket() {
+    this.socket = io(URL.SOCKET_SERVER_URL, { secure: true })
+    this.socket.on('fileUploaded', fileUploaded => {
+      console.log('fileUploaded got from socket:', fileUploaded)
+      if (fileUploaded.requested === this.props.currentChatStore.currentUser) {
+        alert('File uploaded by ' + fileUploaded.requestee)
+        this.getFileList()
+      }
+    })
+  }
+
+  handleFileUploaded() {
+    let fileUploaded = {
+      requestee: this.props.currentChatStore.currentUser,
+      requested: this.props.currentChatStore.currentFriend
+    }
+    this.socket.emit('fileUploaded', fileUploaded)
+    console.log('fileUploaded emitted thru socket', fileUploaded)
+  }
+
   render() {
     let context = this;
     return (
