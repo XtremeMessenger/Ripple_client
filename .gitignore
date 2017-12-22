@@ -7,3 +7,5 @@ node_module
 *.sqlite
 config.js
 config/
+bundle-min.js
+bundle-min.js.map
