@@ -21,7 +21,7 @@ export default class FriendrequestEntry extends Component {
 render() {
     return (
         <div>
-        <div>Request ID: {this.props.id}, Request From: {this.props.request.requestee} </div>
+        <div id="friend_request">Request ID: {this.props.id}, Request From: {this.props.request.requestee} </div>
             <Button bsStyle="primary"
                 onClick={(e) => this.handleRequest(true)}
             >ACCEPT

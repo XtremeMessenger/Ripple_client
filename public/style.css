@@ -269,6 +269,8 @@ Button:active{
     
 }
 
+
+
 #userinfo{
     border: solid;
     /* border-color: rgb(236, 29, 29); */
@@ -812,4 +814,6 @@ div{
     background-color: transparent
 }
     
-
+#friend_request{
+    color: white;
+}

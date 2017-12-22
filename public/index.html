@@ -16,9 +16,9 @@
   <script>
   function getResumePath() {
     if (['localhost', '127.0.0.1'].indexOf(window.location.hostname) === -1) {
-      return "bundle.js";
+      return "bundle-min.js";
     }
-    return "bundle-min.js";
+    return "bundle.js";
   }
   var File1 = getResumePath()
   document.write("<script src='"+ File1 + "'></" + "script>")
