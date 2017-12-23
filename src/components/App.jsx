@@ -9,9 +9,9 @@ import Main from './Main.jsx'
 import Setting from './Setting.jsx'
 import Video from './Video.jsx'
 import VideoConference from './VideoConference.jsx'
-import Jay from '../../public/resume/Jay/Jay.jsx'
-import Ruslan from '../../public/resume/Ruslan/Ruslan.jsx'
-import YiYang from '../../public/resume/YiYang/YiYang.jsx'
+// import Jay from '../../public/resume/Jay/Jay.jsx'
+// import Ruslan from '../../public/resume/Ruslan/Ruslan.jsx'
+// import YiYang from '../../public/resume/YiYang/YiYang.jsx'
 
 import Root from './Root.jsx'
 import { Link } from 'react-router-dom';
