@@ -27,9 +27,9 @@ const App = () => (
       <Route path='/setting' exact component={ Setting } />
       <Route path='/video' exact component={ Video } />
       <Route path='/videoConference' exact component={ VideoConference } />
-      <Route path='/jay' exact component={Jay} />
-      <Route path='/ruslan' exact component={Ruslan} />
-      <Route path='/yiyang' exact component={YiYang} />
+      {/* <Route path='/jay' exact component={Jay} /> */}
+      {/* <Route path='/ruslan' exact component={Ruslan} /> */}
+      {/* <Route path='/yiyang' exact component={YiYang} /> */}
       <Route path='/' component= { Main } />
     </Switch>
   </div>
